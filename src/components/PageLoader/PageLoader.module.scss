@@ -1,0 +1,7 @@
+@use '../../styles/abstracts' as *;
+
+.loader {
+  flex: 1;
+  @include flex-center;
+  min-height: 24rem;
+}

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
@@ -6,14 +6,17 @@ import { useAppSelector } from './store';
 import Navbar from './components/Navbar/Navbar';
 import ToastContainer from './components/Toast/Toast';
 import PageTransition from './components/PageTransition/PageTransition';
-import Home from './pages/Home/Home';
-import Dashboard from './pages/Dashboard/Dashboard';
-import Docs from './pages/Docs/Docs';
-import FormDemo from './pages/FormDemo/FormDemo';
+import PageLoader from './components/PageLoader/PageLoader';
 import './styles/main.scss';
 
+// Each page is a separate async chunk — only fetched when first navigated to
+const Home      = lazy(() => import('./pages/Home/Home'));
+const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
+const FormDemo  = lazy(() => import('./pages/FormDemo/FormDemo'));
+const Docs      = lazy(() => import('./pages/Docs/Docs'));
+
 function ThemeSync() {
-  const theme = useAppSelector((s) => s.ui.theme);
+  const theme   = useAppSelector((s) => s.ui.theme);
   const palette = useAppSelector((s) => s.ui.palette);
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -28,14 +31,21 @@ function AppShell() {
       <ThemeSync />
       <div className="layout">
         <Navbar />
-        <PageTransition>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/form-demo" element={<FormDemo />} />
-            <Route path="/docs" element={<Docs />} />
-          </Routes>
-        </PageTransition>
+        {/*
+          Suspense wraps only the route area so the Navbar and Toast stay
+          visible instantly. PageTransition sits inside Suspense so
+          AnimatePresence only runs after the chunk has loaded.
+        */}
+        <Suspense fallback={<PageLoader />}>
+          <PageTransition>
+            <Routes>
+              <Route path="/"          element={<Home />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/form-demo" element={<FormDemo />} />
+              <Route path="/docs"      element={<Docs />} />
+            </Routes>
+          </PageTransition>
+        </Suspense>
       </div>
       <ToastContainer />
     </>
