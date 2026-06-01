@@ -34,6 +34,14 @@ const TYPE_LABEL: Record<ChangeEntry['type'], string> = {
 
 const RELEASES: Release[] = [
   {
+    version: '1.5.4',
+    date: '2026-06-02',
+    summary: 'Docs search bar now fills the full header width.',
+    changes: [
+      { type: 'fix', text: 'Docs: search input max-width: 32rem replaced with width: 100% — bar now spans the full header column, consistent with the title and subtitle above it' },
+    ],
+  },
+  {
     version: '1.5.3',
     date: '2026-06-02',
     summary: 'Code-review-driven quality pass — eight confirmed bugs fixed across Tooltip, Dashboard, the RTK Query optimistic mutation, and the multi-step form disabled pattern.',
