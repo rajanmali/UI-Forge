@@ -9,10 +9,10 @@ This file gives a Claude instance full context on the UIForge project so it can 
 UIForge is a **branded React component library and live demo app** built to showcase agency-level front-end engineering skills. The goal is a polished, production-quality portfolio project demonstrating: design systems, accessibility, state management, form validation, animation, and theming — all in one coherent codebase.
 
 **GitHub repo:** `github.com:rajanmali/UI-Forge.git` (branch: `main`)
-**Dev server:** `npm run dev` → `http://localhost:5173`
+**Dev server:** `npm run dev` → `http://localhost:5173` (base `'/'` in dev, `'/UI-Forge/'` in production builds only)
 **Storybook:** `npm run storybook` → `http://localhost:6006`
 **Build:** `npm run build` (tsc -b then vite build, zero warnings expected)
-**Version:** 1.2.0
+**Version:** 1.3.0
 
 ---
 
@@ -102,10 +102,16 @@ src/
 All component files use **zero hardcoded colour or spacing values** — everything references SASS variables or CSS custom properties.
 
 Key tokens:
-- **Primary navy:** `$color-primary-600` = `#1B3A6B`
-- **Accent blue:** `$color-accent-500` = `#2563EB`
+- **Primary teal:** `$color-primary-600` = `#1BAAA0` (Zibbet Green)
+- **Accent cornflower:** `$color-accent-500` = `#669DEC`
+- **Gray scale:** warm greige `$color-gray-900` = `#2d2319` → `$color-gray-50` = `#faf4f1`
 - **Spacing scale:** `$space-1` (4px) → `$space-32` (128px) in `rem`
 - **Breakpoints:** `$bp-xs` 480 → `$bp-2xl` 1536, used via `@include md-up { }` etc.
+
+> **Important:** `--text-*`, `--border-*`, `--bg-*`, and `--surface-*` CSS vars in
+> `_light.scss` and `_dark.scss` are **hardcoded to original cool-gray hex values** (not
+> interpolated from `$color-gray-*`). This keeps surface readability independent of the
+> warm greige token scale. Do not change these back to SASS variable interpolations.
 
 ### Theme system
 
@@ -113,7 +119,11 @@ CSS custom properties are declared in two layers:
 
 1. **Light/dark** (`--bg-primary`, `--text-primary`, `--surface`, `--border`, etc.) — toggled by setting `data-theme` attribute on `<html>`. Persisted to `localStorage` via Redux.
 
-2. **Brand palette** (`--palette-accent`, `--palette-primary`, `--palette-accent-light`, `--palette-shadow-primary`, `--palette-focus`) — toggled by `data-palette` attribute. 5 palettes: `ocean` (default), `forest`, `sunset`, `violet`, `rose`. Every interactive component reads these vars so one palette swap cascades everywhere.
+2. **Brand palette** (`--palette-accent`, `--palette-primary`, `--palette-accent-light`, `--palette-shadow-primary`, `--palette-focus`) — toggled by `data-palette` attribute. 5 palettes: `ocean` (teal + cornflower, default), `forest` (aqua + weldon), `sunset` (jellybean + salmon), `violet` (mauve + periwinkle), `rose` (coral + flamingo). Every interactive component reads these vars so one palette swap cascades everywhere.
+
+> **Runtime colour sources:** `Avatar.tsx` AVATAR_COLORS and `ThemeSwitcher.tsx` PALETTES
+> contain hardcoded hex strings (inline styles / JS constants). SASS variable changes do
+> NOT reach these — they must be updated manually when the palette changes.
 
 Both are synced in `ThemeSync` (inside `App.tsx`) and persisted in `localStorage`.
 

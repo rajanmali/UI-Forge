@@ -34,6 +34,22 @@ const TYPE_LABEL: Record<ChangeEntry['type'], string> = {
 
 const RELEASES: Release[] = [
   {
+    version: '1.3.0',
+    date: '2026-06-02',
+    label: 'Warm Palette',
+    summary: 'Full design-token palette migration to a warm, muted pastel system derived from 18 hand-picked source colours — plus a dev-server base-path fix so localhost:5173/ works without a sub-directory prefix.',
+    changes: [
+      { type: 'feature',     text: 'New warm pastel colour system: primary teal scale anchored at Zibbet Green #1BAAA0, accent cornflower/aero/sky-blue scale anchored at #669DEC, warm greige gray scale from Taupe #5F4C41' },
+      { type: 'feature',     text: 'All 5 named palettes remapped — Ocean (teal + cornflower), Forest (aqua + weldon), Sunset (jellybean + salmon), Violet (mauve + periwinkle), Rose (coral + flamingo)' },
+      { type: 'improvement', text: 'Semantic colour scales (success, warning, error, info) remapped to matching image hues: success teal, warning topaz/peach, error jellybean/coral, info cornflower/aero' },
+      { type: 'fix',         text: 'Light/dark mode text and background vars pinned to original cool-gray values so surface readability is unaffected by the greige token changes' },
+      { type: 'fix',         text: 'Avatar.tsx AVATAR_COLORS array updated from old navy/blue hex to new palette colours — SASS migration alone could not reach these runtime JS strings' },
+      { type: 'fix',         text: 'ThemeSwitcher.tsx palette swatch gradients updated to match each palette\'s new primary/accent so the picker chips reflect the actual applied colours' },
+      { type: 'fix',         text: '_light.scss :root fallback palette block updated so pre-hydration first-paint uses new teal/cornflower instead of old navy/blue' },
+      { type: 'infra',       text: 'vite.config.ts: base path is now \'/\' in dev (fixes localhost:5173/ redirect error) and \'/UI-Forge/\' in production builds only — GitHub Pages deployment unchanged' },
+    ],
+  },
+  {
     version: '1.2.0',
     date: '2026-06-01',
     summary: 'Storybook integration — every component now has an isolated story with Controls, Actions, and accessibility checks via @storybook/addon-a11y.',

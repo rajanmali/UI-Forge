@@ -1,8 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-export default defineConfig({
+// In dev (`vite`) serve at root so localhost:5173/ works without a sub-path.
+// In build (`vite build`) use the GitHub Pages sub-directory so all assets
+// are referenced correctly at rajanmali.github.io/UI-Forge/.
+export default defineConfig(({ command }) => ({
   plugins: [react()],
-  // Subdirectory on GitHub Pages: rajanmali.github.io/UI-Forge/
-  base: '/UI-Forge/',
-})
+  base: command === 'serve' ? '/' : '/UI-Forge/',
+}))
