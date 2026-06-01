@@ -14,6 +14,7 @@ const Home      = lazy(() => import('./pages/Home/Home'));
 const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
 const FormDemo  = lazy(() => import('./pages/FormDemo/FormDemo'));
 const Docs      = lazy(() => import('./pages/Docs/Docs'));
+const Changelog = lazy(() => import('./pages/Changelog/Changelog'));
 
 function ThemeSync() {
   const theme   = useAppSelector((s) => s.ui.theme);
@@ -42,7 +43,8 @@ function AppShell() {
               <Route path="/"          element={<Home />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/form-demo" element={<FormDemo />} />
-              <Route path="/docs"      element={<Docs />} />
+              <Route path="/docs"       element={<Docs />} />
+              <Route path="/changelog" element={<Changelog />} />
             </Routes>
           </PageTransition>
         </Suspense>
