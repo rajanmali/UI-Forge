@@ -34,6 +34,20 @@ const TYPE_LABEL: Record<ChangeEntry['type'], string> = {
 
 const RELEASES: Release[] = [
   {
+    version: '1.1.0',
+    date: '2026-06-01',
+    summary: 'Post-launch quality pass — adds a live changelog page, navbar version badge, Inter font, and a full Vitest + React Testing Library suite.',
+    changes: [
+      { type: 'feature',     text: '/changelog page — timeline layout with tagged release entries (Feature / Improvement / Fix / Infra badges), lazy-loaded as its own chunk' },
+      { type: 'feature',     text: 'Version badge in Navbar — pill chip next to the UIForge logo showing the current version, links to /changelog' },
+      { type: 'improvement', text: 'Inter font fully wired via Google Fonts stylesheet (weights 300–800); preconnect hints were already in place from v1.0.0' },
+      { type: 'infra',       text: 'Vitest + React Testing Library — 61 tests across 6 suites: Button, Modal, Tabs, Select, Switch, Input' },
+      { type: 'infra',       text: 'Framer Motion test mock — Proxy-based mock strips animation props and renders plain HTML elements so component logic and ARIA attributes are testable in jsdom' },
+      { type: 'infra',       text: 'Global scrollIntoView stub in test setup — jsdom does not implement the scroll API; stub prevents false failures in Select keyboard navigation tests' },
+      { type: 'fix',         text: 'Git global identity configured — all commits now carry the correct author name and email instead of the machine hostname' },
+    ],
+  },
+  {
     version: '1.0.0',
     date: '2026-06-01',
     label: 'Initial Release',
