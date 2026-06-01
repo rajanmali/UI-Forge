@@ -21,6 +21,11 @@ export interface NewPost {
   userId: number;
 }
 
+// Monotonically-decrementing counter for optimistic IDs — always negative so
+// they never collide with real server-assigned positive IDs, and never collide
+// with each other even when two mutations are dispatched in the same millisecond.
+let _tempId = 0;
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://jsonplaceholder.typicode.com' }),
@@ -42,7 +47,7 @@ export const api = createApi({
       query: (body) => ({ url: '/posts', method: 'POST', body }),
       // JSONPlaceholder echoes the POST back — optimistically prepend to cache
       async onQueryStarted(newPost, { dispatch, queryFulfilled }) {
-        const optimisticId = Date.now();
+        const optimisticId = --_tempId;
         const patch = dispatch(
           api.util.updateQueryData('getPosts', undefined, (draft) => {
             draft.unshift({ id: optimisticId, ...newPost });

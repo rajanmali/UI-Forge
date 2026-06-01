@@ -12,7 +12,7 @@ UIForge is a **branded React component library and live demo app** built to show
 **Dev server:** `npm run dev` → `http://localhost:5173` (base `'/'` in dev, `'/UI-Forge/'` in production builds only)
 **Storybook:** `npm run storybook` → `http://localhost:6006`
 **Build:** `npm run build` (tsc -b then vite build, zero warnings expected)
-**Version:** 1.5.2
+**Version:** 1.5.3
 
 ---
 

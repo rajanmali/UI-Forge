@@ -35,7 +35,7 @@ export default function Step3Preferences({ disabled = false }: { disabled?: bool
   }
 
   return (
-    <div className={styles.step}>
+    <fieldset className={styles.step} disabled={disabled}>
       <div className={styles.step__header}>
         <div>
           <h2 className={styles.step__title}>Preferences</h2>
@@ -89,7 +89,7 @@ export default function Step3Preferences({ disabled = false }: { disabled?: bool
               options={THEME_OPTIONS}
               orientation="horizontal"
               errorText={errors.theme?.message}
-              disabled={disabled}
+
             />
           )}
         />
@@ -107,7 +107,7 @@ export default function Step3Preferences({ disabled = false }: { disabled?: bool
               options={EXP_OPTIONS}
               orientation="horizontal"
               errorText={errors.experience?.message}
-              disabled={disabled}
+
             />
           )}
         />
@@ -124,7 +124,7 @@ export default function Step3Preferences({ disabled = false }: { disabled?: bool
                 checked={field.value}
                 onChange={field.onChange}
                 size="md"
-                disabled={disabled}
+  
               />
             )}
           />
@@ -138,12 +138,12 @@ export default function Step3Preferences({ disabled = false }: { disabled?: bool
                 checked={field.value}
                 onChange={field.onChange}
                 size="md"
-                disabled={disabled}
+  
               />
             )}
           />
         </div>
       </div>
-    </div>
+    </fieldset>
   );
 }

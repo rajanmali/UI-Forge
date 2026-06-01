@@ -1,4 +1,4 @@
-import { useState, useRef, useId, type ReactNode } from 'react';
+import { useState, useRef, useId, useEffect, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import styles from './Tooltip.module.scss';
@@ -16,8 +16,6 @@ export interface TooltipProps {
 interface TooltipPos {
   top: number;
   left: number;
-  // CSS transform applied to the outer portal wrapper for centering.
-  // Framer Motion animates the inner span so the two transforms don't conflict.
   transform: string;
 }
 
@@ -36,7 +34,6 @@ function calcPos(rect: DOMRect, placement: TooltipPlacement): TooltipPos {
   }
 }
 
-// Slide direction per placement (for the motion.span inside the portal wrapper)
 const SLIDE: Record<TooltipPlacement, { initial: { opacity: number; scale: number; y?: number; x?: number } }> = {
   top:    { initial: { opacity: 0, scale: 0.94, y: 4  } },
   bottom: { initial: { opacity: 0, scale: 0.94, y: -4 } },
@@ -56,6 +53,30 @@ export default function Tooltip({
   const [pos, setPos] = useState<TooltipPos | null>(null);
   const wrapperRef = useRef<HTMLSpanElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Fix 1: clear pending timer on unmount so setVisible never fires on a dead component
+  useEffect(() => {
+    return () => {
+      if (timer.current) clearTimeout(timer.current);
+    };
+  }, []);
+
+  // Fix 2: re-compute position on scroll/resize while the tooltip is visible
+  // Uses capture:true to catch scroll events from any scrolling ancestor
+  useEffect(() => {
+    if (!visible) return;
+    function updatePos() {
+      if (wrapperRef.current) {
+        setPos(calcPos(wrapperRef.current.getBoundingClientRect(), placement));
+      }
+    }
+    window.addEventListener('scroll', updatePos, { passive: true, capture: true });
+    window.addEventListener('resize', updatePos, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', updatePos, { capture: true });
+      window.removeEventListener('resize', updatePos);
+    };
+  }, [visible, placement]);
 
   function show() {
     if (disabled) return;
@@ -84,7 +105,6 @@ export default function Tooltip({
       {createPortal(
         <AnimatePresence>
           {visible && pos && (
-            // Outer div: fixed position + centering transform (no Framer Motion so no conflict)
             <div
               style={{
                 position: 'fixed',
@@ -95,7 +115,6 @@ export default function Tooltip({
                 pointerEvents: 'none',
               }}
             >
-              {/* Inner span: Framer Motion handles only opacity/scale/slide — no positioning transform */}
               <motion.span
                 id={id}
                 role="tooltip"

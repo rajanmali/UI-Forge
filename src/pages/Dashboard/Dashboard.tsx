@@ -14,7 +14,7 @@ import Select from '../../components/Select/Select';
 import DropdownMenu from '../../components/DropdownMenu/DropdownMenu';
 import Input from '../../components/Input/Input';
 import Textarea from '../../components/Textarea/Textarea';
-import { useGetPostsQuery, useGetUsersQuery, useCreatePostMutation } from '../../store/api';
+import { useGetPostsQuery, useGetUsersQuery, useCreatePostMutation, type Post } from '../../store/api';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { addToast } from '../../store/uiSlice';
 import {
@@ -22,6 +22,7 @@ import {
   setSortBy,
   setCompactView,
   setPage,
+  setActiveTab,
   PAGE_SIZE,
 } from '../../store/dashboardSlice';
 
@@ -193,7 +194,7 @@ function ComposeModal({ open, onClose, users }: {
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
-  const { filterUserId, sortBy, compactView, page } = useAppSelector((s) => s.dashboard);
+  const { filterUserId, sortBy, compactView, page, activeTab } = useAppSelector((s) => s.dashboard);
   const [composeOpen, setComposeOpen] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -220,15 +221,27 @@ export default function Dashboard() {
 
   const uniqueAuthors = useMemo(() => new Set((posts ?? []).map((p) => p.userId)).size, [posts]);
 
+  // Fix 4: O(n) pass once instead of 2×10 filter scans per render in usersTab
+  const postCountByUser = useMemo(() => {
+    const map = new Map<number, number>();
+    (posts ?? []).forEach((p) => map.set(p.userId, (map.get(p.userId) ?? 0) + 1));
+    return map;
+  }, [posts]);
+
+  // Fix 3: RTK Query refetch() resolves (never throws) even on network error — check .error explicitly
   async function handleRefresh() {
     setIsRefreshing(true);
     dispatch(addToast({ type: 'info', message: 'Re-fetching posts from JSONPlaceholder…' }));
     try {
       const result = await refetchPosts();
-      const count = (result as { data?: typeof posts }).data?.length ?? 0;
+      const { data, error } = result as { data?: Post[]; error?: unknown };
+      if (error) {
+        dispatch(addToast({ type: 'error', message: 'Refresh failed — check your connection.' }));
+        return;
+      }
       dispatch(addToast({
         type: 'success',
-        message: `Refreshed — ${count} posts reloaded. Any optimistic writes were cleared (JSONPlaceholder doesn't persist them).`,
+        message: `Refreshed — ${data?.length ?? 0} posts reloaded. Any optimistic writes were cleared (JSONPlaceholder doesn't persist them).`,
       }));
     } catch {
       dispatch(addToast({ type: 'error', message: 'Refresh failed.' }));
@@ -302,14 +315,14 @@ export default function Dashboard() {
               variant="ghost" size="sm"
               leftIcon={<ChevronIcon dir="left" />}
               disabled={page === 0}
-              onClick={() => dispatch(setPage(page - 1))}
+              onClick={() => dispatch(setPage(Math.max(0, page - 1)))}
             >Prev</Button>
             <span className={styles.pagination__page}>{page + 1} / {totalPages}</span>
             <Button
               variant="ghost" size="sm"
               rightIcon={<ChevronIcon dir="right" />}
               disabled={page >= totalPages - 1}
-              onClick={() => dispatch(setPage(page + 1))}
+              onClick={() => dispatch(setPage(Math.min(totalPages - 1, page + 1)))}
             >Next</Button>
           </div>
         </div>
@@ -330,9 +343,9 @@ export default function Dashboard() {
                 <p className={styles.user_email}>{user.email}</p>
               </div>
               <div className={styles.user_meta}>
-                <Tooltip content={`${(posts ?? []).filter((p) => p.userId === user.id).length} posts authored`} placement="left">
+                <Tooltip content={`${postCountByUser.get(user.id) ?? 0} posts authored`} placement="left">
                   <Badge variant="info" size="sm">
-                    {(posts ?? []).filter((p) => p.userId === user.id).length} posts
+                    {postCountByUser.get(user.id) ?? 0} posts
                   </Badge>
                 </Tooltip>
                 <Badge variant="success" size="sm">Active</Badge>
@@ -384,6 +397,8 @@ export default function Dashboard() {
         </div>
         <Tabs
           variant="line"
+          defaultTab={activeTab === 0 ? 'posts' : 'users'}
+          onChange={(id) => dispatch(setActiveTab(id === 'posts' ? 0 : 1))}
           tabs={[
             { id: 'posts', label: 'Posts', content: postsTab },
             { id: 'users', label: 'Users', content: usersTab },

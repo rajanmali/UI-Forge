@@ -64,7 +64,7 @@ export default function Step2Account({ disabled = false }: { disabled?: boolean 
   }
 
   return (
-    <div className={styles.step}>
+    <fieldset className={styles.step} disabled={disabled}>
       <div className={styles.step__header}>
         <div>
           <h2 className={styles.step__title}>Account Setup</h2>
@@ -99,7 +99,7 @@ export default function Step2Account({ disabled = false }: { disabled?: boolean 
               value={field.value}
               onChange={field.onChange}
               errorText={errors.role?.message}
-              disabled={disabled}
+
               fullWidth
             />
           )}
@@ -138,6 +138,6 @@ export default function Step2Account({ disabled = false }: { disabled?: boolean 
           />
         </div>
       </div>
-    </div>
+    </fieldset>
   );
 }

@@ -235,11 +235,15 @@
 }
 
 // ─── Step content ────────────────────────────────────────────
+// Used as <fieldset disabled={submitting}> — reset all fieldset browser defaults
 .step {
   padding: $space-6 $space-6 $space-4;
   display: flex;
   flex-direction: column;
   gap: $space-6;
+  border: none;
+  margin: 0;
+  min-width: 0;
 }
 
 .step__header {

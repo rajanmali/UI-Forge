@@ -34,6 +34,21 @@ const TYPE_LABEL: Record<ChangeEntry['type'], string> = {
 
 const RELEASES: Release[] = [
   {
+    version: '1.5.3',
+    date: '2026-06-02',
+    summary: 'Code-review-driven quality pass — eight confirmed bugs fixed across Tooltip, Dashboard, the RTK Query optimistic mutation, and the multi-step form disabled pattern.',
+    changes: [
+      { type: 'fix', text: 'Tooltip: added useEffect cleanup so the pending setTimeout is cleared on unmount — prevents stale setVisible(true) firing on a dead component during route transitions' },
+      { type: 'fix', text: 'Tooltip: scroll and resize event listeners (capture phase, passive) now re-run calcPos() while the tooltip is visible — portal position tracks the trigger element as the page scrolls' },
+      { type: 'fix', text: 'Dashboard handleRefresh: RTK Query refetch() resolves rather than rejects on network error — now explicitly checks result.error before dispatching the success toast' },
+      { type: 'fix', text: 'Dashboard usersTab: replaced 2×10 filter() scans per render with a single O(n) useMemo Map — postCountByUser computed once when posts change, read by key per user' },
+      { type: 'fix', text: 'Dashboard pagination: setPage calls now clamp via Math.min/Math.max — rapid double-click on Next/Prev cannot advance beyond valid page bounds' },
+      { type: 'fix', text: 'Dashboard: Tabs onChange wired to dispatch setActiveTab — Redux activeTab now reflects the real UI state instead of remaining permanently 0' },
+      { type: 'fix', text: 'api.ts createPost: replaced Date.now() optimistic ID with a module-level decrementing counter — always negative, never collides with server IDs or concurrent mutations' },
+      { type: 'improvement', text: 'FormDemo steps: replaced 14 individual disabled prop threads with a single <fieldset disabled={submitting}> — natively cascades to all current and future form controls with zero per-field boilerplate' },
+    ],
+  },
+  {
     version: '1.5.2',
     date: '2026-06-02',
     summary: 'Tooltip component rewritten to render via React portal — escapes all CSS stacking contexts so it no longer clips or bleeds through Card, Modal, or any transformed parent. Tooltip colour fixed to a hardcoded near-black independent of the warm palette token system.',
