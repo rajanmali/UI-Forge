@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import styles from './Home.module.scss';
 import Button from '../../components/Button/Button';
 import Badge from '../../components/Badge/Badge';
@@ -16,12 +17,30 @@ import Select from '../../components/Select/Select';
 import { useAppDispatch } from '../../store';
 import { addToast } from '../../store/uiSlice';
 
+const EASE = [0.4, 0, 0.2, 1] as [number, number, number, number];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE } },
+};
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
+};
+
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className={styles.section}>
+    <motion.section
+      className={styles.section}
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: '-60px' }}
+    >
       <h2 className={styles.section__title}>{title}</h2>
       <div className={styles.section__body}>{children}</div>
-    </section>
+    </motion.section>
   );
 }
 
@@ -62,17 +81,19 @@ export default function Home() {
   return (
     <main className={styles.home}>
       {/* Hero */}
-      <div className={styles.hero}>
-        <Badge variant="secondary" size="sm">v1.0.0 — Production Ready</Badge>
-        <h1 className={styles.hero__title}>UIForge</h1>
-        <p className={styles.hero__sub}>
+      <motion.div className={styles.hero} variants={stagger} initial="hidden" animate="show">
+        <motion.div variants={fadeUp}>
+          <Badge variant="secondary" size="sm">v1.0.0 — Production Ready</Badge>
+        </motion.div>
+        <motion.h1 className={styles.hero__title} variants={fadeUp}>UIForge</motion.h1>
+        <motion.p className={styles.hero__sub} variants={fadeUp}>
           A branded React component library demonstrating agency-level front-end engineering. Design tokens, full accessibility, dark mode, and live interaction.
-        </p>
-        <div className={styles.hero__actions}>
+        </motion.p>
+        <motion.div className={styles.hero__actions} variants={fadeUp}>
           <Button size="lg" onClick={() => fire('success', 'Welcome to UIForge!')}>Get Started</Button>
           <Button size="lg" variant="secondary" onClick={() => setModalOpen(true)}>View Source</Button>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       <div className={styles.showcase}>
         {/* Buttons */}

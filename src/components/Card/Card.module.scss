@@ -29,10 +29,7 @@
   &--pad-lg   .card__body  { padding: $space-8; }
 
   // ─── Interactive ───────────────────────────────────────────
-  &--hoverable:hover {
-    box-shadow: $shadow-md;
-    transform: translateY(-2px);
-  }
+  /* hover lift handled by Framer Motion whileHover */
 
   &--clickable {
     cursor: pointer;

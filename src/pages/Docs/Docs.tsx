@@ -1,4 +1,9 @@
+import { motion } from 'framer-motion';
 import styles from './Docs.module.scss';
+
+const EASE = [0.4, 0, 0.2, 1] as [number, number, number, number];
+const fadeUp = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE } } };
+const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
 import Card from '../../components/Card/Card';
 import Badge from '../../components/Badge/Badge';
 import Tabs from '../../components/Tabs/Tabs';
@@ -111,11 +116,11 @@ const docTabs = [
 export default function Docs() {
   return (
     <main className={styles.docs}>
-      <div className={styles.header}>
-        <Badge variant="info" size="sm">Documentation</Badge>
-        <h1 className={styles.title}>Component Reference</h1>
-        <p className={styles.sub}>Full prop tables, usage examples, and accessibility notes for every UIForge component.</p>
-      </div>
+      <motion.div className={styles.header} variants={stagger} initial="hidden" animate="show">
+        <motion.div variants={fadeUp}><Badge variant="info" size="sm">Documentation</Badge></motion.div>
+        <motion.h1 className={styles.title} variants={fadeUp}>Component Reference</motion.h1>
+        <motion.p className={styles.sub} variants={fadeUp}>Full prop tables, usage examples, and accessibility notes for every UIForge component.</motion.p>
+      </motion.div>
 
       <div className={styles.layout}>
         {/* Sidebar */}

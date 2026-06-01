@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import styles from './Button.module.scss';
 import Spinner from '../Spinner/Spinner';
 
@@ -14,6 +15,10 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   rightIcon?: React.ReactNode;
   children: React.ReactNode;
 }
+
+const tapScale = { scale: 0.96 };
+const whileHover = { scale: 1.02 };
+const transition = { type: 'spring' as const, stiffness: 500, damping: 30 };
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -34,8 +39,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const isDisabled = disabled || loading;
 
     return (
-      <button
+      <motion.button
         ref={ref}
+        whileHover={isDisabled ? undefined : whileHover}
+        whileTap={isDisabled ? undefined : tapScale}
+        transition={transition}
         className={[
           styles.btn,
           styles[`btn--${variant}`],
@@ -49,7 +57,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={isDisabled}
         aria-disabled={isDisabled}
         aria-busy={loading}
-        {...rest}
+        {...(rest as React.ComponentProps<typeof motion.button>)}
       >
         {loading && (
           <span className={styles.btn__spinner} aria-hidden="true">
@@ -67,11 +75,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             {rightIcon}
           </span>
         )}
-      </button>
+      </motion.button>
     );
   },
 );
 
 Button.displayName = 'Button';
-
 export default Button;

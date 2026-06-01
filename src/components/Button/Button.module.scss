@@ -14,9 +14,7 @@
   transition: background-color $transition-base, border-color $transition-base,
     box-shadow $transition-base, transform $transition-fast, opacity $transition-base;
 
-  &:active:not(:disabled) {
-    transform: translateY(1px);
-  }
+  /* tap scale handled by Framer Motion whileTap */
 
   // ─── Variants ──────────────────────────────────────────────
   &--primary {

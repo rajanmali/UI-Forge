@@ -5,6 +5,7 @@ import { store } from './store';
 import { useAppSelector } from './store';
 import Navbar from './components/Navbar/Navbar';
 import ToastContainer from './components/Toast/Toast';
+import PageTransition from './components/PageTransition/PageTransition';
 import Home from './pages/Home/Home';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Docs from './pages/Docs/Docs';
@@ -24,11 +25,13 @@ function AppShell() {
       <ThemeSync />
       <div className="layout">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/docs" element={<Docs />} />
-        </Routes>
+        <PageTransition>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/docs" element={<Docs />} />
+          </Routes>
+        </PageTransition>
       </div>
       <ToastContainer />
     </>

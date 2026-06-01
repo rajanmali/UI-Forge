@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import styles from './Dashboard.module.scss';
 import Card from '../../components/Card/Card';
 import Badge from '../../components/Badge/Badge';
@@ -8,15 +9,21 @@ import { useGetPostsQuery, useGetUsersQuery } from '../../store/api';
 import { useAppDispatch } from '../../store';
 import { addToast } from '../../store/uiSlice';
 
+const EASE = [0.4, 0, 0.2, 1] as [number, number, number, number];
+const fadeUp = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE } } };
+const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };
+
 function StatCard({ label, value, delta, variant }: { label: string; value: string | number; delta?: string; variant?: 'success' | 'error' }) {
   return (
-    <Card variant="elevated" padding="md">
-      <div className={styles.stat}>
-        <span className={styles.stat__label}>{label}</span>
-        <span className={styles.stat__value}>{value}</span>
-        {delta && <Badge variant={variant ?? 'success'} size="sm" dot>{delta}</Badge>}
-      </div>
-    </Card>
+    <motion.div variants={fadeUp}>
+      <Card variant="elevated" padding="md" hoverable>
+        <div className={styles.stat}>
+          <span className={styles.stat__label}>{label}</span>
+          <span className={styles.stat__value}>{value}</span>
+          {delta && <Badge variant={variant ?? 'success'} size="sm" dot>{delta}</Badge>}
+        </div>
+      </Card>
+    </motion.div>
   );
 }
 
@@ -51,16 +58,16 @@ export default function Dashboard() {
       </div>
 
       {/* Stats */}
-      <div className={styles.stats}>
+      <motion.div className={styles.stats} variants={stagger} initial="hidden" animate="show">
         <StatCard label="Total Posts" value={posts?.length ?? '—'} delta="+12%" variant="success" />
         <StatCard label="Active Users" value={users?.length ?? '—'} delta="+3%" variant="success" />
         <StatCard label="Avg. Response" value="142ms" delta="-8ms" variant="success" />
         <StatCard label="Error Rate" value="0.3%" delta="+0.1%" variant="error" />
-      </div>
+      </motion.div>
 
-      <div className={styles.grid}>
+      <motion.div className={styles.grid} variants={stagger} initial="hidden" animate="show">
         {/* Posts */}
-        <section className={styles.panel}>
+        <motion.section className={styles.panel} variants={fadeUp}>
           <div className={styles.panel__head}>
             <h2 className={styles.panel__title}>Recent Posts</h2>
             <Badge variant="neutral">{posts?.length ?? 0}</Badge>
@@ -88,10 +95,10 @@ export default function Dashboard() {
               ))}
             </ul>
           )}
-        </section>
+        </motion.section>
 
         {/* Users */}
-        <section className={styles.panel}>
+        <motion.section className={styles.panel} variants={fadeUp}>
           <div className={styles.panel__head}>
             <h2 className={styles.panel__title}>Users</h2>
             <Badge variant="neutral">{users?.length ?? 0}</Badge>
@@ -115,8 +122,8 @@ export default function Dashboard() {
               ))}
             </ul>
           )}
-        </section>
-      </div>
+        </motion.section>
+      </motion.div>
     </main>
   );
 }
