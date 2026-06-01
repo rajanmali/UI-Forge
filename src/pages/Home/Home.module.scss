@@ -1,0 +1,137 @@
+@use '../../styles/abstracts' as *;
+
+.home {
+  flex: 1;
+}
+
+// ─── Hero ──────────────────────────────────────────────────────
+.hero {
+  @include flex(column, center, center);
+  gap: $space-5;
+  text-align: center;
+  padding: $space-16 $space-4 $space-12;
+  background: linear-gradient(
+    160deg,
+    var(--bg-primary) 0%,
+    $color-accent-50 50%,
+    var(--bg-primary) 100%
+  );
+
+  [data-theme='dark'] & {
+    background: linear-gradient(
+      160deg,
+      var(--bg-primary) 0%,
+      rgba($color-primary-600, 0.15) 50%,
+      var(--bg-primary) 100%
+    );
+  }
+}
+
+.hero__title {
+  font-size: clamp(#{$font-size-3xl}, 8vw, #{$font-size-5xl});
+  font-weight: $font-weight-extrabold;
+  letter-spacing: $letter-spacing-tight;
+  background: linear-gradient(135deg, $color-primary-600, $color-accent-500);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: $line-height-tight;
+}
+
+.hero__sub {
+  max-width: 42rem;
+  font-size: $font-size-lg;
+  color: var(--text-secondary);
+  line-height: $line-height-relaxed;
+}
+
+.hero__actions {
+  @include flex(row, center, center);
+  gap: $space-4;
+  flex-wrap: wrap;
+}
+
+// ─── Showcase ──────────────────────────────────────────────────
+.showcase {
+  @include container;
+  padding-bottom: $space-20;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.section {
+  padding: $space-8 0;
+  border-bottom: 1px solid var(--border);
+
+  &:last-child { border-bottom: none; }
+}
+
+.section__title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: var(--text-primary);
+  margin-bottom: $space-6;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+}
+
+.section__body {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  @include sm-up {
+    flex-direction: row;
+    align-items: center;
+    gap: $space-4;
+  }
+}
+
+.row__label {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: var(--text-muted);
+  letter-spacing: $letter-spacing-widest;
+  text-transform: uppercase;
+  min-width: 6rem;
+  flex-shrink: 0;
+}
+
+.row__items {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-3;
+}
+
+.card_grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-4;
+
+  @include md-up {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.variant_label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: var(--text-muted);
+  margin-bottom: $space-3;
+}

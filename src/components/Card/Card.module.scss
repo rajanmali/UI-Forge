@@ -1,0 +1,59 @@
+@use '../../styles/abstracts' as *;
+
+.card {
+  border-radius: $radius-lg;
+  overflow: hidden;
+  transition: box-shadow $transition-base, transform $transition-base, border-color $transition-base;
+
+  // ─── Variants ──────────────────────────────────────────────
+  &--elevated {
+    background-color: var(--surface);
+    box-shadow: $shadow-sm;
+    border: 1px solid var(--border);
+  }
+
+  &--outlined {
+    background-color: transparent;
+    border: 1.5px solid var(--border-strong);
+  }
+
+  &--filled {
+    background-color: var(--bg-secondary);
+    border: 1px solid transparent;
+  }
+
+  // ─── Padding ───────────────────────────────────────────────
+  &--pad-none .card__body  { padding: 0; }
+  &--pad-sm   .card__body  { padding: $space-3; }
+  &--pad-md   .card__body  { padding: $space-5; }
+  &--pad-lg   .card__body  { padding: $space-8; }
+
+  // ─── Interactive ───────────────────────────────────────────
+  &--hoverable:hover {
+    box-shadow: $shadow-md;
+    transform: translateY(-2px);
+  }
+
+  &--clickable {
+    cursor: pointer;
+    @include focus-visible-ring;
+  }
+}
+
+.card__header {
+  padding: $space-4 $space-5;
+  border-bottom: 1px solid var(--border);
+  font-weight: $font-weight-semibold;
+  color: var(--text-primary);
+}
+
+.card__body {
+  // padding set by variant modifier above
+}
+
+.card__footer {
+  padding: $space-4 $space-5;
+  border-top: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: $font-size-sm;
+}

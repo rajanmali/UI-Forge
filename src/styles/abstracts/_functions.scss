@@ -1,0 +1,40 @@
+@use 'sass:math';
+@use 'sass:color';
+@use 'variables' as *;
+
+// ─── Unit Conversion ─────────────────────────────────────────
+@function rem($px) {
+  @return math.div($px, 16) * 1rem;
+}
+
+@function em($px, $context: 16) {
+  @return math.div($px, $context) * 1em;
+}
+
+// ─── Colour Helpers ──────────────────────────────────────────
+@function tint($color, $percentage) {
+  @return color.mix(white, $color, $percentage);
+}
+
+@function shade($color, $percentage) {
+  @return color.mix(black, $color, $percentage);
+}
+
+@function alpha($color, $opacity) {
+  @return rgba($color, $opacity);
+}
+
+// ─── Spacing ─────────────────────────────────────────────────
+@function spacing($multiplier) {
+  @return $multiplier * $space-4;
+}
+
+// ─── String ──────────────────────────────────────────────────
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+  @return $string;
+}

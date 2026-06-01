@@ -1,0 +1,105 @@
+@use '../../styles/abstracts' as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+
+  &--full { width: 100%; }
+
+  &--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.field__label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: var(--text-primary);
+}
+
+.field__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.field__input {
+  width: 100%;
+  background-color: var(--surface);
+  border: 1.5px solid var(--border-strong);
+  border-radius: $radius-md;
+  color: var(--text-primary);
+  font-family: $font-family-sans;
+  transition: border-color $transition-base, box-shadow $transition-base;
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+
+  &:hover:not(:disabled) {
+    border-color: $color-accent-400;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent-500;
+    box-shadow: $shadow-focus;
+  }
+
+  // Sizes
+  &--sm {
+    padding: $space-1 $space-3;
+    font-size: $font-size-sm;
+    min-height: 2rem;
+  }
+  &--md {
+    padding: $space-2 $space-4;
+    font-size: $font-size-base;
+    min-height: 2.5rem;
+  }
+  &--lg {
+    padding: $space-3 $space-4;
+    font-size: $font-size-md;
+    min-height: 3rem;
+  }
+
+  &--has-left  { padding-left: 2.5rem; }
+  &--has-right { padding-right: 2.5rem; }
+
+  .field--error & {
+    border-color: $color-error-500;
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba($color-error-500, 0.35);
+    }
+  }
+}
+
+.field__icon {
+  position: absolute;
+  left: $space-3;
+  color: var(--text-muted);
+  @include flex-center;
+  pointer-events: none;
+  width: 1.1rem;
+  height: 1.1rem;
+
+  &--right {
+    left: unset;
+    right: $space-3;
+  }
+}
+
+.field__error {
+  font-size: $font-size-sm;
+  color: $color-error-600;
+  @include flex(row, flex-start, center);
+  gap: $space-1;
+}
+
+.field__helper {
+  font-size: $font-size-sm;
+  color: var(--text-muted);
+}

@@ -1,0 +1,190 @@
+@use '../../styles/abstracts' as *;
+
+.docs {
+  @include container;
+  padding-block: $space-8 $space-20;
+}
+
+.header {
+  padding-block: $space-8 $space-10;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.title {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  color: var(--text-primary);
+}
+
+.sub {
+  color: var(--text-secondary);
+  font-size: $font-size-md;
+  max-width: 48rem;
+}
+
+// ─── Layout ────────────────────────────────────────────────────
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-8;
+
+  @include lg-up {
+    grid-template-columns: 14rem 1fr;
+    align-items: start;
+  }
+}
+
+// ─── Sidebar ───────────────────────────────────────────────────
+.sidebar {
+  @include card-base;
+  padding: $space-4;
+  position: sticky;
+  top: $space-20;
+  display: none;
+
+  @include lg-up { display: block; }
+}
+
+.sidebar__heading {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  letter-spacing: $letter-spacing-widest;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: $space-2 $space-3;
+}
+
+.sidebar__list { display: flex; flex-direction: column; gap: $space-1; }
+
+.sidebar__link {
+  @include flex-between;
+  padding: $space-2 $space-3;
+  font-size: $font-size-sm;
+  color: var(--text-secondary);
+  border-radius: $radius-md;
+  text-decoration: none;
+  transition: background-color $transition-fast, color $transition-fast;
+
+  &:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+}
+
+// ─── Content ───────────────────────────────────────────────────
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: $space-10;
+}
+
+.component_section { scroll-margin-top: $space-20; }
+
+.component_header {
+  @include flex(row, flex-start, center);
+  gap: $space-3;
+  margin-bottom: $space-3;
+}
+
+.component_title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: var(--text-primary);
+}
+
+.component_desc {
+  color: var(--text-secondary);
+  margin-bottom: $space-5;
+  line-height: $line-height-relaxed;
+}
+
+.sub_title {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: var(--text-primary);
+  margin-bottom: $space-3;
+}
+
+.note {
+  font-size: $font-size-sm;
+  color: var(--text-muted);
+  margin-top: $space-3;
+}
+
+.stub_note {
+  color: var(--text-secondary);
+  font-size: $font-size-sm;
+}
+
+// ─── Props Table ───────────────────────────────────────────────
+.table_wrap {
+  overflow-x: auto;
+  @include custom-scrollbar;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $font-size-sm;
+
+  th, td {
+    padding: $space-3 $space-4;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  th {
+    font-weight: $font-weight-semibold;
+    color: var(--text-muted);
+    font-size: $font-size-xs;
+    letter-spacing: $letter-spacing-wider;
+    text-transform: uppercase;
+    background-color: var(--bg-secondary);
+  }
+
+  td { color: var(--text-secondary); }
+  tr:last-child td { border-bottom: none; }
+}
+
+.type {
+  color: $color-accent-600;
+  font-size: $font-size-xs;
+  [data-theme='dark'] & { color: $color-accent-300; }
+}
+
+.muted { color: var(--text-muted); }
+
+// ─── Code block ────────────────────────────────────────────────
+.code_block {
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: $radius-md;
+  padding: $space-5;
+  font-family: $font-family-mono;
+  font-size: $font-size-sm;
+  line-height: $line-height-relaxed;
+  overflow-x: auto;
+  color: var(--text-primary);
+  @include custom-scrollbar;
+}
+
+// ─── A11y list ─────────────────────────────────────────────────
+.a11y {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  ul {
+    list-style: disc;
+    padding-left: $space-5;
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+  }
+
+  li { color: var(--text-secondary); font-size: $font-size-sm; line-height: $line-height-relaxed; }
+}

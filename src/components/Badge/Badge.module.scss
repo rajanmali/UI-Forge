@@ -1,0 +1,71 @@
+@use '../../styles/abstracts' as *;
+
+.badge {
+  @include flex(row, center, center);
+  display: inline-flex;
+  gap: $space-1;
+  border-radius: $radius-full;
+  font-weight: $font-weight-semibold;
+  letter-spacing: $letter-spacing-wide;
+  line-height: 1;
+  white-space: nowrap;
+
+  // ─── Sizes ─────────────────────────────────────────────────
+  &--sm {
+    padding: calc(#{$space-1} * 0.5) $space-2;
+    font-size: $font-size-xs;
+  }
+  &--md {
+    padding: $space-1 $space-3;
+    font-size: $font-size-xs;
+  }
+  &--lg {
+    padding: $space-2 $space-4;
+    font-size: $font-size-sm;
+  }
+
+  // ─── Variants ──────────────────────────────────────────────
+  &--primary {
+    background-color: $color-primary-50;
+    color: $color-primary-600;
+    [data-theme='dark'] & { background-color: rgba($color-primary-600, 0.2); color: $color-primary-300; }
+  }
+  &--secondary {
+    background-color: $color-accent-50;
+    color: $color-accent-600;
+    [data-theme='dark'] & { background-color: rgba($color-accent-500, 0.2); color: $color-accent-300; }
+  }
+  &--success {
+    background-color: $color-success-50;
+    color: $color-success-700;
+    [data-theme='dark'] & { background-color: rgba($color-success-500, 0.2); color: $color-success-500; }
+  }
+  &--warning {
+    background-color: $color-warning-50;
+    color: $color-warning-700;
+    [data-theme='dark'] & { background-color: rgba($color-warning-500, 0.2); color: $color-warning-500; }
+  }
+  &--error {
+    background-color: $color-error-50;
+    color: $color-error-700;
+    [data-theme='dark'] & { background-color: rgba($color-error-500, 0.2); color: $color-error-500; }
+  }
+  &--info {
+    background-color: $color-info-50;
+    color: $color-info-700;
+    [data-theme='dark'] & { background-color: rgba($color-info-500, 0.2); color: $color-info-300; }
+  }
+  &--neutral {
+    background-color: $color-gray-100;
+    color: $color-gray-700;
+    [data-theme='dark'] & { background-color: $color-gray-700; color: $color-gray-300; }
+  }
+}
+
+.badge__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: $radius-full;
+  background-color: currentColor;
+  flex-shrink: 0;
+}

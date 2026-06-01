@@ -1,0 +1,52 @@
+@use '../../styles/abstracts' as *;
+
+.avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-full;
+  overflow: visible;
+  flex-shrink: 0;
+
+  &--xs { width: 1.5rem;  height: 1.5rem;  font-size: $font-size-xs;   }
+  &--sm { width: 2rem;    height: 2rem;    font-size: $font-size-xs;   }
+  &--md { width: 2.5rem;  height: 2.5rem;  font-size: $font-size-sm;   }
+  &--lg { width: 3.5rem;  height: 3.5rem;  font-size: $font-size-base; }
+  &--xl { width: 5rem;    height: 5rem;    font-size: $font-size-lg;   }
+}
+
+.avatar__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: $radius-full;
+}
+
+.avatar__initials {
+  width: 100%;
+  height: 100%;
+  border-radius: $radius-full;
+  @include flex-center;
+  font-weight: $font-weight-semibold;
+  color: $color-white;
+  letter-spacing: $letter-spacing-wide;
+  user-select: none;
+}
+
+.avatar__status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 28%;
+  height: 28%;
+  min-width: 0.5rem;
+  min-height: 0.5rem;
+  border-radius: $radius-full;
+  border: 2px solid var(--surface);
+
+  &--online { background-color: $color-success-500; }
+  &--away   { background-color: $color-warning-500; }
+  &--busy   { background-color: $color-error-500; }
+  &--offline { background-color: $color-gray-400; }
+}

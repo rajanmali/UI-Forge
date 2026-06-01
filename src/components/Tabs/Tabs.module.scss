@@ -1,0 +1,90 @@
+@use '../../styles/abstracts' as *;
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs__list {
+  display: flex;
+  gap: $space-1;
+  overflow-x: auto;
+  @include custom-scrollbar($width: 3px);
+
+  &--line {
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0;
+    gap: 0;
+  }
+
+  &--pill {
+    background-color: var(--bg-secondary);
+    border-radius: $radius-lg;
+    padding: $space-1;
+  }
+}
+
+.tabs__tab {
+  @include interactive;
+  @include focus-visible-ring;
+
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: var(--text-muted);
+  white-space: nowrap;
+  border-radius: $radius-base;
+  transition: color $transition-base, background-color $transition-base, box-shadow $transition-base;
+
+  padding: $space-2 $space-4;
+
+  &:hover:not(:disabled) {
+    color: var(--text-primary);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .tabs__list--line & {
+    border-radius: $radius-base $radius-base 0 0;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+
+    &--active {
+      color: $color-accent-500;
+      border-bottom-color: $color-accent-500;
+      font-weight: $font-weight-semibold;
+    }
+  }
+
+  .tabs__list--pill & {
+    border-radius: $radius-md;
+
+    &--active {
+      background-color: var(--surface);
+      color: var(--text-primary);
+      font-weight: $font-weight-semibold;
+      box-shadow: $shadow-sm;
+    }
+  }
+}
+
+.tabs__icon {
+  @include flex-center;
+  width: 1rem;
+  height: 1rem;
+}
+
+.tabs__panel {
+  padding-top: $space-5;
+  outline: none;
+  color: var(--text-secondary);
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}

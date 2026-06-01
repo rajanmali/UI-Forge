@@ -1,0 +1,163 @@
+@use '../../styles/abstracts' as *;
+
+.dashboard {
+  @include container;
+  padding-block: $space-8;
+  display: flex;
+  flex-direction: column;
+  gap: $space-8;
+}
+
+.header {
+  @include flex-between;
+  flex-wrap: wrap;
+  gap: $space-4;
+}
+
+.title {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: var(--text-primary);
+}
+
+.sub {
+  font-size: $font-size-sm;
+  color: var(--text-muted);
+  margin-top: $space-1;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-4;
+
+  @include lg-up {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.stat__label {
+  font-size: $font-size-sm;
+  color: var(--text-muted);
+  font-weight: $font-weight-medium;
+}
+
+.stat__value {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.grid {
+  display: grid;
+  gap: $space-6;
+  grid-template-columns: 1fr;
+
+  @include lg-up {
+    grid-template-columns: 3fr 2fr;
+  }
+}
+
+.panel {
+  @include card-base;
+  overflow: hidden;
+}
+
+.panel__head {
+  @include flex-between;
+  padding: $space-4 $space-5;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel__title {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: var(--text-primary);
+}
+
+.center {
+  @include flex-center;
+  padding: $space-12;
+}
+
+.error {
+  color: $color-error-600;
+  font-size: $font-size-sm;
+}
+
+.list {
+  @include custom-scrollbar;
+  max-height: 32rem;
+  overflow-y: auto;
+}
+
+// ─── Post Item ─────────────────────────────────────────────────
+.post_item {
+  @include flex(row, flex-start, flex-start);
+  gap: $space-3;
+  padding: $space-4 $space-5;
+  border-bottom: 1px solid var(--border);
+  transition: background-color $transition-fast;
+
+  &:last-child { border-bottom: none; }
+  &:hover { background-color: var(--bg-secondary); }
+}
+
+.post_id {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: var(--text-muted);
+  min-width: 2rem;
+  margin-top: $space-1;
+}
+
+.post_content { flex: 1; }
+
+.post_title {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: var(--text-primary);
+  @include truncate;
+  text-transform: capitalize;
+}
+
+.post_body {
+  font-size: $font-size-xs;
+  color: var(--text-muted);
+  margin-top: $space-1;
+  line-height: $line-height-relaxed;
+}
+
+// ─── User Item ─────────────────────────────────────────────────
+.user_item {
+  @include flex(row, flex-start, center);
+  gap: $space-3;
+  padding: $space-3 $space-5;
+  border-bottom: 1px solid var(--border);
+  transition: background-color $transition-fast;
+
+  &:last-child { border-bottom: none; }
+  &:hover { background-color: var(--bg-secondary); }
+}
+
+.user_name {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: var(--text-primary);
+}
+
+.user_email {
+  font-size: $font-size-xs;
+  color: var(--text-muted);
+}
+
+.user_badge {
+  margin-left: auto;
+}

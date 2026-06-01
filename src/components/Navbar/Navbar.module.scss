@@ -1,0 +1,210 @@
+@use '../../styles/abstracts' as *;
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: $z-sticky;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  background-color: rgba(var(--surface-raised), 0.92);
+}
+
+.navbar__inner {
+  @include container;
+  @include flex-between;
+  height: 4rem;
+}
+
+// ─── Logo ──────────────────────────────────────────────────────
+.navbar__logo {
+  @include flex(row, flex-start, center);
+  gap: $space-2;
+  text-decoration: none;
+  @include focus-visible-ring;
+  border-radius: $radius-sm;
+
+  &:hover { text-decoration: none; }
+}
+
+.navbar__logo_mark {
+  font-size: $font-size-xl;
+  color: $color-accent-500;
+  line-height: 1;
+}
+
+.navbar__logo_text {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: var(--text-primary);
+  letter-spacing: $letter-spacing-tight;
+}
+
+// ─── Desktop Nav ───────────────────────────────────────────────
+.navbar__nav {
+  display: none;
+
+  @include md-up {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.navbar__list {
+  @include flex(row, flex-start, center);
+  gap: $space-1;
+}
+
+.navbar__link {
+  display: block;
+  padding: $space-2 $space-3;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: var(--text-secondary);
+  border-radius: $radius-md;
+  text-decoration: none;
+  transition: color $transition-base, background-color $transition-base;
+  @include focus-visible-ring;
+
+  &:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
+    text-decoration: none;
+  }
+
+  &--active {
+    color: $color-accent-500;
+    background-color: $color-accent-50;
+    font-weight: $font-weight-semibold;
+
+    [data-theme='dark'] & {
+      background-color: rgba($color-accent-500, 0.12);
+      color: $color-accent-300;
+    }
+  }
+}
+
+// ─── Actions ───────────────────────────────────────────────────
+.navbar__actions {
+  @include flex(row, flex-end, center);
+  gap: $space-2;
+}
+
+.navbar__icon_btn {
+  @include flex-center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: $radius-md;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background-color $transition-base, color $transition-base;
+  @include focus-visible-ring;
+
+  &:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+  }
+}
+
+// ─── Hamburger ─────────────────────────────────────────────────
+.navbar__hamburger {
+  @include flex(column, center, center);
+  gap: 5px;
+  width: 2.25rem;
+  height: 2.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: $space-2;
+  border-radius: $radius-md;
+  @include focus-visible-ring;
+  transition: background-color $transition-base;
+
+  &:hover { background-color: var(--bg-secondary); }
+
+  @include md-up { display: none; }
+
+  span {
+    display: block;
+    width: 1.25rem;
+    height: 2px;
+    background-color: var(--text-primary);
+    border-radius: $radius-full;
+    transition: transform $transition-base, opacity $transition-base;
+    transform-origin: center;
+  }
+
+  &--open {
+    span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  }
+}
+
+// ─── Mobile Nav ────────────────────────────────────────────────
+.navbar__mobile {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: $shadow-lg;
+  padding: $space-4;
+  z-index: $z-dropdown;
+
+  @include md-up { display: none !important; }
+
+  &--open {
+    display: block;
+  }
+}
+
+.navbar__mobile_list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.navbar__mobile_link {
+  display: block;
+  padding: $space-3 $space-4;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: var(--text-secondary);
+  border-radius: $radius-md;
+  text-decoration: none;
+  transition: color $transition-base, background-color $transition-base;
+
+  &:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
+    text-decoration: none;
+  }
+
+  &--active {
+    color: $color-accent-500;
+    background-color: $color-accent-50;
+    font-weight: $font-weight-semibold;
+
+    [data-theme='dark'] & {
+      background-color: rgba($color-accent-500, 0.12);
+      color: $color-accent-300;
+    }
+  }
+}
+
+// ─── Backdrop ──────────────────────────────────────────────────
+.navbar__backdrop {
+  display: block;
+  position: fixed;
+  inset: 0;
+  top: 4rem;
+  background-color: rgba($color-black, 0.4);
+  z-index: $z-overlay - 1;
+
+  @include md-up { display: none; }
+}

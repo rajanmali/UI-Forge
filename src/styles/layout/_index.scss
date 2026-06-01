@@ -1,0 +1,33 @@
+@use '../abstracts' as *;
+
+.container {
+  @include container;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding-block: $space-8;
+}
+
+.section {
+  padding-block: $space-12;
+
+  @include lg-up {
+    padding-block: $space-16;
+  }
+}
+
+.grid {
+  display: grid;
+  gap: $space-6;
+
+  &--2 { grid-template-columns: repeat(1, 1fr); @include sm-up { grid-template-columns: repeat(2, 1fr); } }
+  &--3 { grid-template-columns: repeat(1, 1fr); @include sm-up { grid-template-columns: repeat(2, 1fr); } @include lg-up { grid-template-columns: repeat(3, 1fr); } }
+  &--4 { grid-template-columns: repeat(1, 1fr); @include sm-up { grid-template-columns: repeat(2, 1fr); } @include xl-up { grid-template-columns: repeat(4, 1fr); } }
+}
