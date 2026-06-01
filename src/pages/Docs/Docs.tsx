@@ -1,20 +1,24 @@
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import styles from './Docs.module.scss';
+import Badge from '../../components/Badge/Badge';
+import Card from '../../components/Card/Card';
+import Tabs from '../../components/Tabs/Tabs';
+import { ALL_DOCS, CATEGORIES, type ComponentDocData, type PropRow } from './docsData';
 
 const EASE = [0.4, 0, 0.2, 1] as [number, number, number, number];
 const fadeUp = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE } } };
-const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
-import Card from '../../components/Card/Card';
-import Badge from '../../components/Badge/Badge';
-import Tabs from '../../components/Tabs/Tabs';
+const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };
 
-interface PropRow {
-  name: string;
-  type: string;
-  default?: string;
-  description: string;
-}
+const CATEGORY_VARIANT: Record<string, 'primary' | 'secondary' | 'success' | 'info' | 'warning'> = {
+  Form:       'secondary',
+  Display:    'primary',
+  Feedback:   'warning',
+  Overlay:    'info',
+  Navigation: 'success',
+};
 
+// ─── Props table ──────────────────────────────────────────────
 function PropsTable({ rows }: { rows: PropRow[] }) {
   return (
     <div className={styles.table_wrap}>
@@ -33,7 +37,7 @@ function PropsTable({ rows }: { rows: PropRow[] }) {
               <td><code>{r.name}</code></td>
               <td><code className={styles.type}>{r.type}</code></td>
               <td>{r.default ? <code>{r.default}</code> : <span className={styles.muted}>—</span>}</td>
-              <td>{r.description}</td>
+              <td className={styles.desc_cell}>{r.description}</td>
             </tr>
           ))}
         </tbody>
@@ -42,96 +46,184 @@ function PropsTable({ rows }: { rows: PropRow[] }) {
   );
 }
 
-const BUTTON_PROPS: PropRow[] = [
-  { name: 'variant', type: "'primary' | 'secondary' | 'ghost' | 'danger'", default: "'primary'", description: 'Visual style of the button.' },
-  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Controls padding and font size.' },
-  { name: 'loading', type: 'boolean', default: 'false', description: 'Shows spinner and disables interaction.' },
-  { name: 'fullWidth', type: 'boolean', default: 'false', description: 'Stretches to fill parent width.' },
-  { name: 'leftIcon', type: 'ReactNode', default: '—', description: 'Icon rendered before the label.' },
-  { name: 'rightIcon', type: 'ReactNode', default: '—', description: 'Icon rendered after the label.' },
-  { name: 'disabled', type: 'boolean', default: 'false', description: 'Native disabled attribute.' },
-];
+// ─── Single component doc ─────────────────────────────────────
+function ComponentDoc({ doc }: { doc: ComponentDocData }) {
+  const tabs = [
+    {
+      id: 'props',
+      label: 'Props',
+      content: (
+        <div className={styles.tab_content}>
+          <PropsTable rows={doc.props} />
+          {doc.notes && <p className={styles.note}>{doc.notes}</p>}
+        </div>
+      ),
+    },
+    {
+      id: 'usage',
+      label: 'Usage',
+      content: (
+        <div className={styles.tab_content}>
+          <pre className={styles.code_block}>{doc.usage}</pre>
+        </div>
+      ),
+    },
+    {
+      id: 'a11y',
+      label: 'Accessibility',
+      content: (
+        <div className={[styles.tab_content, styles.a11y].join(' ')}>
+          {doc.a11y}
+        </div>
+      ),
+    },
+  ];
 
-const components = [
-  { id: 'button',  label: 'Button',  status: 'stable' },
-  { id: 'input',   label: 'Input',   status: 'stable' },
-  { id: 'card',    label: 'Card',    status: 'stable' },
-  { id: 'modal',   label: 'Modal',   status: 'stable' },
-  { id: 'badge',   label: 'Badge',   status: 'stable' },
-  { id: 'navbar',  label: 'Navbar',  status: 'stable' },
-  { id: 'spinner', label: 'Spinner', status: 'stable' },
-  { id: 'toast',   label: 'Toast',   status: 'stable' },
-  { id: 'avatar',  label: 'Avatar',  status: 'stable' },
-  { id: 'tabs',    label: 'Tabs',    status: 'stable' },
-];
-
-const docTabs = [
-  {
-    id: 'props',
-    label: 'Props',
-    content: (
-      <>
-        <h3 className={styles.sub_title}>Button Props</h3>
-        <PropsTable rows={BUTTON_PROPS} />
-        <p className={styles.note}>All native <code>{'<button>'}</code> HTML attributes are also accepted via rest props.</p>
-      </>
-    ),
-  },
-  {
-    id: 'usage',
-    label: 'Usage',
-    content: (
-      <pre className={styles.code_block}>{`import Button from '@/components/Button';
-
-// Basic usage
-<Button variant="primary" size="md">
-  Click me
-</Button>
-
-// With loading state
-<Button loading>Saving…</Button>
-
-// With icon
-<Button leftIcon={<SaveIcon />}>Save</Button>`}
-      </pre>
-    ),
-  },
-  {
-    id: 'a11y',
-    label: 'Accessibility',
-    content: (
-      <div className={styles.a11y}>
-        <p>Button renders a native <code>{'<button>'}</code> element and inherits full keyboard and screen-reader support.</p>
-        <ul>
-          <li><strong>Loading state:</strong> Sets <code>aria-busy="true"</code> and <code>aria-disabled="true"</code>.</li>
-          <li><strong>Disabled:</strong> Sets both HTML <code>disabled</code> and <code>aria-disabled</code> attributes.</li>
-          <li><strong>Focus:</strong> Uses <code>:focus-visible</code> ring — visible for keyboard, hidden for mouse.</li>
-          <li><strong>Icons:</strong> All icon spans have <code>aria-hidden="true"</code> to prevent double-announcing.</li>
-        </ul>
+  return (
+    <motion.section
+      id={doc.id}
+      className={styles.component_section}
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: '-40px' }}
+    >
+      <div className={styles.component_header}>
+        <h2 className={styles.component_title}>{doc.label}</h2>
+        <div className={styles.component_badges}>
+          <Badge variant={CATEGORY_VARIANT[doc.category]} size="sm">{doc.category}</Badge>
+          <Badge variant="success" size="sm">Stable</Badge>
+        </div>
       </div>
-    ),
-  },
-];
+      <p className={styles.component_desc}>{doc.description}</p>
+      <Card variant="outlined" padding="none">
+        <Tabs tabs={tabs} variant="line" />
+      </Card>
+    </motion.section>
+  );
+}
 
+// ─── Active section tracker ───────────────────────────────────
+function useActiveSection(ids: string[]) {
+  const [active, setActive] = useState(ids[0]);
+
+  useEffect(() => {
+    const observers = ids.map((id) => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActive(id); },
+        { rootMargin: '-20% 0px -70% 0px' },
+      );
+      obs.observe(el);
+      return obs;
+    });
+    return () => observers.forEach((o) => o?.disconnect());
+  }, [ids]);
+
+  return active;
+}
+
+// ─── Search ───────────────────────────────────────────────────
+function useSearch(query: string) {
+  if (!query.trim()) return ALL_DOCS;
+  const q = query.toLowerCase();
+  return ALL_DOCS.filter(
+    (d) =>
+      d.label.toLowerCase().includes(q) ||
+      d.description.toLowerCase().includes(q) ||
+      d.category.toLowerCase().includes(q) ||
+      d.props.some((p) => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q)),
+  );
+}
+
+// ─── Page ─────────────────────────────────────────────────────
 export default function Docs() {
+  const [query, setQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState<string>('All');
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  const filtered = useSearch(query).filter(
+    (d) => activeCategory === 'All' || d.category === activeCategory,
+  );
+
+  const ids = filtered.map((d) => d.id);
+  const activeSection = useActiveSection(ids);
+
+  // ⌘K / Ctrl+K focuses search
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, []);
+
   return (
     <main className={styles.docs}>
+      {/* Page header */}
       <motion.div className={styles.header} variants={stagger} initial="hidden" animate="show">
         <motion.div variants={fadeUp}><Badge variant="info" size="sm">Documentation</Badge></motion.div>
         <motion.h1 className={styles.title} variants={fadeUp}>Component Reference</motion.h1>
-        <motion.p className={styles.sub} variants={fadeUp}>Full prop tables, usage examples, and accessibility notes for every UIForge component.</motion.p>
+        <motion.p className={styles.sub} variants={fadeUp}>
+          Prop tables, usage examples, and accessibility notes for all {ALL_DOCS.length} UIForge components.
+        </motion.p>
+
+        {/* Search */}
+        <motion.div variants={fadeUp} className={styles.search_wrap}>
+          <svg className={styles.search_icon} width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            ref={searchRef}
+            type="search"
+            placeholder="Search components, props… (⌘K)"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className={styles.search_input}
+            aria-label="Search documentation"
+          />
+          {query && (
+            <button className={styles.search_clear} onClick={() => setQuery('')} aria-label="Clear search">✕</button>
+          )}
+        </motion.div>
+
+        {/* Category filter */}
+        <motion.div variants={fadeUp} className={styles.filters} role="group" aria-label="Filter by category">
+          {['All', ...CATEGORIES].map((cat) => (
+            <button
+              key={cat}
+              className={[styles.filter_btn, activeCategory === cat ? styles['filter_btn--active'] : ''].join(' ')}
+              onClick={() => setActiveCategory(cat)}
+              aria-pressed={activeCategory === cat}
+            >
+              {cat}
+            </button>
+          ))}
+        </motion.div>
       </motion.div>
 
       <div className={styles.layout}>
         {/* Sidebar */}
         <nav className={styles.sidebar} aria-label="Component navigation">
-          <p className={styles.sidebar__heading}>Components</p>
+          <p className={styles.sidebar__heading}>
+            {filtered.length} component{filtered.length !== 1 ? 's' : ''}
+          </p>
           <ul role="list" className={styles.sidebar__list}>
-            {components.map((c) => (
-              <li key={c.id}>
-                <a href={`#${c.id}`} className={styles.sidebar__link}>
-                  {c.label}
-                  <Badge variant="success" size="sm">{c.status}</Badge>
+            {filtered.map((doc) => (
+              <li key={doc.id}>
+                <a
+                  href={`#${doc.id}`}
+                  className={[
+                    styles.sidebar__link,
+                    activeSection === doc.id ? styles['sidebar__link--active'] : '',
+                  ].join(' ')}
+                >
+                  <span>{doc.label}</span>
+                  <Badge variant={CATEGORY_VARIANT[doc.category]} size="sm">{doc.category}</Badge>
                 </a>
               </li>
             ))}
@@ -140,33 +232,14 @@ export default function Docs() {
 
         {/* Content */}
         <div className={styles.content}>
-          <section id="button" className={styles.component_section}>
-            <div className={styles.component_header}>
-              <h2 className={styles.component_title}>Button</h2>
-              <Badge variant="success">Stable</Badge>
+          {filtered.length === 0 ? (
+            <div className={styles.empty}>
+              <p>No components match <strong>"{query}"</strong>.</p>
+              <button className={styles.filter_btn} onClick={() => { setQuery(''); setActiveCategory('All'); }}>Clear filters</button>
             </div>
-            <p className={styles.component_desc}>
-              A fully accessible, polymorphic button primitive with four visual variants, three sizes, loading state, icon slots, and full TypeScript props.
-            </p>
-            <Card variant="outlined" padding="none">
-              <Tabs tabs={docTabs} variant="line" />
-            </Card>
-          </section>
-
-          {/* Stub entries for remaining components */}
-          {components.slice(1).map((c) => (
-            <section key={c.id} id={c.id} className={styles.component_section}>
-              <div className={styles.component_header}>
-                <h2 className={styles.component_title}>{c.label}</h2>
-                <Badge variant="success">Stable</Badge>
-              </div>
-              <Card variant="filled" padding="md">
-                <p className={styles.stub_note}>
-                  Full documentation for <strong>{c.label}</strong> — props table, usage examples, and accessibility notes — coming in the next iteration.
-                </p>
-              </Card>
-            </section>
-          ))}
+          ) : (
+            filtered.map((doc) => <ComponentDoc key={doc.id} doc={doc} />)
+          )}
         </div>
       </div>
     </main>
