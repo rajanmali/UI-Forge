@@ -34,6 +34,18 @@ const TYPE_LABEL: Record<ChangeEntry['type'], string> = {
 
 const RELEASES: Release[] = [
   {
+    version: '1.5.0',
+    date: '2026-06-02',
+    label: 'Dashboard Polish',
+    summary: 'Three Dashboard fixes: internal list scroll removed in favour of Redux-driven pagination, Compose Post gains an Auto-fill button matching the FormDemo pattern, and the Refresh button now awaits the refetch and surfaces a completion toast explaining optimistic write behaviour.',
+    changes: [
+      { type: 'fix',         text: 'Dashboard list: removed max-height + overflow-y — panel no longer scrolls internally; page scrolls naturally' },
+      { type: 'feature',     text: 'Dashboard pagination: dashboardSlice gains a page counter (20 posts per page); filter and sort changes reset to page 0; Prev/Next controls dispatch setPage' },
+      { type: 'feature',     text: 'Compose Post: Auto-fill button pre-populates title, body, and author with seed data, matching the multi-step FormDemo pattern' },
+      { type: 'fix',         text: 'Refresh button: now async — awaits refetchPosts(), shows a loading spinner on the button, and fires a completion toast explaining that optimistic writes are cleared on refetch because JSONPlaceholder is read-only' },
+    ],
+  },
+  {
     version: '1.4.0',
     date: '2026-06-02',
     label: 'Dashboard v2',

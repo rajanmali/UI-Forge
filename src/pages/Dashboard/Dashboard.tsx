@@ -21,6 +21,8 @@ import {
   setFilterUserId,
   setSortBy,
   setCompactView,
+  setPage,
+  PAGE_SIZE,
 } from '../../store/dashboardSlice';
 
 const EASE = [0.4, 0, 0.2, 1] as [number, number, number, number];
@@ -28,6 +30,12 @@ const fadeUp = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transi
 const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };
 
 const SORT_LABELS: Record<string, string> = { id: 'Date added', title: 'Title A–Z', userId: 'Author' };
+
+const COMPOSE_SEED = {
+  title: 'Building Scalable Design Systems with React and TypeScript',
+  body: 'Design systems are the backbone of modern front-end engineering. By combining React\'s component model with TypeScript\'s type safety, teams can build consistent, accessible, and maintainable UI libraries that scale across large organisations and product suites.',
+  authorId: '3',
+};
 
 function RefreshIcon() {
   return (
@@ -50,6 +58,16 @@ function SortIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
       <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="9" y2="18"/>
+    </svg>
+  );
+}
+
+function ChevronIcon({ dir }: { dir: 'left' | 'right' }) {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+      {dir === 'left'
+        ? <polyline points="15 18 9 12 15 6" />
+        : <polyline points="9 18 15 12 9 6" />}
     </svg>
   );
 }
@@ -93,6 +111,19 @@ function ComposeModal({ open, onClose, users }: {
 
   const authorOptions = users.map((u) => ({ value: String(u.id), label: u.name }));
 
+  function handleAutofill() {
+    setTitle(COMPOSE_SEED.title);
+    setBody(COMPOSE_SEED.body);
+    setAuthorId(COMPOSE_SEED.authorId);
+  }
+
+  function handleClose() {
+    setTitle('');
+    setBody('');
+    setAuthorId('1');
+    onClose();
+  }
+
   async function handleSubmit() {
     if (!title.trim() || !body.trim()) {
       dispatch(addToast({ type: 'warning', message: 'Title and body are required.' }));
@@ -113,20 +144,23 @@ function ComposeModal({ open, onClose, users }: {
   return (
     <Modal
       open={open}
-      onClose={onClose}
+      onClose={handleClose}
       title="Compose Post"
       size="md"
       footer={
         <div className={styles.modal_footer}>
-          <Button variant="ghost" onClick={onClose}>Cancel</Button>
-          <Button variant="primary" onClick={handleSubmit} loading={isLoading}>Publish</Button>
+          <Button variant="ghost" size="sm" onClick={handleAutofill}>Auto-fill</Button>
+          <div className={styles.modal_footer__actions}>
+            <Button variant="ghost" onClick={handleClose}>Cancel</Button>
+            <Button variant="primary" onClick={handleSubmit} loading={isLoading}>Publish</Button>
+          </div>
         </div>
       }
     >
       <div className={styles.modal_body}>
         <p className={styles.modal_hint}>
-          Demonstrates a <strong>createPost</strong> RTK Query mutation with optimistic UI update —
-          the post appears immediately in the list while the network request is in flight.
+          Demonstrates a <strong>createPost</strong> RTK Query mutation with optimistic UI —
+          the post appears instantly while the request is in flight, and rolls back on failure.
         </p>
         <Select
           label="Author"
@@ -156,8 +190,9 @@ function ComposeModal({ open, onClose, users }: {
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
-  const { filterUserId, sortBy, compactView } = useAppSelector((s) => s.dashboard);
+  const { filterUserId, sortBy, compactView, page } = useAppSelector((s) => s.dashboard);
   const [composeOpen, setComposeOpen] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const { data: posts, isLoading: postsLoading, isError: postsError, refetch: refetchPosts } = useGetPostsQuery();
   const { data: users, isLoading: usersLoading } = useGetUsersQuery();
@@ -177,11 +212,26 @@ export default function Dashboard() {
     });
   }, [posts, filterUserId, sortBy]);
 
+  const totalPages = Math.ceil(filteredPosts.length / PAGE_SIZE);
+  const pagedPosts = filteredPosts.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+
   const uniqueAuthors = useMemo(() => new Set((posts ?? []).map((p) => p.userId)).size, [posts]);
 
-  function handleRefresh() {
-    refetchPosts();
-    dispatch(addToast({ type: 'info', message: 'Refreshing posts from JSONPlaceholder…' }));
+  async function handleRefresh() {
+    setIsRefreshing(true);
+    dispatch(addToast({ type: 'info', message: 'Re-fetching posts from JSONPlaceholder…' }));
+    try {
+      const result = await refetchPosts();
+      const count = (result as { data?: typeof posts }).data?.length ?? 0;
+      dispatch(addToast({
+        type: 'success',
+        message: `Refreshed — ${count} posts reloaded. Any optimistic writes were cleared (JSONPlaceholder doesn't persist them).`,
+      }));
+    } catch {
+      dispatch(addToast({ type: 'error', message: 'Refresh failed.' }));
+    } finally {
+      setIsRefreshing(false);
+    }
   }
 
   const postsTab = (
@@ -223,7 +273,7 @@ export default function Dashboard() {
       {postsError && <div className={styles.center}><p className={styles.error}>Failed to load posts.</p></div>}
       {!postsLoading && !postsError && (
         <ul className={styles.list}>
-          {filteredPosts.map((post) => (
+          {pagedPosts.map((post) => (
             <li key={post.id} className={[styles.post_item, compactView ? styles['post_item--compact'] : ''].join(' ')}>
               <Tooltip content={`User #${post.userId}`} placement="right">
                 <span className={styles.post_id}>#{post.id}</span>
@@ -237,9 +287,30 @@ export default function Dashboard() {
           ))}
         </ul>
       )}
-      <div className={styles.list_footer}>
-        Showing <strong>{filteredPosts.length}</strong> of <strong>{posts?.length ?? 0}</strong> posts
-      </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className={styles.pagination}>
+          <span className={styles.pagination__info}>
+            {page * PAGE_SIZE + 1}–{Math.min((page + 1) * PAGE_SIZE, filteredPosts.length)} of {filteredPosts.length}
+          </span>
+          <div className={styles.pagination__controls}>
+            <Button
+              variant="ghost" size="sm"
+              leftIcon={<ChevronIcon dir="left" />}
+              disabled={page === 0}
+              onClick={() => dispatch(setPage(page - 1))}
+            >Prev</Button>
+            <span className={styles.pagination__page}>{page + 1} / {totalPages}</span>
+            <Button
+              variant="ghost" size="sm"
+              rightIcon={<ChevronIcon dir="right" />}
+              disabled={page >= totalPages - 1}
+              onClick={() => dispatch(setPage(page + 1))}
+            >Next</Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 
@@ -281,7 +352,7 @@ export default function Dashboard() {
           </p>
         </div>
         <div className={styles.header_actions}>
-          <Button size="sm" variant="secondary" onClick={handleRefresh} leftIcon={<RefreshIcon />}>
+          <Button size="sm" variant="secondary" onClick={handleRefresh} loading={isRefreshing} leftIcon={<RefreshIcon />}>
             Refresh
           </Button>
           <Button size="sm" variant="primary" leftIcon={<PlusIcon />} onClick={() => setComposeOpen(true)}>

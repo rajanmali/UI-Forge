@@ -98,17 +98,34 @@
 
 // ─── List ──────────────────────────────────────────────────────
 .list {
-  @include custom-scrollbar;
-  max-height: 36rem;
-  overflow-y: auto;
+  // No internal scroll — page scrolls, card grows with content
 }
 
-.list_footer {
+// ─── Pagination ────────────────────────────────────────────────
+.pagination {
+  @include flex-between;
+  flex-wrap: wrap;
+  gap: $space-3;
   padding: $space-3 $space-5;
-  font-size: $font-size-xs;
-  color: var(--text-muted);
   border-top: 1px solid var(--border);
   background-color: var(--bg-secondary);
+}
+
+.pagination__info {
+  font-size: $font-size-xs;
+  color: var(--text-muted);
+}
+
+.pagination__controls {
+  @include flex(row, flex-end, center);
+  gap: $space-2;
+}
+
+.pagination__page {
+  font-size: $font-size-xs;
+  color: var(--text-secondary);
+  min-width: 3.5rem;
+  text-align: center;
 }
 
 .center {
@@ -214,6 +231,12 @@
 }
 
 .modal_footer {
+  @include flex-between;
+  gap: $space-2;
+  width: 100%;
+}
+
+.modal_footer__actions {
   @include flex(row, flex-end, center);
   gap: $space-2;
 }
