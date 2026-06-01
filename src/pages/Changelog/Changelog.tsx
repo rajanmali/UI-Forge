@@ -34,6 +34,16 @@ const TYPE_LABEL: Record<ChangeEntry['type'], string> = {
 
 const RELEASES: Release[] = [
   {
+    version: '1.5.2',
+    date: '2026-06-02',
+    summary: 'Tooltip component rewritten to render via React portal — escapes all CSS stacking contexts so it no longer clips or bleeds through Card, Modal, or any transformed parent. Tooltip colour fixed to a hardcoded near-black independent of the warm palette token system.',
+    changes: [
+      { type: 'fix', text: 'Tooltip: converted from absolute-positioned child to createPortal(document.body) — position computed via getBoundingClientRect so z-index is always relative to the document root, not a transformed ancestor' },
+      { type: 'fix', text: 'Tooltip: centering transform (translate(-50%, -100%) etc.) moved to the portal wrapper div; Framer Motion animates the inner span with scale/opacity only — the two transforms no longer conflict' },
+      { type: 'fix', text: 'Tooltip: background hardcoded to #1a1a1a (near-black) instead of $color-gray-900 which had become warm brown #2d2319 after the v1.3.0 palette migration' },
+    ],
+  },
+  {
     version: '1.5.1',
     date: '2026-06-02',
     summary: 'Inputs, Selects, Textareas, Switches, and RadioGroups now disable during form submission — wired at component level via a disabled prop so the behaviour cascades automatically.',

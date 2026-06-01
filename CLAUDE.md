@@ -12,7 +12,7 @@ UIForge is a **branded React component library and live demo app** built to show
 **Dev server:** `npm run dev` → `http://localhost:5173` (base `'/'` in dev, `'/UI-Forge/'` in production builds only)
 **Storybook:** `npm run storybook` → `http://localhost:6006`
 **Build:** `npm run build` (tsc -b then vite build, zero warnings expected)
-**Version:** 1.5.1
+**Version:** 1.5.2
 
 ---
 
@@ -112,6 +112,10 @@ Key tokens:
 > `_light.scss` and `_dark.scss` are **hardcoded to original cool-gray hex values** (not
 > interpolated from `$color-gray-*`). This keeps surface readability independent of the
 > warm greige token scale. Do not change these back to SASS variable interpolations.
+
+### Tooltip architecture note
+
+`Tooltip` renders via `createPortal(document.body)` with `position: fixed` coordinates computed from `getBoundingClientRect`. The centering CSS transform lives on a plain `div` wrapper; Framer Motion animates an inner `span` with scale/opacity only so the two transforms never conflict. Background colour is hardcoded (`#1a1a1a`) — it must NOT reference `$color-gray-*` which is now warm greige.
 
 ### Theme system
 
