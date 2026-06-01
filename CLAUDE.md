@@ -10,7 +10,9 @@ UIForge is a **branded React component library and live demo app** built to show
 
 **GitHub repo:** `github.com:rajanmali/UI-Forge.git` (branch: `main`)
 **Dev server:** `npm run dev` → `http://localhost:5173`
+**Storybook:** `npm run storybook` → `http://localhost:6006`
 **Build:** `npm run build` (tsc -b then vite build, zero warnings expected)
+**Version:** 1.2.0
 
 ---
 
@@ -58,7 +60,7 @@ src/
 │   └── layout/
 │       └── _index.scss      # .container, .layout, .grid utilities
 │
-├── components/              # 18 components — each: ComponentName.tsx + .module.scss + index.ts
+├── components/              # 21 components — each: ComponentName.tsx + .module.scss + index.ts
 │   ├── Avatar/              # Initials (deterministic colour), image, status dot (online/away/busy/offline)
 │   ├── Badge/               # 7 semantic variants, dot indicator, 3 sizes
 │   ├── Button/              # 4 variants, 3 sizes, loading+spinner, icon slots, Framer whileHover/whileTap
@@ -68,6 +70,7 @@ src/
 │   ├── Input/               # Label, helper/error, left+right icon slots (right is pointer-events:auto), 3 sizes
 │   ├── Modal/               # Portal, focus trap, ESC-close, scroll lock, slide-up animation
 │   ├── Navbar/              # Sticky, dark mode toggle, palette switcher, hamburger menu, Redux-connected
+│   ├── PageLoader/          # Fullscreen skeleton shown during lazy-loaded route chunks
 │   ├── PageTransition/      # AnimatePresence fade-up on every route change
 │   ├── Popover/             # Portal, 8 placement options, auto-clamps to viewport, click-outside+ESC
 │   ├── Radio/               # Radio + RadioGroup (vertical/horizontal), per-option helper text
@@ -77,13 +80,17 @@ src/
 │   ├── Tabs/                # line/pill variants, arrow-key keyboard nav, ARIA roles
 │   ├── Textarea/            # Label, helper/error, configurable resize
 │   ├── ThemeSwitcher/       # 5 palettes (Ocean/Forest/Sunset/Violet/Rose), animated dropdown, persisted
-│   └── Toast/               # Redux-driven queue, 4 types, auto-dismiss, portal-free (fixed position)
+│   ├── Toast/               # Redux-driven queue, 4 types, auto-dismiss, portal-free (fixed position)
+│   └── Tooltip/             # 4 placements, configurable delay, Framer Motion enter/exit
 │
-└── pages/
-    ├── Home/                # Live showcase of every component with all variants
-    ├── Dashboard/           # RTK Query live data (JSONPlaceholder), stat cards, posts+users panels
-    ├── FormDemo/            # 4-step validated form (see below)
-    └── Docs/                # Button documented in full; 17 other components are stubs
+├── pages/
+│   ├── Home/                # Live showcase of every component with all variants
+│   ├── Dashboard/           # RTK Query live data (JSONPlaceholder), stat cards, posts+users panels
+│   ├── FormDemo/            # 4-step validated form (see below)
+│   ├── Docs/                # All components documented with prop tables, live examples, a11y notes
+│   └── Changelog/           # Release timeline with Feature/Fix/Improvement/Infra badges
+│
+└── [stories]                # *.stories.tsx co-located with each component (excluded from tsc build)
 ```
 
 ---
@@ -191,27 +198,35 @@ Every component ships with:
 
 ---
 
+## Storybook
+
+Storybook 10 is configured at `.storybook/`:
+
+```
+.storybook/
+├── main.ts      # @storybook/react-vite framework, addon-a11y, viteFinal strips /UI-Forge/ base
+└── preview.tsx  # Imports main.scss, Redux Provider decorator, Theme+Palette toolbar globals
+```
+
+- Stories live at `src/components/ComponentName/ComponentName.stories.tsx` (co-located)
+- `tsconfig.app.json` excludes `*.stories.tsx` so `npm run build` stays clean
+- The Storybook toolbar has **Theme** (light/dark) and **Palette** (5 options) buttons that set `data-theme` / `data-palette` on `<html>`, cascading the full CSS custom property system across every story
+
+---
+
 ## What is NOT yet built (known gaps)
 
-These are the next priorities, roughly in order:
+These are the remaining priorities, roughly in order:
 
-1. **Full Docs page** — Only Button has a complete prop table + usage code + a11y section. The other 17 components show a stub card. This is the highest-ROI remaining item for portfolio credibility.
+1. **Expanded test coverage** — 61 tests exist across Button, Modal, Tabs, Select, Switch, Input. The remaining 15 components have no unit tests. Vitest + RTL per component (focus trap, keyboard nav, controlled state). Playwright E2E for critical paths.
 
-2. **Storybook** — `@storybook/react-vite`, stories per component with Controls and Actions. Strong hiring signal.
+2. **DataTable component** — A sortable, filterable table with pagination would strongly demonstrate data-handling capability on the Dashboard page.
 
-3. **Code splitting** — JS bundle is ~620 kB gzipped 191 kB. Wrapping pages in `React.lazy` + `Suspense` would halve initial load. Vite's `rolldownOptions.output.codeSplitting` could also help.
+3. **Accordion / Disclosure component** — Common pattern missing from the current set.
 
-4. **Testing** — No tests exist yet. Vitest + React Testing Library per component (focus trap, keyboard nav, controlled state). Playwright E2E for critical paths.
+4. **Storybook deploy** — Build and publish Storybook to GitHub Pages or Chromatic so hiring engineers can browse stories without cloning.
 
-5. **Deploy** — `og:url` is set to `https://rajanmali.github.io/UI-Forge/`. A `gh-pages` branch with `vite build && gh-pages -d dist` would make the portfolio shareable.
-
-6. **Inter font** — The design uses `system-ui` as fallback. Preconnect hints to Google Fonts are already in `index.html`. Wiring up Inter would noticeably elevate the visual quality.
-
-7. **DataTable component** — A sortable, filterable table with pagination would strongly demonstrate data-handling capability on the Dashboard page.
-
-8. **Accordion / Disclosure component** — Common pattern missing from the current set.
-
-9. **`git config --global user.name/email`** — All commits have been made without a global git identity configured, which attaches the machine hostname. Should be fixed before sharing the repo publicly.
+5. **Chromatic visual regression** — Connect the Storybook to Chromatic so every PR screenshots all stories and flags visual diffs automatically.
 
 ---
 
