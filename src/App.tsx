@@ -52,10 +52,14 @@ function AppShell() {
   );
 }
 
+// basename must match vite.config base (minus trailing slash) so React Router
+// strips the prefix before matching routes — fixes GitHub Pages subdirectory deploys.
+const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/';
+
 export default function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <AppShell />
       </BrowserRouter>
     </Provider>
