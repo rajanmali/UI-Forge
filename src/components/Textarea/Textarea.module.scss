@@ -1,0 +1,60 @@
+@use '../../styles/abstracts' as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+
+  &--full { width: 100%; }
+  &--disabled { opacity: 0.5; pointer-events: none; }
+}
+
+.field__label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: var(--text-primary);
+}
+
+.field__textarea {
+  width: 100%;
+  min-height: 6rem;
+  padding: $space-3 $space-4;
+  background-color: var(--surface);
+  border: 1.5px solid var(--border-strong);
+  border-radius: $radius-md;
+  color: var(--text-primary);
+  font-family: $font-family-sans;
+  font-size: $font-size-base;
+  line-height: $line-height-relaxed;
+  transition: border-color $transition-base, box-shadow $transition-base;
+
+  &::placeholder { color: var(--text-muted); }
+
+  &:hover:not(:disabled) { border-color: $color-accent-400; }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent-500;
+    box-shadow: $shadow-focus;
+  }
+
+  &--resize-none       { resize: none; }
+  &--resize-vertical   { resize: vertical; }
+  &--resize-horizontal { resize: horizontal; }
+  &--resize-both       { resize: both; }
+
+  .field--error & {
+    border-color: $color-error-500;
+    &:focus { box-shadow: 0 0 0 3px rgba($color-error-500, 0.35); }
+  }
+}
+
+.field__error {
+  font-size: $font-size-sm;
+  color: $color-error-600;
+}
+
+.field__helper {
+  font-size: $font-size-sm;
+  color: var(--text-muted);
+}
