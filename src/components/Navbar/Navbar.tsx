@@ -4,6 +4,7 @@ import styles from './Navbar.module.scss';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { toggleTheme, toggleNav, setNavOpen } from '../../store/uiSlice';
+import { APP_VERSION } from '../../version';
 
 export interface NavItem {
   label: string;
@@ -15,10 +16,11 @@ export interface NavbarProps {
 }
 
 const DEFAULT_ITEMS: NavItem[] = [
-  { label: 'Showcase',  to: '/' },
-  { label: 'Dashboard', to: '/dashboard' },
-  { label: 'Form Demo', to: '/form-demo' },
-  { label: 'Docs',      to: '/docs' },
+  { label: 'Showcase',   to: '/' },
+  { label: 'Dashboard',  to: '/dashboard' },
+  { label: 'Form Demo',  to: '/form-demo' },
+  { label: 'Docs',       to: '/docs' },
+  { label: 'Changelog',  to: '/changelog' },
 ];
 
 function MoonIcon() {
@@ -69,10 +71,15 @@ export default function Navbar({ items = DEFAULT_ITEMS }: NavbarProps) {
     <header className={styles.navbar} role="banner">
       <div className={styles.navbar__inner}>
         {/* Logo */}
-        <NavLink to="/" className={styles.navbar__logo} aria-label="UIForge home">
-          <span className={styles.navbar__logo_mark} aria-hidden="true">⬡</span>
-          <span className={styles.navbar__logo_text}>UIForge</span>
-        </NavLink>
+        <div className={styles.navbar__logo_group}>
+          <NavLink to="/" className={styles.navbar__logo} aria-label="UIForge home">
+            <span className={styles.navbar__logo_mark} aria-hidden="true">⬡</span>
+            <span className={styles.navbar__logo_text}>UIForge</span>
+          </NavLink>
+          <NavLink to="/changelog" className={styles.navbar__version} aria-label={`View changelog for version ${APP_VERSION}`}>
+            v{APP_VERSION}
+          </NavLink>
+        </div>
 
         {/* Desktop nav */}
         <nav className={styles.navbar__nav} aria-label="Main navigation">

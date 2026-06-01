@@ -17,6 +17,31 @@
 }
 
 // ─── Logo ──────────────────────────────────────────────────────
+.navbar__logo_group {
+  @include flex(row, flex-start, center);
+  gap: $space-2;
+}
+
+.navbar__version {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: var(--palette-accent);
+  background-color: var(--palette-accent-light);
+  border-radius: $radius-full;
+  padding: 2px $space-2;
+  text-decoration: none;
+  letter-spacing: $letter-spacing-wide;
+  white-space: nowrap;
+  transition: opacity $transition-fast;
+  @include focus-visible-ring;
+
+  &:hover { opacity: 0.75; text-decoration: none; }
+
+  [data-theme='dark'] & {
+    background-color: rgba(0, 0, 0, 0.25);
+  }
+}
+
 .navbar__logo {
   @include flex(row, flex-start, center);
   gap: $space-2;
