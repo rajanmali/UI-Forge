@@ -4,14 +4,14 @@
 [data-theme='light'],
 [data-theme='dark'] {
   // Default palette (ocean) — overridden per [data-palette]
-  --palette-primary:         #1B3A6B;
-  --palette-primary-hover:   #163470;
-  --palette-primary-light:   #e8f1fb;
-  --palette-accent:          #2563EB;
-  --palette-accent-hover:    #1a4fc0;
-  --palette-accent-light:    #eff4ff;
-  --palette-shadow-primary:  0 4px 14px 0 rgba(37, 99, 235, 0.35);
-  --palette-focus:           0 0 0 3px rgba(37, 99, 235, 0.4);
+  --palette-primary:         #1BAAA0;
+  --palette-primary-hover:   #138079;
+  --palette-primary-light:   #eaf8f6;
+  --palette-accent:          #669DEC;
+  --palette-accent-hover:    #4678e0;
+  --palette-accent-light:    #e8f9fe;
+  --palette-shadow-primary:  0 4px 14px 0 rgba(102, 157, 236, 0.35);
+  --palette-focus:           0 0 0 3px rgba(102, 157, 236, 0.4);
 }
 
 :root,
@@ -19,11 +19,11 @@
   --bg-primary:       #{$color-white};
   --bg-secondary:     #{$color-gray-50};
   --bg-tertiary:      #{$color-gray-100};
-  --text-primary:     #{$color-gray-900};
-  --text-secondary:   #{$color-gray-600};
-  --text-muted:       #{$color-gray-400};
-  --border:           #{$color-gray-200};
-  --border-strong:    #{$color-gray-300};
+  --text-primary:     #111827;
+  --text-secondary:   #4b5563;
+  --text-muted:       #9ca3af;
+  --border:           #e5e7eb;
+  --border-strong:    #d1d5db;
   --surface:          #{$color-white};
   --surface-raised:   #{$color-white};
   --shadow-color:     0, 0, 0;

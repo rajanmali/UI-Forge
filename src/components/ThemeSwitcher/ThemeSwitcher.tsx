@@ -12,11 +12,11 @@ interface PaletteConfig {
 }
 
 const PALETTES: PaletteConfig[] = [
-  { id: 'ocean',  label: 'Ocean',  accent: '#2563EB', primary: '#1B3A6B' },
-  { id: 'forest', label: 'Forest', accent: '#16a34a', primary: '#14532d' },
-  { id: 'sunset', label: 'Sunset', accent: '#ea580c', primary: '#7c2d12' },
-  { id: 'violet', label: 'Violet', accent: '#7c3aed', primary: '#4c1d95' },
-  { id: 'rose',   label: 'Rose',   accent: '#e11d48', primary: '#881337' },
+  { id: 'ocean',  label: 'Ocean',  accent: '#669DEC', primary: '#1BAAA0' },
+  { id: 'forest', label: 'Forest', accent: '#7CB3AC', primary: '#79D2B8' },
+  { id: 'sunset', label: 'Sunset', accent: '#FF9F7A', primary: '#DB6557' },
+  { id: 'violet', label: 'Violet', accent: '#B6C1FF', primary: '#AEA0E8' },
+  { id: 'rose',   label: 'Rose',   accent: '#FC91AD', primary: '#FC7E8A' },
 ];
 
 export default function ThemeSwitcher() {

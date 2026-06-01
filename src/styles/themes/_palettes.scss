@@ -1,61 +1,61 @@
 @use '../abstracts' as *;
 
-// ─── Ocean (default brand) ────────────────────────────────────
+// ─── Ocean (teal primary + cornflower accent) ─────────────────
 [data-palette='ocean'] {
-  --palette-primary:         #{$color-primary-600};
-  --palette-primary-hover:   #{$color-primary-700};
-  --palette-primary-light:   #{$color-primary-50};
-  --palette-accent:          #{$color-accent-500};
-  --palette-accent-hover:    #{$color-accent-700};
-  --palette-accent-light:    #{$color-accent-50};
-  --palette-shadow-primary:  0 4px 14px 0 rgba(37, 99, 235, 0.35);
-  --palette-focus:           0 0 0 3px rgba(37, 99, 235, 0.4);
+  --palette-primary:         #1BAAA0;
+  --palette-primary-hover:   #138079;
+  --palette-primary-light:   #eaf8f6;
+  --palette-accent:          #669DEC;
+  --palette-accent-hover:    #4678e0;
+  --palette-accent-light:    #e8f9fe;
+  --palette-shadow-primary:  0 4px 14px 0 rgba(102, 157, 236, 0.35);
+  --palette-focus:           0 0 0 3px rgba(102, 157, 236, 0.4);
 }
 
-// ─── Forest ───────────────────────────────────────────────────
+// ─── Forest (aqua primary + weldon accent) ────────────────────
 [data-palette='forest'] {
-  --palette-primary:         #14532d;
-  --palette-primary-hover:   #166534;
-  --palette-primary-light:   #f0fdf4;
-  --palette-accent:          #16a34a;
-  --palette-accent-hover:    #15803d;
-  --palette-accent-light:    #dcfce7;
-  --palette-shadow-primary:  0 4px 14px 0 rgba(22, 163, 74, 0.35);
-  --palette-focus:           0 0 0 3px rgba(22, 163, 74, 0.4);
+  --palette-primary:         #79D2B8;
+  --palette-primary-hover:   #1BAAA0;
+  --palette-primary-light:   #eaf8f6;
+  --palette-accent:          #7CB3AC;
+  --palette-accent-hover:    #5a9690;
+  --palette-accent-light:    #d4f0ec;
+  --palette-shadow-primary:  0 4px 14px 0 rgba(121, 210, 184, 0.35);
+  --palette-focus:           0 0 0 3px rgba(121, 210, 184, 0.4);
 }
 
-// ─── Sunset ───────────────────────────────────────────────────
+// ─── Sunset (jellybean primary + salmon accent) ───────────────
 [data-palette='sunset'] {
-  --palette-primary:         #7c2d12;
-  --palette-primary-hover:   #9a3412;
-  --palette-primary-light:   #fff7ed;
-  --palette-accent:          #ea580c;
-  --palette-accent-hover:    #c2410c;
-  --palette-accent-light:    #ffedd5;
-  --palette-shadow-primary:  0 4px 14px 0 rgba(234, 88, 12, 0.35);
-  --palette-focus:           0 0 0 3px rgba(234, 88, 12, 0.4);
+  --palette-primary:         #DB6557;
+  --palette-primary-hover:   #b33d2d;
+  --palette-primary-light:   #fef2f3;
+  --palette-accent:          #FF9F7A;
+  --palette-accent-hover:    #e87a52;
+  --palette-accent-light:    #fff0e8;
+  --palette-shadow-primary:  0 4px 14px 0 rgba(219, 101, 87, 0.35);
+  --palette-focus:           0 0 0 3px rgba(219, 101, 87, 0.4);
 }
 
-// ─── Violet ───────────────────────────────────────────────────
+// ─── Violet (mauve primary + periwinkle accent) ───────────────
 [data-palette='violet'] {
-  --palette-primary:         #4c1d95;
-  --palette-primary-hover:   #5b21b6;
-  --palette-primary-light:   #f5f3ff;
-  --palette-accent:          #7c3aed;
-  --palette-accent-hover:    #6d28d9;
-  --palette-accent-light:    #ede9fe;
-  --palette-shadow-primary:  0 4px 14px 0 rgba(124, 58, 237, 0.35);
-  --palette-focus:           0 0 0 3px rgba(124, 58, 237, 0.4);
+  --palette-primary:         #AEA0E8;
+  --palette-primary-hover:   #8e7ed4;
+  --palette-primary-light:   #f0eeff;
+  --palette-accent:          #B6C1FF;
+  --palette-accent-hover:    #8a98f0;
+  --palette-accent-light:    #eceffe;
+  --palette-shadow-primary:  0 4px 14px 0 rgba(174, 160, 232, 0.35);
+  --palette-focus:           0 0 0 3px rgba(174, 160, 232, 0.4);
 }
 
-// ─── Rose ─────────────────────────────────────────────────────
+// ─── Rose (coral primary + flamingo accent) ───────────────────
 [data-palette='rose'] {
-  --palette-primary:         #881337;
-  --palette-primary-hover:   #9f1239;
-  --palette-primary-light:   #fff1f2;
-  --palette-accent:          #e11d48;
-  --palette-accent-hover:    #be123c;
-  --palette-accent-light:    #ffe4e6;
-  --palette-shadow-primary:  0 4px 14px 0 rgba(225, 29, 72, 0.35);
-  --palette-focus:           0 0 0 3px rgba(225, 29, 72, 0.4);
+  --palette-primary:         #FC7E8A;
+  --palette-primary-hover:   #e85d6b;
+  --palette-primary-light:   #fef2f3;
+  --palette-accent:          #FC91AD;
+  --palette-accent-hover:    #e06e8e;
+  --palette-accent-light:    #ffe4ed;
+  --palette-shadow-primary:  0 4px 14px 0 rgba(252, 126, 138, 0.35);
+  --palette-focus:           0 0 0 3px rgba(252, 126, 138, 0.4);
 }

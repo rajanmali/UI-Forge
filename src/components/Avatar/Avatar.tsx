@@ -21,8 +21,8 @@ function getInitials(name: string): string {
 }
 
 const AVATAR_COLORS = [
-  '#1B3A6B', '#2563EB', '#7C3AED', '#DB2777', '#DC2626',
-  '#D97706', '#16A34A', '#0891B2', '#9333EA', '#EA580C',
+  '#0a4f4b', '#2a5fcc', '#5F4C41', '#DB6557', '#d97a2a',
+  '#b33d2d', '#8e7ed4', '#1BAAA0', '#669DEC', '#AC80A0',
 ];
 
 function getColorFromName(name: string): string {
@@ -39,7 +39,7 @@ export default function Avatar({
   className,
 }: AvatarProps) {
   const initials = name ? getInitials(name) : '?';
-  const bgColor = name ? getColorFromName(name) : '#1B3A6B';
+  const bgColor = name ? getColorFromName(name) : '#0a4f4b';
   const label = alt ?? name ?? 'Avatar';
 
   return (
