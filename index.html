@@ -35,6 +35,33 @@
     <!-- Preconnect for Inter font (if added later) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- GitHub Pages SPA redirect — decodes path encoded by 404.html -->
+    <script>
+      (function () {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+        // Decode query-string redirect from 404.html
+        var search = window.location.search;
+        if (search.slice(1, 3) === 'p=') {
+          var decoded = search.slice(1).split('&').reduce(function (params, param) {
+            var p = param.split('=');
+            params[decodeURIComponent(p[0])] = decodeURIComponent(p.slice(1).join('=').replace(/~and~/g, '&'));
+            return params;
+          }, {});
+          if (decoded.p !== undefined) {
+            window.history.replaceState(
+              null, null,
+              window.location.pathname.slice(0, -1) + (decoded.p || '/') +
+              (decoded.q ? '?' + decoded.q : '') + window.location.hash
+            );
+          }
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
