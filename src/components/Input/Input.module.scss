@@ -66,7 +66,7 @@
   }
 
   &--has-left  { padding-left: 2.5rem; }
-  &--has-right { padding-right: 2.5rem; }
+  &--has-right { padding-right: 3rem; }
 
   .field--error & {
     border-color: $color-error-500;
@@ -82,13 +82,16 @@
   left: $space-3;
   color: var(--text-muted);
   @include flex-center;
-  pointer-events: none;
+  pointer-events: none; // left icons are always decorative
   width: 1.1rem;
   height: 1.1rem;
 
   &--right {
     left: unset;
     right: $space-3;
+    pointer-events: auto; // right slot may contain interactive controls (e.g. show/hide toggle)
+    width: auto;
+    height: auto;
   }
 }
 
