@@ -1,6 +1,20 @@
 @use '../abstracts' as *;
 
 :root,
+[data-theme='light'],
+[data-theme='dark'] {
+  // Default palette (ocean) — overridden per [data-palette]
+  --palette-primary:         #1B3A6B;
+  --palette-primary-hover:   #163470;
+  --palette-primary-light:   #e8f1fb;
+  --palette-accent:          #2563EB;
+  --palette-accent-hover:    #1a4fc0;
+  --palette-accent-light:    #eff4ff;
+  --palette-shadow-primary:  0 4px 14px 0 rgba(37, 99, 235, 0.35);
+  --palette-focus:           0 0 0 3px rgba(37, 99, 235, 0.4);
+}
+
+:root,
 [data-theme='light'] {
   --bg-primary:       #{$color-white};
   --bg-secondary:     #{$color-gray-50};

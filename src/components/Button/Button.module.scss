@@ -18,32 +18,29 @@
 
   // ─── Variants ──────────────────────────────────────────────
   &--primary {
-    background-color: $color-accent-500;
+    background-color: var(--palette-accent);
     color: $color-white;
-    border-color: $color-accent-500;
+    border-color: var(--palette-accent);
 
     &:hover:not(:disabled) {
-      background-color: $color-accent-700;
-      border-color: $color-accent-700;
-      box-shadow: $shadow-primary;
+      background-color: var(--palette-accent-hover);
+      border-color: var(--palette-accent-hover);
+      box-shadow: var(--palette-shadow-primary);
     }
   }
 
   &--secondary {
     background-color: transparent;
-    color: $color-accent-500;
-    border-color: $color-accent-500;
+    color: var(--palette-accent);
+    border-color: var(--palette-accent);
 
     &:hover:not(:disabled) {
-      background-color: $color-accent-50;
+      background-color: var(--palette-accent-light);
     }
 
     [data-theme='dark'] & {
-      color: $color-accent-300;
-      border-color: $color-accent-300;
-
       &:hover:not(:disabled) {
-        background-color: rgba($color-accent-500, 0.12);
+        background-color: rgba(0, 0, 0, 0.12);
       }
     }
   }

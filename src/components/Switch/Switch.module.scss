@@ -43,10 +43,10 @@
   .label--lg & { width: 3rem;   height: 1.625rem; }
 }
 
-.input:checked ~ .track { background-color: $color-accent-500; }
-.input:focus-visible ~ .track { @include focus-ring; }
+.input:checked ~ .track { background-color: var(--palette-accent); }
+.input:focus-visible ~ .track { outline: 2px solid var(--palette-accent); outline-offset: 2px; }
 .label:hover .input:not(:disabled) ~ .track { background-color: $color-gray-400; }
-.label:hover .input:checked:not(:disabled) ~ .track { background-color: $color-accent-600; }
+.label:hover .input:checked:not(:disabled) ~ .track { background-color: var(--palette-accent-hover); }
 
 .thumb {
   position: absolute;

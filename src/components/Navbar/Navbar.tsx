@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Navbar.module.scss';
+import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { toggleTheme, toggleNav, setNavOpen } from '../../store/uiSlice';
 
@@ -93,6 +94,7 @@ export default function Navbar({ items = DEFAULT_ITEMS }: NavbarProps) {
 
         {/* Actions */}
         <div className={styles.navbar__actions}>
+          <ThemeSwitcher />
           <button
             onClick={() => dispatch(toggleTheme())}
             className={styles.navbar__icon_btn}

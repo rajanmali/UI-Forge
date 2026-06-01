@@ -1,0 +1,61 @@
+@use '../abstracts' as *;
+
+// ─── Ocean (default brand) ────────────────────────────────────
+[data-palette='ocean'] {
+  --palette-primary:         #{$color-primary-600};
+  --palette-primary-hover:   #{$color-primary-700};
+  --palette-primary-light:   #{$color-primary-50};
+  --palette-accent:          #{$color-accent-500};
+  --palette-accent-hover:    #{$color-accent-700};
+  --palette-accent-light:    #{$color-accent-50};
+  --palette-shadow-primary:  0 4px 14px 0 rgba(37, 99, 235, 0.35);
+  --palette-focus:           0 0 0 3px rgba(37, 99, 235, 0.4);
+}
+
+// ─── Forest ───────────────────────────────────────────────────
+[data-palette='forest'] {
+  --palette-primary:         #14532d;
+  --palette-primary-hover:   #166534;
+  --palette-primary-light:   #f0fdf4;
+  --palette-accent:          #16a34a;
+  --palette-accent-hover:    #15803d;
+  --palette-accent-light:    #dcfce7;
+  --palette-shadow-primary:  0 4px 14px 0 rgba(22, 163, 74, 0.35);
+  --palette-focus:           0 0 0 3px rgba(22, 163, 74, 0.4);
+}
+
+// ─── Sunset ───────────────────────────────────────────────────
+[data-palette='sunset'] {
+  --palette-primary:         #7c2d12;
+  --palette-primary-hover:   #9a3412;
+  --palette-primary-light:   #fff7ed;
+  --palette-accent:          #ea580c;
+  --palette-accent-hover:    #c2410c;
+  --palette-accent-light:    #ffedd5;
+  --palette-shadow-primary:  0 4px 14px 0 rgba(234, 88, 12, 0.35);
+  --palette-focus:           0 0 0 3px rgba(234, 88, 12, 0.4);
+}
+
+// ─── Violet ───────────────────────────────────────────────────
+[data-palette='violet'] {
+  --palette-primary:         #4c1d95;
+  --palette-primary-hover:   #5b21b6;
+  --palette-primary-light:   #f5f3ff;
+  --palette-accent:          #7c3aed;
+  --palette-accent-hover:    #6d28d9;
+  --palette-accent-light:    #ede9fe;
+  --palette-shadow-primary:  0 4px 14px 0 rgba(124, 58, 237, 0.35);
+  --palette-focus:           0 0 0 3px rgba(124, 58, 237, 0.4);
+}
+
+// ─── Rose ─────────────────────────────────────────────────────
+[data-palette='rose'] {
+  --palette-primary:         #881337;
+  --palette-primary-hover:   #9f1239;
+  --palette-primary-light:   #fff1f2;
+  --palette-accent:          #e11d48;
+  --palette-accent-hover:    #be123c;
+  --palette-accent-light:    #ffe4e6;
+  --palette-shadow-primary:  0 4px 14px 0 rgba(225, 29, 72, 0.35);
+  --palette-focus:           0 0 0 3px rgba(225, 29, 72, 0.4);
+}

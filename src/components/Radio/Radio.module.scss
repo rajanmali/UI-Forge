@@ -77,8 +77,8 @@
   }
 
   .input:checked ~ & {
-    background-color: $color-accent-500;
-    border-color: $color-accent-500;
+    background-color: var(--palette-accent);
+    border-color: var(--palette-accent);
 
     &::after {
       opacity: 1;
@@ -91,7 +91,7 @@
   }
 
   .label:hover .input:not(:disabled) ~ & {
-    border-color: $color-accent-500;
+    border-color: var(--palette-accent);
   }
 }
 

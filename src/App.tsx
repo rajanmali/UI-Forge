@@ -13,9 +13,11 @@ import './styles/main.scss';
 
 function ThemeSync() {
   const theme = useAppSelector((s) => s.ui.theme);
+  const palette = useAppSelector((s) => s.ui.palette);
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+    document.documentElement.setAttribute('data-palette', palette);
+  }, [theme, palette]);
   return null;
 }
 

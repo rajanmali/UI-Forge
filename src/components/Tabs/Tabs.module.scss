@@ -55,8 +55,8 @@
     margin-bottom: -2px;
 
     &--active {
-      color: $color-accent-500;
-      border-bottom-color: $color-accent-500;
+      color: var(--palette-accent);
+      border-bottom-color: var(--palette-accent);
       font-weight: $font-weight-semibold;
     }
   }

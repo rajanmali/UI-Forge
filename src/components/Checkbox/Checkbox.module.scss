@@ -47,8 +47,8 @@
 
   .input:checked ~ &,
   .input:indeterminate ~ & {
-    background-color: $color-accent-500;
-    border-color: $color-accent-500;
+    background-color: var(--palette-accent);
+    border-color: var(--palette-accent);
     color: $color-white;
   }
 
@@ -62,7 +62,7 @@
 
   .input:checked ~ &:hover,
   .input:not(:checked) ~ &:hover {
-    border-color: $color-accent-500;
+    border-color: var(--palette-accent);
   }
 }
 

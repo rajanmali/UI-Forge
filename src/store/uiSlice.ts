@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 export type Theme = 'light' | 'dark';
+export type Palette = 'ocean' | 'forest' | 'sunset' | 'violet' | 'rose';
 
 export interface Toast {
   id: string;
@@ -11,14 +12,17 @@ export interface Toast {
 
 interface UIState {
   theme: Theme;
+  palette: Palette;
   toasts: Toast[];
   navOpen: boolean;
 }
 
 const storedTheme = (localStorage.getItem('ui-forge-theme') as Theme) ?? 'light';
+const storedPalette = (localStorage.getItem('ui-forge-palette') as Palette) ?? 'ocean';
 
 const initialState: UIState = {
   theme: storedTheme,
+  palette: storedPalette,
   toasts: [],
   navOpen: false,
 };
@@ -37,6 +41,11 @@ const uiSlice = createSlice({
       state.theme = next;
       localStorage.setItem('ui-forge-theme', next);
       document.documentElement.setAttribute('data-theme', next);
+    },
+    setPalette(state, action: PayloadAction<Palette>) {
+      state.palette = action.payload;
+      localStorage.setItem('ui-forge-palette', action.payload);
+      document.documentElement.setAttribute('data-palette', action.payload);
     },
     addToast(state, action: PayloadAction<Omit<Toast, 'id'>>) {
       const id = `toast-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
@@ -60,6 +69,7 @@ const uiSlice = createSlice({
 export const {
   setTheme,
   toggleTheme,
+  setPalette,
   addToast,
   removeToast,
   clearToasts,

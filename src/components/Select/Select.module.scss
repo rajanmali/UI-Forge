@@ -33,11 +33,11 @@
   cursor: pointer;
   transition: border-color $transition-base, box-shadow $transition-base;
 
-  &:hover:not(:disabled) { border-color: $color-accent-400; }
+  &:hover:not(:disabled) { border-color: var(--palette-accent); }
 
   &--open, &:focus {
-    border-color: $color-accent-500;
-    box-shadow: $shadow-focus;
+    border-color: var(--palette-accent);
+    box-shadow: var(--palette-focus);
   }
 
   &--error {
@@ -106,7 +106,7 @@
   list-style: none;
 
   &--active    { background-color: var(--bg-secondary); }
-  &--selected  { color: $color-accent-500; font-weight: $font-weight-medium; }
+  &--selected  { color: var(--palette-accent); font-weight: $font-weight-medium; }
   &--disabled  { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
 }
 

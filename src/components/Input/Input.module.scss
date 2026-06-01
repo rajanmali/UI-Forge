@@ -39,13 +39,13 @@
   }
 
   &:hover:not(:disabled) {
-    border-color: $color-accent-400;
+    border-color: var(--palette-accent);
   }
 
   &:focus {
     outline: none;
-    border-color: $color-accent-500;
-    box-shadow: $shadow-focus;
+    border-color: var(--palette-accent);
+    box-shadow: var(--palette-focus);
   }
 
   // Sizes

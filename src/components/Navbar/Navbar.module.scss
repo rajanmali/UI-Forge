@@ -73,13 +73,12 @@
   }
 
   &--active {
-    color: $color-accent-500;
-    background-color: $color-accent-50;
+    color: var(--palette-accent);
+    background-color: var(--palette-accent-light);
     font-weight: $font-weight-semibold;
 
     [data-theme='dark'] & {
-      background-color: rgba($color-accent-500, 0.12);
-      color: $color-accent-300;
+      background-color: rgba(0, 0, 0, 0.15);
     }
   }
 }
@@ -186,13 +185,12 @@
   }
 
   &--active {
-    color: $color-accent-500;
-    background-color: $color-accent-50;
+    color: var(--palette-accent);
+    background-color: var(--palette-accent-light);
     font-weight: $font-weight-semibold;
 
     [data-theme='dark'] & {
-      background-color: rgba($color-accent-500, 0.12);
-      color: $color-accent-300;
+      background-color: rgba(0, 0, 0, 0.15);
     }
   }
 }
