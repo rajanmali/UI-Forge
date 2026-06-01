@@ -34,6 +34,17 @@ const TYPE_LABEL: Record<ChangeEntry['type'], string> = {
 
 const RELEASES: Release[] = [
   {
+    version: '1.5.1',
+    date: '2026-06-02',
+    summary: 'Inputs, Selects, Textareas, Switches, and RadioGroups now disable during form submission — wired at component level via a disabled prop so the behaviour cascades automatically.',
+    changes: [
+      { type: 'fix', text: 'RadioGroup: added top-level disabled prop — all radio options disable together; previously only per-option disabled was supported' },
+      { type: 'fix', text: 'Step1Personal, Step2Account, Step3Preferences: each accepts disabled prop and passes it to every field — all inputs lock during the 1.4s mock submit' },
+      { type: 'fix', text: 'FormDemo: stepComponents array passes disabled={submitting} to steps 1–3 so the full field set becomes non-interactive while submission is in flight' },
+      { type: 'fix', text: 'Dashboard ComposeModal: Select, Input, and Textarea receive disabled={isLoading} — fields lock during the createPost RTK Query mutation' },
+    ],
+  },
+  {
     version: '1.5.0',
     date: '2026-06-02',
     label: 'Dashboard Polish',

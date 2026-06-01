@@ -21,7 +21,7 @@ const EXP_OPTIONS = [
   { value: 'lead',   label: 'Lead / Principal', helperText: '10+ years' },
 ];
 
-export default function Step3Preferences() {
+export default function Step3Preferences({ disabled = false }: { disabled?: boolean }) {
   const { register, control, watch, formState: { errors }, setValue } = useFormContext<FormData>();
   const bio = watch('bio') ?? '';
 
@@ -57,6 +57,7 @@ export default function Step3Preferences() {
             rows={3}
             helperText={`${bio.length}/280 characters`}
             errorText={errors.bio?.message}
+            disabled={disabled}
             fullWidth
             {...register('bio')}
           />
@@ -69,6 +70,7 @@ export default function Step3Preferences() {
           placeholder="https://yoursite.com"
           helperText="Optional personal or portfolio link"
           errorText={errors.website?.message}
+          disabled={disabled}
           leftIcon={<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>}
           {...register('website')}
           fullWidth
@@ -87,6 +89,7 @@ export default function Step3Preferences() {
               options={THEME_OPTIONS}
               orientation="horizontal"
               errorText={errors.theme?.message}
+              disabled={disabled}
             />
           )}
         />
@@ -104,6 +107,7 @@ export default function Step3Preferences() {
               options={EXP_OPTIONS}
               orientation="horizontal"
               errorText={errors.experience?.message}
+              disabled={disabled}
             />
           )}
         />
@@ -120,6 +124,7 @@ export default function Step3Preferences() {
                 checked={field.value}
                 onChange={field.onChange}
                 size="md"
+                disabled={disabled}
               />
             )}
           />
@@ -133,6 +138,7 @@ export default function Step3Preferences() {
                 checked={field.value}
                 onChange={field.onChange}
                 size="md"
+                disabled={disabled}
               />
             )}
           />

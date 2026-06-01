@@ -17,6 +17,7 @@ export interface RadioGroupProps {
   errorText?: string;
   orientation?: 'vertical' | 'horizontal';
   size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
 }
 
 export interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
@@ -33,12 +34,13 @@ export function RadioGroup({
   errorText,
   orientation = 'vertical',
   size = 'md',
+  disabled = false,
 }: RadioGroupProps) {
   const groupId = `radio-group-${name}`;
   const hasError = Boolean(errorText);
 
   return (
-    <fieldset className={styles.group} aria-describedby={hasError ? `${groupId}-error` : undefined}>
+    <fieldset className={styles.group} aria-describedby={hasError ? `${groupId}-error` : undefined} disabled={disabled}>
       {label && <legend className={styles.group__legend}>{label}</legend>}
       <div className={[styles.group__options, styles[`group__options--${orientation}`]].join(' ')}>
         {options.map((opt) => (
@@ -47,7 +49,7 @@ export function RadioGroup({
             className={[
               styles.label,
               styles[`label--${size}`],
-              opt.disabled ? styles['label--disabled'] : '',
+              (opt.disabled || disabled) ? styles['label--disabled'] : '',
             ].filter(Boolean).join(' ')}
           >
             <input
@@ -55,7 +57,7 @@ export function RadioGroup({
               name={name}
               value={opt.value}
               checked={value === opt.value}
-              disabled={opt.disabled}
+              disabled={opt.disabled || disabled}
               aria-invalid={hasError}
               onChange={() => onChange?.(opt.value)}
               className={styles.input}

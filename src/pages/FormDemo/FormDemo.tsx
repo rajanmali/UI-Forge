@@ -97,10 +97,10 @@ export default function FormDemo() {
   }
 
   const stepComponents = [
-    <Step1Personal key="s1" />,
-    <Step2Account  key="s2" />,
-    <Step3Preferences key="s3" />,
-    <Step4Review   key="s4" />,
+    <Step1Personal    key="s1" disabled={submitting} />,
+    <Step2Account     key="s2" disabled={submitting} />,
+    <Step3Preferences key="s3" disabled={submitting} />,
+    <Step4Review      key="s4" />,
   ];
 
   const variants = {

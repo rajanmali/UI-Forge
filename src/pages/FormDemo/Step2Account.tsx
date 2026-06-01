@@ -51,7 +51,7 @@ function PasswordStrength({ value }: { value: string }) {
   );
 }
 
-export default function Step2Account() {
+export default function Step2Account({ disabled = false }: { disabled?: boolean }) {
   const { register, control, watch, formState: { errors }, setValue } = useFormContext<FormData>();
   const [showPw, setShowPw]     = useState(false);
   const [showCpw, setShowCpw]   = useState(false);
@@ -82,6 +82,7 @@ export default function Step2Account() {
           label="Username *"
           placeholder="jane_smith"
           helperText="3–20 chars — lowercase letters, numbers, underscores only"
+          disabled={disabled}
           errorText={errors.username?.message}
           leftIcon={<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>}
           {...register('username')}
@@ -98,6 +99,7 @@ export default function Step2Account() {
               value={field.value}
               onChange={field.onChange}
               errorText={errors.role?.message}
+              disabled={disabled}
               fullWidth
             />
           )}
@@ -108,6 +110,7 @@ export default function Step2Account() {
             label="Password *"
             type={showPw ? 'text' : 'password'}
             placeholder="Min 8 chars, one uppercase, one number"
+            disabled={disabled}
             errorText={errors.password?.message}
             rightIcon={
               <button type="button" onClick={() => setShowPw((v) => !v)} aria-label={showPw ? 'Hide password' : 'Show password'} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', display: 'flex', alignItems: 'center' }}>
@@ -124,6 +127,7 @@ export default function Step2Account() {
             label="Confirm password *"
             type={showCpw ? 'text' : 'password'}
             placeholder="Repeat your password"
+            disabled={disabled}
             errorText={errors.confirmPassword?.message}
             rightIcon={
               <button type="button" onClick={() => setShowCpw((v) => !v)} aria-label={showCpw ? 'Hide password' : 'Show password'} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', display: 'flex', alignItems: 'center' }}>

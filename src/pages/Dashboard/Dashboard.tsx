@@ -167,6 +167,7 @@ function ComposeModal({ open, onClose, users }: {
           options={authorOptions}
           value={authorId}
           onChange={setAuthorId}
+          disabled={isLoading}
           fullWidth
         />
         <Input
@@ -174,6 +175,7 @@ function ComposeModal({ open, onClose, users }: {
           placeholder="Enter post title…"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          disabled={isLoading}
           fullWidth
         />
         <Textarea
@@ -181,6 +183,7 @@ function ComposeModal({ open, onClose, users }: {
           placeholder="Write your post…"
           value={body}
           onChange={(e) => setBody(e.target.value)}
+          disabled={isLoading}
           rows={4}
         />
       </div>
