@@ -34,6 +34,19 @@ const TYPE_LABEL: Record<ChangeEntry['type'], string> = {
 
 const RELEASES: Release[] = [
   {
+    version: '1.2.0',
+    date: '2026-06-01',
+    summary: 'Storybook integration — every component now has an isolated story with Controls, Actions, and accessibility checks via @storybook/addon-a11y.',
+    changes: [
+      { type: 'feature', text: 'Storybook 10 scaffolded with @storybook/react-vite — runs on port 6006 via `npm run storybook`' },
+      { type: 'feature', text: 'Stories for all 18 components: Avatar, Badge, Button, Card, Checkbox, DropdownMenu, Input, Modal, Popover, Radio, Select, Spinner, Switch, Tabs, Textarea, Toast, Tooltip — each with multiple named stories covering all prop variants' },
+      { type: 'feature', text: 'Global Theme + Palette toolbar in Storybook — switch between light/dark and all 5 palettes (Ocean, Forest, Sunset, Violet, Rose) without touching code' },
+      { type: 'feature', text: 'Redux Provider decorator in preview.tsx — stateful components like Toast work correctly in isolation' },
+      { type: 'infra', text: 'viteFinal override strips the /UI-Forge/ base path from the Storybook dev/build config so stories load correctly without GitHub Pages routing' },
+      { type: 'infra', text: 'Story files excluded from tsconfig.app.json so `npm run build` remains clean; Storybook handles TypeScript via its own Vite pipeline' },
+    ],
+  },
+  {
     version: '1.1.0',
     date: '2026-06-01',
     summary: 'Post-launch quality pass — adds a live changelog page, navbar version badge, Inter font, and a full Vitest + React Testing Library suite.',
