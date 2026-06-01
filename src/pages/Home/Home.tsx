@@ -14,6 +14,9 @@ import Checkbox from '../../components/Checkbox/Checkbox';
 import { RadioGroup } from '../../components/Radio/Radio';
 import Switch from '../../components/Switch/Switch';
 import Select from '../../components/Select/Select';
+import Tooltip from '../../components/Tooltip/Tooltip';
+import Popover from '../../components/Popover/Popover';
+import DropdownMenu from '../../components/DropdownMenu/DropdownMenu';
 import { useAppDispatch } from '../../store';
 import { addToast } from '../../store/uiSlice';
 
@@ -372,6 +375,133 @@ export default function Home() {
                 { value: 'lg', label: 'L' },
                 { value: 'xl', label: 'XL' },
               ]}
+            />
+          </Row>
+        </Section>
+
+        {/* Tooltip */}
+        <Section title="Tooltip">
+          <Row label="Placements">
+            <Tooltip content="Top tooltip" placement="top">
+              <Button variant="secondary" size="sm">Top</Button>
+            </Tooltip>
+            <Tooltip content="Bottom tooltip" placement="bottom">
+              <Button variant="secondary" size="sm">Bottom</Button>
+            </Tooltip>
+            <Tooltip content="Left tooltip" placement="left">
+              <Button variant="secondary" size="sm">Left</Button>
+            </Tooltip>
+            <Tooltip content="Right tooltip" placement="right">
+              <Button variant="secondary" size="sm">Right</Button>
+            </Tooltip>
+          </Row>
+          <Row label="Rich content">
+            <Tooltip content={<span>Keyboard shortcut: <strong>⌘ + K</strong></span>} placement="top">
+              <Button variant="ghost" size="sm">With markup</Button>
+            </Tooltip>
+            <Tooltip content="This tooltip is disabled" disabled>
+              <Button variant="ghost" size="sm">Disabled tooltip</Button>
+            </Tooltip>
+          </Row>
+        </Section>
+
+        {/* Popover */}
+        <Section title="Popover">
+          <Row label="With title">
+            <Popover
+              title="What is UIForge?"
+              placement="bottom-start"
+              trigger={<Button variant="secondary" size="sm">Open popover</Button>}
+              content={
+                <p>UIForge is a branded React component library demonstrating agency-level front-end engineering with design tokens, full accessibility, and Framer Motion animations.</p>
+              }
+            />
+          </Row>
+          <Row label="Placements">
+            <Popover
+              placement="bottom-start"
+              trigger={<Button variant="ghost" size="sm">Bottom start</Button>}
+              content={<p>Aligned to the start of the trigger element.</p>}
+            />
+            <Popover
+              placement="bottom-end"
+              trigger={<Button variant="ghost" size="sm">Bottom end</Button>}
+              content={<p>Aligned to the end of the trigger element.</p>}
+            />
+            <Popover
+              placement="top-start"
+              trigger={<Button variant="ghost" size="sm">Top start</Button>}
+              content={<p>Appears above the trigger, aligned to start.</p>}
+            />
+          </Row>
+          <Row label="Rich content">
+            <Popover
+              title="Team members"
+              placement="bottom-start"
+              trigger={<Button variant="primary" size="sm">View team</Button>}
+              content={
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {[['Rajan Mali', 'Lead Engineer'], ['Sarah Chen', 'Designer'], ['Alex Torres', 'PM']].map(([name, role]) => (
+                    <div key={name} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <Avatar name={name} size="sm" status="online" />
+                      <div>
+                        <p style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>{name}</p>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{role}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              }
+            />
+          </Row>
+        </Section>
+
+        {/* Dropdown Menu */}
+        <Section title="Dropdown Menu">
+          <Row label="Basic">
+            <DropdownMenu
+              trigger={<Button variant="secondary" size="sm" rightIcon={<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>}>Actions</Button>}
+              sections={[{
+                items: [
+                  { id: 'edit',   label: 'Edit',        icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>, onClick: () => {} },
+                  { id: 'dup',    label: 'Duplicate',   icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>, onClick: () => {} },
+                  { id: 'share',  label: 'Share',       icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>, onClick: () => {} },
+                ],
+              }]}
+            />
+          </Row>
+          <Row label="Grouped + shortcuts">
+            <DropdownMenu
+              placement="bottom-end"
+              trigger={<Button variant="ghost" size="sm" rightIcon={<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>}>File</Button>}
+              sections={[
+                {
+                  label: 'Document',
+                  items: [
+                    { id: 'new',   label: 'New file',    shortcut: '⌘N', icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>, onClick: () => {} },
+                    { id: 'save',  label: 'Save',        shortcut: '⌘S', icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>, onClick: () => {} },
+                    { id: 'print', label: 'Print',       shortcut: '⌘P', icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>, onClick: () => {} },
+                  ],
+                },
+                {
+                  label: 'Danger zone',
+                  items: [
+                    { id: 'del', label: 'Delete file', danger: true, icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>, onClick: () => {} },
+                  ],
+                },
+              ]}
+            />
+          </Row>
+          <Row label="With disabled item">
+            <DropdownMenu
+              trigger={<Button variant="ghost" size="sm" rightIcon={<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>}>More options</Button>}
+              sections={[{
+                items: [
+                  { id: 'a', label: 'Available action', icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>, onClick: () => {} },
+                  { id: 'b', label: 'Disabled action',  disabled: true, icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg> },
+                  { id: 'c', label: 'Another action',   onClick: () => {} },
+                ],
+              }]}
             />
           </Row>
         </Section>

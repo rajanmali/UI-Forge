@@ -1,0 +1,50 @@
+@use '../../styles/abstracts' as *;
+
+.popover {
+  position: fixed;
+  z-index: $z-tooltip;
+  background-color: var(--surface);
+  border: 1.5px solid var(--border-strong);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-xl;
+  min-width: 14rem;
+  max-width: 22rem;
+  transform-origin: top center;
+}
+
+.popover__header {
+  @include flex-between;
+  padding: $space-3 $space-4;
+  border-bottom: 1px solid var(--border);
+}
+
+.popover__title {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: var(--text-primary);
+}
+
+.popover__close {
+  @include flex-center;
+  @include focus-visible-ring;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: $radius-sm;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: background-color $transition-fast, color $transition-fast;
+
+  &:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+  }
+}
+
+.popover__body {
+  padding: $space-4;
+  font-size: $font-size-sm;
+  color: var(--text-secondary);
+  line-height: $line-height-relaxed;
+}
