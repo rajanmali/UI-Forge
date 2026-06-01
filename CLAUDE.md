@@ -12,7 +12,7 @@ UIForge is a **branded React component library and live demo app** built to show
 **Dev server:** `npm run dev` → `http://localhost:5173` (base `'/'` in dev, `'/UI-Forge/'` in production builds only)
 **Storybook:** `npm run storybook` → `http://localhost:6006`
 **Build:** `npm run build` (tsc -b then vite build, zero warnings expected)
-**Version:** 1.3.0
+**Version:** 1.4.0
 
 ---
 
@@ -140,10 +140,19 @@ Both are synced in `ThemeSync` (inside `App.tsx`) and persisted in `localStorage
   navOpen: boolean
 }
 
+// dashboardSlice  (src/store/dashboardSlice.ts)
+{
+  filterUserId: number | null   // filter posts by author
+  sortBy:       'id' | 'title' | 'userId'
+  compactView:  boolean
+  activeTab:    number
+}
+
 // api (RTK Query — JSONPlaceholder)
-getPosts()   → Post[]
-getPost(id)  → Post
-getUsers()   → User[]
+getPosts()              → Post[]   // all 100 posts (no _limit)
+getPost(id)             → Post
+getUsers()              → User[]
+createPost(NewPost)     → Post     // mutation with optimistic update middleware
 ```
 
 Typed hooks: `useAppDispatch()`, `useAppSelector()` from `src/store/index.ts`.

@@ -34,6 +34,23 @@ const TYPE_LABEL: Record<ChangeEntry['type'], string> = {
 
 const RELEASES: Release[] = [
   {
+    version: '1.4.0',
+    date: '2026-06-02',
+    label: 'Dashboard v2',
+    summary: 'Full Dashboard rewrite showcasing advanced Redux patterns — RTK Query mutations with optimistic updates, a dedicated dashboardSlice for client-side UI state, and six new components integrated into the page. UI polish pass fixes Badge breathability and a Tabs overflow issue.',
+    changes: [
+      { type: 'feature',     text: 'Dashboard: RTK Query createPost mutation with optimistic update middleware — new post appears instantly in the list before the network response lands, rolls back on failure' },
+      { type: 'feature',     text: 'Dashboard: dashboardSlice — dedicated Redux slice for filterUserId, sortBy, and compactView, cleanly separating UI state from server cache state' },
+      { type: 'feature',     text: 'Dashboard: full 100-post dataset from JSONPlaceholder (removed _limit=10) with client-side filter by author (Select) and sort by date/title/author (DropdownMenu)' },
+      { type: 'feature',     text: 'Dashboard: Tabs component splits Posts and Users panels; Switch toggles compact/comfortable view; Tooltip on all stat card deltas and post ID chips' },
+      { type: 'feature',     text: 'Dashboard: Compose Post modal (Modal + Input + Textarea + Select) demonstrates the full mutation flow with author picker and live optimistic feedback' },
+      { type: 'improvement', text: 'Badge: padding increased at all three sizes (sm 2px→4px, md 4px→8px vertical) for better readability as eyebrow labels and section tags' },
+      { type: 'fix',         text: 'Badge: stretching full-width inside flex column containers — added align-items: flex-start to FormDemo page_header and Docs header' },
+      { type: 'fix',         text: 'Tabs: visible horizontal scrollbar on tabs list replaced with scrollbar-width: none — functionality preserved, track hidden' },
+      { type: 'fix',         text: 'Home hero version badge wired to APP_VERSION constant — no longer shows hardcoded v1.0.0' },
+    ],
+  },
+  {
     version: '1.3.0',
     date: '2026-06-02',
     label: 'Warm Palette',

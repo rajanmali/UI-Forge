@@ -8,6 +8,7 @@
   gap: $space-8;
 }
 
+// ─── Header ────────────────────────────────────────────────────
 .header {
   @include flex-between;
   flex-wrap: wrap;
@@ -26,6 +27,12 @@
   margin-top: $space-1;
 }
 
+.header_actions {
+  @include flex(row, flex-start, center);
+  gap: $space-2;
+}
+
+// ─── Stats ─────────────────────────────────────────────────────
 .stats {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -55,16 +62,7 @@
   line-height: 1;
 }
 
-.grid {
-  display: grid;
-  gap: $space-6;
-  grid-template-columns: 1fr;
-
-  @include lg-up {
-    grid-template-columns: 3fr 2fr;
-  }
-}
-
+// ─── Panel ─────────────────────────────────────────────────────
 .panel {
   @include card-base;
   overflow: hidden;
@@ -82,6 +80,37 @@
   color: var(--text-primary);
 }
 
+// ─── Tab content ───────────────────────────────────────────────
+.tab_content {
+  display: flex;
+  flex-direction: column;
+}
+
+// ─── Controls bar ──────────────────────────────────────────────
+.controls {
+  @include flex(row, flex-start, center);
+  flex-wrap: wrap;
+  gap: $space-3;
+  padding: $space-3 $space-5;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--bg-secondary);
+}
+
+// ─── List ──────────────────────────────────────────────────────
+.list {
+  @include custom-scrollbar;
+  max-height: 36rem;
+  overflow-y: auto;
+}
+
+.list_footer {
+  padding: $space-3 $space-5;
+  font-size: $font-size-xs;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  background-color: var(--bg-secondary);
+}
+
 .center {
   @include flex-center;
   padding: $space-12;
@@ -92,15 +121,9 @@
   font-size: $font-size-sm;
 }
 
-.list {
-  @include custom-scrollbar;
-  max-height: 32rem;
-  overflow-y: auto;
-}
-
-// ─── Post Item ─────────────────────────────────────────────────
+// ─── Post item ─────────────────────────────────────────────────
 .post_item {
-  @include flex(row, flex-start, flex-start);
+  @include flex(row, flex-start, center);
   gap: $space-3;
   padding: $space-4 $space-5;
   border-bottom: 1px solid var(--border);
@@ -108,17 +131,21 @@
 
   &:last-child { border-bottom: none; }
   &:hover { background-color: var(--bg-secondary); }
+
+  &--compact {
+    padding-block: $space-2;
+  }
 }
 
 .post_id {
   font-size: $font-size-xs;
   font-weight: $font-weight-semibold;
   color: var(--text-muted);
-  min-width: 2rem;
-  margin-top: $space-1;
+  min-width: 2.2rem;
+  cursor: default;
 }
 
-.post_content { flex: 1; }
+.post_content { flex: 1; min-width: 0; }
 
 .post_title {
   font-size: $font-size-sm;
@@ -133,19 +160,22 @@
   color: var(--text-muted);
   margin-top: $space-1;
   line-height: $line-height-relaxed;
+  @include truncate;
 }
 
-// ─── User Item ─────────────────────────────────────────────────
+// ─── User item ─────────────────────────────────────────────────
 .user_item {
   @include flex(row, flex-start, center);
   gap: $space-3;
-  padding: $space-3 $space-5;
+  padding: $space-4 $space-5;
   border-bottom: 1px solid var(--border);
   transition: background-color $transition-fast;
 
   &:last-child { border-bottom: none; }
   &:hover { background-color: var(--bg-secondary); }
 }
+
+.user_info { flex: 1; min-width: 0; }
 
 .user_name {
   font-size: $font-size-sm;
@@ -158,6 +188,32 @@
   color: var(--text-muted);
 }
 
-.user_badge {
-  margin-left: auto;
+.user_meta {
+  @include flex(row, flex-end, center);
+  gap: $space-2;
+  flex-shrink: 0;
+}
+
+// ─── Compose Modal ─────────────────────────────────────────────
+.modal_body {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.modal_hint {
+  font-size: $font-size-sm;
+  color: var(--text-muted);
+  padding: $space-3 $space-4;
+  background-color: $color-info-50;
+  border-left: 3px solid $color-info-500;
+  border-radius: $radius-base;
+  line-height: $line-height-relaxed;
+
+  strong { color: var(--text-primary); font-weight: $font-weight-semibold; }
+}
+
+.modal_footer {
+  @include flex(row, flex-end, center);
+  gap: $space-2;
 }

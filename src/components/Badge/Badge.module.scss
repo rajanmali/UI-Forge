@@ -12,15 +12,15 @@
 
   // ─── Sizes ─────────────────────────────────────────────────
   &--sm {
-    padding: calc(#{$space-1} * 0.5) $space-2;
-    font-size: $font-size-xs;
-  }
-  &--md {
     padding: $space-1 $space-3;
     font-size: $font-size-xs;
   }
-  &--lg {
+  &--md {
     padding: $space-2 $space-4;
+    font-size: $font-size-xs;
+  }
+  &--lg {
+    padding: $space-2 $space-5;
     font-size: $font-size-sm;
   }
 

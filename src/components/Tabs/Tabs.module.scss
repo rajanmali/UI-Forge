@@ -9,7 +9,9 @@
   display: flex;
   gap: $space-1;
   overflow-x: auto;
-  @include custom-scrollbar($width: 3px);
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar { display: none; }
 
   &--line {
     border-bottom: 2px solid var(--border);

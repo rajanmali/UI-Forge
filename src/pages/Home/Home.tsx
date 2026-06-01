@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import styles from './Home.module.scss';
+import { APP_VERSION } from '../../version';
 import Button from '../../components/Button/Button';
 import Badge from '../../components/Badge/Badge';
 import Input from '../../components/Input/Input';
@@ -86,7 +87,7 @@ export default function Home() {
       {/* Hero */}
       <motion.div className={styles.hero} variants={stagger} initial="hidden" animate="show">
         <motion.div variants={fadeUp}>
-          <Badge variant="secondary" size="sm">v1.0.0 — Production Ready</Badge>
+          <Badge variant="secondary" size="sm">v{APP_VERSION} — Production Ready</Badge>
         </motion.div>
         <motion.h1 className={styles.hero__title} variants={fadeUp}>UIForge</motion.h1>
         <motion.p className={styles.hero__sub} variants={fadeUp}>

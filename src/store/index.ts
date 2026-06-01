@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, type TypedUseSelectorHook } from 'react-redux';
 import uiReducer from './uiSlice';
+import dashboardReducer from './dashboardSlice';
 import { api } from './api';
 
 export const store = configureStore({
   reducer: {
     ui: uiReducer,
+    dashboard: dashboardReducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>
