@@ -15,9 +15,10 @@ export interface NavbarProps {
 }
 
 const DEFAULT_ITEMS: NavItem[] = [
-  { label: 'Showcase', to: '/' },
+  { label: 'Showcase',  to: '/' },
   { label: 'Dashboard', to: '/dashboard' },
-  { label: 'Docs', to: '/docs' },
+  { label: 'Form Demo', to: '/form-demo' },
+  { label: 'Docs',      to: '/docs' },
 ];
 
 function MoonIcon() {

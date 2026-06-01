@@ -9,6 +9,7 @@ import PageTransition from './components/PageTransition/PageTransition';
 import Home from './pages/Home/Home';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Docs from './pages/Docs/Docs';
+import FormDemo from './pages/FormDemo/FormDemo';
 import './styles/main.scss';
 
 function ThemeSync() {
@@ -31,6 +32,7 @@ function AppShell() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/form-demo" element={<FormDemo />} />
             <Route path="/docs" element={<Docs />} />
           </Routes>
         </PageTransition>
