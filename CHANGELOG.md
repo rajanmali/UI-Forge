@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.3](https://github.com/rajanmali/UI-Forge/compare/v1.6.2...v1.6.3) (2026-06-02)
+
+### Documentation
+
+- **readme:** full rewrite to reflect v1.6.1 state ([87edb4c](https://github.com/rajanmali/UI-Forge/commit/87edb4c6b255b560a627448a65a12255e20b6087))
+
 ### [1.6.2](https://github.com/rajanmali/UI-Forge/compare/v1.6.1...v1.6.2) (2026-06-02)
 
 ### Documentation
