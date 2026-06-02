@@ -115,8 +115,24 @@ function ComponentDoc({ doc }: { doc: ComponentDocData }) {
 }
 
 // ─── Active section tracker ───────────────────────────────────
-function useActiveSection(ids: string[]) {
+// hashId overrides the active section immediately (e.g. from command palette
+// navigation). The IntersectionObserver is suppressed for 800ms via a ref so
+// the smooth-scroll animation passing through sibling sections cannot win the
+// race. No setState is called inside effects — hashId is returned directly,
+// satisfying the react-hooks/set-state-in-effect lint rule.
+function useActiveSection(ids: string[], hashId?: string) {
   const [active, setActive] = useState(ids[0]);
+  const suppressRef = useRef(false);
+
+  // When the hash changes, block observer updates for 800ms (no setState here)
+  useEffect(() => {
+    if (!hashId) return;
+    suppressRef.current = true;
+    const t = setTimeout(() => {
+      suppressRef.current = false;
+    }, 800);
+    return () => clearTimeout(t);
+  }, [hashId]);
 
   useEffect(() => {
     const observers = ids.map((id) => {
@@ -124,7 +140,7 @@ function useActiveSection(ids: string[]) {
       if (!el) return null;
       const obs = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) setActive(id);
+          if (entry.isIntersecting && !suppressRef.current) setActive(id);
         },
         { rootMargin: '-20% 0px -70% 0px' },
       );
@@ -134,7 +150,9 @@ function useActiveSection(ids: string[]) {
     return () => observers.forEach((o) => o?.disconnect());
   }, [ids]);
 
-  return active;
+  // hashId wins when present — the observer updates `active` in the background
+  // and takes over once the user scrolls manually (hash clears or suppress expires).
+  return hashId ?? active;
 }
 
 // ─── Search ───────────────────────────────────────────────────
@@ -171,7 +189,8 @@ export default function Docs() {
   );
 
   const ids = filtered.map((d) => d.id);
-  const activeSection = useActiveSection(ids);
+  const hashId = hash ? hash.slice(1) : undefined;
+  const activeSection = useActiveSection(ids, hashId);
 
   // ⌘K / Ctrl+K focuses search
   useEffect(() => {
