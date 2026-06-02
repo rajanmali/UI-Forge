@@ -36,7 +36,9 @@ jobs:
 
       - name: Capture pre-release version
         id: pre
-        run: echo "version=$(node -p \"require('./package.json').version\")" >> "$GITHUB_OUTPUT"
+        run: |
+          VERSION=$(node -e "console.log(require('./package.json').version)")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Run standard-version
         run: npm run release
@@ -44,7 +46,7 @@ jobs:
       - name: Check for version bump
         id: bump
         run: |
-          NEW=$(node -p "require('./package.json').version")
+          NEW=$(node -e "console.log(require('./package.json').version)")
           echo "version=$NEW" >> "$GITHUB_OUTPUT"
           if [ "$NEW" = "${{ steps.pre.outputs.version }}" ]; then
             echo "bumped=false" >> "$GITHUB_OUTPUT"
@@ -60,7 +62,7 @@ jobs:
         if: steps.bump.outputs.bumped == 'true'
         run: |
           VERSION="${{ steps.bump.outputs.version }}"
-          git add package.json CHANGELOG.md src/pages/Changelog/Changelog.tsx src/version.ts
+          git add package.json package-lock.json CHANGELOG.md src/pages/Changelog/Changelog.tsx src/version.ts
           git commit -m "chore(release): v${VERSION} [skip ci]"
           git tag -a "v${VERSION}" -m "v${VERSION}"
           git push --follow-tags
