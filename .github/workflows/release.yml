@@ -7,12 +7,14 @@ on:
 permissions:
   contents: write
 
-# Skip if this is already a release commit (prevents infinite loop)
+# Skip own release commits to prevent an infinite loop.
+# Using the commit message prefix instead of [skip ci] so deploy.yml
+# still runs on release commits and the site version stays in sync.
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    if: "!startsWith(github.event.head_commit.message, 'chore(release):')"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -68,7 +70,7 @@ jobs:
           git branch
           git add package.json package-lock.json CHANGELOG.md src/pages/Changelog/Changelog.tsx src/version.ts
           git diff --staged --stat
-          git commit -m "chore(release): v${VERSION} [skip ci]"
+          git commit -m "chore(release): v${VERSION}"
           git tag -a "v${VERSION}" -m "v${VERSION}"
           git push origin main --follow-tags
           echo "Release pushed successfully"
