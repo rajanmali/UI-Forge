@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useMemo, useId } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import styles from './DataTable.module.scss';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -21,6 +22,12 @@ export interface DataTableProps<T extends object> {
   emptyMessage?: string;
   className?: string;
   'aria-label'?: string;
+  /** When true, renders only visible rows via virtualisation. Pagination is hidden. */
+  virtualScroll?: boolean;
+  /** Row height in px used by the virtualiser (default 44). */
+  rowHeight?: number;
+  /** Height of the scrollable container in px when virtualScroll is true (default 400). */
+  scrollHeight?: number;
 }
 
 type SortDir = 'asc' | 'desc' | null;
@@ -37,6 +44,9 @@ export default function DataTable<T extends object>({
   emptyMessage = 'No results.',
   className,
   'aria-label': ariaLabel,
+  virtualScroll = false,
+  rowHeight = 44,
+  scrollHeight = 400,
 }: DataTableProps<T>) {
   const filterId = useId();
   const [filterText, setFilterText] = useState('');
@@ -102,7 +112,20 @@ export default function DataTable<T extends object>({
 
   const totalPages = Math.ceil(processed.length / pageSize);
   const safePage = Math.min(page, Math.max(0, totalPages - 1));
-  const pageData = processed.slice(safePage * pageSize, (safePage + 1) * pageSize);
+  const pageData = virtualScroll
+    ? processed
+    : processed.slice(safePage * pageSize, (safePage + 1) * pageSize);
+
+  // Virtual scrolling — only active when virtualScroll=true
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const virtualizer = useVirtualizer({
+    count: virtualScroll ? processed.length : 0,
+    getScrollElement: () => scrollContainerRef.current,
+    estimateSize: () => rowHeight,
+    enabled: virtualScroll,
+    overscan: 5,
+  });
+  const virtualItems = virtualScroll ? virtualizer.getVirtualItems() : [];
 
   function ariaSortAttr(key: string): React.AriaAttributes['aria-sort'] {
     if (sortKey !== key) return 'none';
@@ -147,10 +170,17 @@ export default function DataTable<T extends object>({
         </div>
       )}
 
-      <div className={styles.table_wrap} role="region" aria-label={ariaLabel ?? 'Data table'}>
+      <div
+        ref={virtualScroll ? scrollContainerRef : undefined}
+        className={styles.table_wrap}
+        role="region"
+        aria-label={ariaLabel ?? 'Data table'}
+        style={virtualScroll ? { height: scrollHeight, overflowY: 'auto' } : undefined}
+      >
         <table
           className={[styles.table, compact && styles['table--compact']].filter(Boolean).join(' ')}
           role="grid"
+          style={virtualScroll ? { width: '100%' } : undefined}
         >
           <thead>
             <tr>
@@ -184,8 +214,48 @@ export default function DataTable<T extends object>({
               ))}
             </tr>
           </thead>
-          <tbody>
-            {pageData.length === 0 ? (
+          <tbody
+            style={
+              virtualScroll
+                ? { height: virtualizer.getTotalSize(), position: 'relative' }
+                : undefined
+            }
+          >
+            {virtualScroll ? (
+              virtualItems.length === 0 ? (
+                <tr>
+                  <td colSpan={columns.length} className={styles.empty}>
+                    {emptyMessage}
+                  </td>
+                </tr>
+              ) : (
+                virtualItems.map((vItem) => {
+                  const row = processed[vItem.index];
+                  return (
+                    <tr
+                      key={vItem.key}
+                      data-index={vItem.index}
+                      ref={virtualizer.measureElement}
+                      className={styles.tr}
+                      tabIndex={0}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        transform: `translateY(${vItem.start}px)`,
+                      }}
+                    >
+                      {columns.map((col) => (
+                        <td key={col.key} className={styles.td}>
+                          {col.render ? col.render(row) : String(row[col.key] ?? '')}
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })
+              )
+            ) : pageData.length === 0 ? (
               <tr>
                 <td colSpan={columns.length} className={styles.empty}>
                   {emptyMessage}
@@ -206,7 +276,7 @@ export default function DataTable<T extends object>({
         </table>
       </div>
 
-      {totalPages > 1 && (
+      {!virtualScroll && totalPages > 1 && (
         <div className={styles.pagination}>
           <span className={styles.pagination__info}>
             {safePage * pageSize + 1}–{Math.min((safePage + 1) * pageSize, processed.length)} of{' '}
