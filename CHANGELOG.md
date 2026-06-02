@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file. See [standa
 - **ci:** fix shell syntax error in release workflow ([89085d8](https://github.com/rajanmali/UI-Forge/commit/89085d88c81fa220d54eb3408138be56b33b956d))
 - **ci:** use annotated tag so --follow-tags pushes it ([131df45](https://github.com/rajanmali/UI-Forge/commit/131df450901ffbebd47e0cb48e11033a08aaf1fb))
 - **docs:** sidebar active item matches hash on command palette navigation ([d9d1724](https://github.com/rajanmali/UI-Forge/commit/d9d1724112362935ea4e0beb5b780324b44b5f6a))
-- syntax highlighting in Docs, FormDemo bg, palette centering, hash scroll ([efb02cf](https://github.com/rajanmali/UI-Forge/commit/efb02cf29aa36776e9c26a2185afc8f7099d59da)), closes [#1e1e1](https://github.com/rajanmali/UI-Forge/issues/1e1e1) [#2d2319](https://github.com/rajanmali/UI-Forge/issues/2d2319)
+- syntax highlighting in Docs, FormDemo bg, palette centering, hash scroll ([efb02cf](https://github.com/rajanmali/UI-Forge/commit/efb02cf29aa36776e9c26a2185afc8f7099d59da))
 
 ### Tests
 
