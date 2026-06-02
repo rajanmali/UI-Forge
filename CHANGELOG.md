@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/rajanmali/UI-Forge/compare/v1.5.4...v1.6.0) (2026-06-02)
+
+### Features
+
+- **accordion:** add Accordion disclosure component ([063670e](https://github.com/rajanmali/UI-Forge/commit/063670e8d7e086b9878d9d0caf8000bbeb9d5743))
+- **command-palette:** add global ⌘K command palette ([c17b824](https://github.com/rajanmali/UI-Forge/commit/c17b824cf75c3b60500f5df03939a8b98c0c10b6))
+- **datatable:** add DataTable component and integrate into Dashboard ([53e66e7](https://github.com/rajanmali/UI-Forge/commit/53e66e72f9e38e83f3207a9047248c45dd74096e))
+- **datatable:** add virtual scrolling via @tanstack/react-virtual ([857dd04](https://github.com/rajanmali/UI-Forge/commit/857dd0469abc97d0195cc1c0cff582c282c9214c))
+- **error-boundary:** add ErrorBoundary component and wrap route area ([ef94ace](https://github.com/rajanmali/UI-Forge/commit/ef94acec560f1613459a2904ff311b17d3ee41f9))
+- **msw:** add Mock Service Worker for deterministic API tests ([8bc9061](https://github.com/rajanmali/UI-Forge/commit/8bc906173134e1f11e76624cf190b92314df76b6))
+
+### Bug Fixes
+
+- **ci:** fix shell syntax error in release workflow ([89085d8](https://github.com/rajanmali/UI-Forge/commit/89085d88c81fa220d54eb3408138be56b33b956d))
+- **ci:** use annotated tag so --follow-tags pushes it ([131df45](https://github.com/rajanmali/UI-Forge/commit/131df450901ffbebd47e0cb48e11033a08aaf1fb))
+- **docs:** sidebar active item matches hash on command palette navigation ([d9d1724](https://github.com/rajanmali/UI-Forge/commit/d9d1724112362935ea4e0beb5b780324b44b5f6a))
+- syntax highlighting in Docs, FormDemo bg, palette centering, hash scroll ([efb02cf](https://github.com/rajanmali/UI-Forge/commit/efb02cf29aa36776e9c26a2185afc8f7099d59da)), closes [#1e1e1](https://github.com/rajanmali/UI-Forge/issues/1e1e1) [#2d2319](https://github.com/rajanmali/UI-Forge/issues/2d2319)
+
+### Tests
+
+- add unit tests for all 16 previously-untested components ([def1671](https://github.com/rajanmali/UI-Forge/commit/def167177c51b3254994cabefc35137d137ca4fa))
+- **e2e:** add Playwright E2E tests for 4 critical user paths ([210a334](https://github.com/rajanmali/UI-Forge/commit/210a3346b71f02325ae8edcecbd67fa470d52996))
+
 ## [1.5.4] (2026-06-02)
 
 ### Bug Fixes
