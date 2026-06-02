@@ -18,8 +18,15 @@ interface UIState {
   commandPaletteOpen: boolean;
 }
 
-const storedTheme = (localStorage.getItem('ui-forge-theme') as Theme) ?? 'light';
-const storedPalette = (localStorage.getItem('ui-forge-palette') as Palette) ?? 'ocean';
+const safeLS = (key: string): string | null => {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+};
+const storedTheme = (safeLS('ui-forge-theme') as Theme) ?? 'light';
+const storedPalette = (safeLS('ui-forge-palette') as Palette) ?? 'ocean';
 
 const initialState: UIState = {
   theme: storedTheme,
