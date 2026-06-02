@@ -1,0 +1,64 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: $space-8;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-4;
+  max-width: 28rem;
+  width: 100%;
+  padding: $space-10 $space-8;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: $radius-xl;
+  text-align: center;
+}
+
+.icon {
+  width: 3rem;
+  height: 3rem;
+  color: var(--palette-accent);
+  flex-shrink: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.message {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.button {
+  margin-top: $space-2;
+  padding: $space-3 $space-6;
+  background: var(--palette-primary);
+  color: #fff;
+  border: none;
+  border-radius: $radius-md;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+
+  &:hover {
+    opacity: 0.88;
+  }
+
+  @include focus-visible-ring;
+}

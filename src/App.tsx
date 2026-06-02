@@ -7,17 +7,18 @@ import Navbar from './components/Navbar/Navbar';
 import ToastContainer from './components/Toast/Toast';
 import PageTransition from './components/PageTransition/PageTransition';
 import PageLoader from './components/PageLoader/PageLoader';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import './styles/main.scss';
 
 // Each page is a separate async chunk — only fetched when first navigated to
-const Home      = lazy(() => import('./pages/Home/Home'));
+const Home = lazy(() => import('./pages/Home/Home'));
 const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
-const FormDemo  = lazy(() => import('./pages/FormDemo/FormDemo'));
-const Docs      = lazy(() => import('./pages/Docs/Docs'));
+const FormDemo = lazy(() => import('./pages/FormDemo/FormDemo'));
+const Docs = lazy(() => import('./pages/Docs/Docs'));
 const Changelog = lazy(() => import('./pages/Changelog/Changelog'));
 
 function ThemeSync() {
-  const theme   = useAppSelector((s) => s.ui.theme);
+  const theme = useAppSelector((s) => s.ui.theme);
   const palette = useAppSelector((s) => s.ui.palette);
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -39,13 +40,15 @@ function AppShell() {
         */}
         <Suspense fallback={<PageLoader />}>
           <PageTransition>
-            <Routes>
-              <Route path="/"          element={<Home />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/form-demo" element={<FormDemo />} />
-              <Route path="/docs"       element={<Docs />} />
-              <Route path="/changelog" element={<Changelog />} />
-            </Routes>
+            <ErrorBoundary>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/form-demo" element={<FormDemo />} />
+                <Route path="/docs" element={<Docs />} />
+                <Route path="/changelog" element={<Changelog />} />
+              </Routes>
+            </ErrorBoundary>
           </PageTransition>
         </Suspense>
       </div>
