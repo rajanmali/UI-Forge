@@ -1,0 +1,15 @@
+{
+  "types": [
+    { "type": "feat", "section": "Features" },
+    { "type": "fix", "section": "Bug Fixes" },
+    { "type": "perf", "section": "Performance" },
+    { "type": "refactor", "section": "Refactoring" },
+    { "type": "infra", "section": "Infrastructure" },
+    { "type": "test", "section": "Tests" },
+    { "type": "docs", "section": "Documentation" },
+    { "type": "chore", "hidden": true },
+    { "type": "style", "hidden": true }
+  ],
+  "commitUrlFormat": "https://github.com/rajanmali/UI-Forge/commit/{{hash}}",
+  "compareUrlFormat": "https://github.com/rajanmali/UI-Forge/compare/{{previousTag}}...{{currentTag}}"
+}

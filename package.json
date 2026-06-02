@@ -14,7 +14,8 @@
     "coverage": "vitest run --coverage",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "prepare": "husky"
+    "prepare": "husky",
+    "release": "standard-version --skip.commit --skip.tag"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
@@ -53,6 +54,7 @@
     "jsdom": "^29.1.1",
     "lint-staged": "^15.5.2",
     "prettier": "^3.8.3",
+    "standard-version": "^9.5.0",
     "storybook": "^10.4.1",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",

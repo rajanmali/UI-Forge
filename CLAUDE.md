@@ -18,17 +18,17 @@ UIForge is a **branded React component library and live demo app** built to show
 
 ## Tech stack
 
-| Layer | Technology | Version |
-|---|---|---|
-| UI | React | 19 |
-| Language | TypeScript | 6 |
-| Bundler | Vite | 8 |
-| Styling | SASS (7-1 architecture) | 1.100 |
-| State | Redux Toolkit + RTK Query | 2.12 |
-| Routing | React Router v7 | 7.16 |
-| Animation | Framer Motion | 12 |
-| Forms | React Hook Form + Zod v4 | 7.77 / 4.4 |
-| Linting | ESLint + Prettier | configured |
+| Layer     | Technology                | Version    |
+| --------- | ------------------------- | ---------- |
+| UI        | React                     | 19         |
+| Language  | TypeScript                | 6          |
+| Bundler   | Vite                      | 8          |
+| Styling   | SASS (7-1 architecture)   | 1.100      |
+| State     | Redux Toolkit + RTK Query | 2.12       |
+| Routing   | React Router v7           | 7.16       |
+| Animation | Framer Motion             | 12         |
+| Forms     | React Hook Form + Zod v4  | 7.77 / 4.4 |
+| Linting   | ESLint + Prettier         | configured |
 
 ---
 
@@ -102,6 +102,7 @@ src/
 All component files use **zero hardcoded colour or spacing values** — everything references SASS variables or CSS custom properties.
 
 Key tokens:
+
 - **Primary teal:** `$color-primary-600` = `#1BAAA0` (Zibbet Green)
 - **Accent cornflower:** `$color-accent-500` = `#669DEC`
 - **Gray scale:** warm greige `$color-gray-900` = `#2d2319` → `$color-gray-50` = `#faf4f1`
@@ -168,16 +169,17 @@ Typed hooks: `useAppDispatch()`, `useAppSelector()` from `src/store/index.ts`.
 
 4-step multi-step form with **React Hook Form + Zod v4** + per-step field validation.
 
-| Step | Fields | Components used |
-|---|---|---|
-| 1 Personal | firstName, lastName, email, phone | Input (4×) |
-| 2 Account | username, password (strength meter + show/hide), confirmPassword, role | Input (3×), Select |
+| Step          | Fields                                                                       | Components used                               |
+| ------------- | ---------------------------------------------------------------------------- | --------------------------------------------- |
+| 1 Personal    | firstName, lastName, email, phone                                            | Input (4×)                                    |
+| 2 Account     | username, password (strength meter + show/hide), confirmPassword, role       | Input (3×), Select                            |
 | 3 Preferences | bio (live char count), website, theme, experience, notifications, newsletter | Textarea, Input, RadioGroup (2×), Switch (2×) |
-| 4 Review | Read-only summary, Avatar, Badges | Avatar, Badge |
+| 4 Review      | Read-only summary, Avatar, Badges                                            | Avatar, Badge                                 |
 
 **Auto-fill button** on each of steps 1–3 populates all fields with valid seed data (`AUTOFILL` in `schema.ts`) so users can navigate through steps without typing.
 
 Architecture:
+
 - Single `useForm<FormData>` instance with `zodResolver(fullSchema)` (merged schema)
 - `methods.trigger(STEP_FIELDS[step])` validates only current step's fields on Continue
 - `FormProvider` passes context; each step uses `useFormContext()`
@@ -188,12 +190,12 @@ Architecture:
 
 ## Routing
 
-| Path | Page |
-|---|---|
-| `/` | Home — component showcase |
+| Path         | Page                            |
+| ------------ | ------------------------------- |
+| `/`          | Home — component showcase       |
 | `/dashboard` | Dashboard — RTK Query live data |
-| `/form-demo` | Multi-step form demo |
-| `/docs` | Component documentation |
+| `/form-demo` | Multi-step form demo            |
+| `/docs`      | Component documentation         |
 
 All routes wrapped in `<PageTransition>` (AnimatePresence fade-up).
 
@@ -213,6 +215,7 @@ All routes wrapped in `<PageTransition>` (AnimatePresence fade-up).
 ## Accessibility standards
 
 Every component ships with:
+
 - Proper ARIA roles (`role="dialog"`, `role="tooltip"`, `role="switch"`, `role="combobox"`, `role="listbox"`, `role="menu"`, `role="menuitem"`, `role="tab"`, `role="tabpanel"`, `role="tablist"`)
 - `aria-*` attributes (`aria-expanded`, `aria-haspopup`, `aria-selected`, `aria-disabled`, `aria-invalid`, `aria-describedby`, `aria-label`, `aria-live`)
 - Full keyboard navigation (Tab, Enter, Space, Escape, Arrow keys, Home, End)
@@ -266,7 +269,7 @@ These are the remaining priorities, roughly in order:
 
 5. **Framer Motion for all animations** — no CSS transitions on `transform` or `opacity` for interactive state changes; let Framer own those via `whileHover`/`whileTap`/`AnimatePresence`.
 
-6. **No comments explaining what code does** — only add a comment when the *why* is non-obvious (hidden constraint, workaround, subtle invariant).
+6. **No comments explaining what code does** — only add a comment when the _why_ is non-obvious (hidden constraint, workaround, subtle invariant).
 
 7. **Commit after each feature** — one commit per logical feature, with a descriptive multi-line message covering what changed and why.
 
@@ -275,3 +278,66 @@ These are the remaining priorities, roughly in order:
 9. **TypeScript strict** — `noUnusedLocals`, `noUnusedParameters` are on. Easing bezier arrays must be typed as `[number, number, number, number]` tuples for Framer Motion TS compatibility.
 
 10. **Build must be clean** — `npm run build` (tsc -b && vite build) must complete with zero TypeScript errors before any commit.
+
+---
+
+## Behavioural guidelines
+
+### 1. Think before coding
+
+Don't assume. Don't hide confusion. Surface tradeoffs.
+
+Before implementing:
+
+- State assumptions explicitly. If uncertain, ask.
+- If multiple interpretations exist, present them — don't pick silently.
+- If a simpler approach exists, say so. Push back when warranted.
+- If something is unclear, stop, name what's confusing, and ask.
+
+### 2. Simplicity first
+
+Minimum code that solves the problem. Nothing speculative.
+
+- No features beyond what was asked.
+- No abstractions for single-use code.
+- No "flexibility" or "configurability" that wasn't requested.
+- No error handling for impossible scenarios.
+- If you write 200 lines and it could be 50, rewrite it.
+
+Ask: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+
+### 3. Surgical changes
+
+Touch only what you must. Clean up only your own mess.
+
+When editing existing code:
+
+- Don't "improve" adjacent code, comments, or formatting.
+- Don't refactor things that aren't broken.
+- Match existing style, even if you'd do it differently.
+- If you notice unrelated dead code, mention it — don't delete it.
+
+When your changes create orphans:
+
+- Remove imports/variables/functions that YOUR changes made unused.
+- Don't remove pre-existing dead code unless asked.
+
+Every changed line should trace directly to the user's request.
+
+### 4. Goal-driven execution
+
+Define success criteria. Loop until verified.
+
+Transform tasks into verifiable goals:
+
+- "Add validation" → "Write tests for invalid inputs, then make them pass"
+- "Fix the bug" → "Write a test that reproduces it, then make it pass"
+- "Refactor X" → "Ensure tests pass before and after"
+
+For multi-step tasks, state a brief plan before starting:
+
+```
+1. [Step] → verify: [check]
+2. [Step] → verify: [check]
+3. [Step] → verify: [check]
+```
