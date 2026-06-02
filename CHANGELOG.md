@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.1](https://github.com/rajanmali/UI-Forge/compare/v1.6.0...v1.6.1) (2026-06-02)
+
+### Bug Fixes
+
+- **ci:** fix detached HEAD and add release push diagnostics ([e15b80b](https://github.com/rajanmali/UI-Forge/commit/e15b80ba5bdf00fd4f85f8a0fc7860af83b3d315))
+
 ## [1.6.0](https://github.com/rajanmali/UI-Forge/compare/v1.5.4...v1.6.0) (2026-06-02)
 
 ### Features
