@@ -3,7 +3,7 @@
 // ─── Page shell ──────────────────────────────────────────────
 .page {
   flex: 1;
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary);
   padding-block: $space-10;
 }
 
@@ -141,7 +141,10 @@
   font-size: $font-size-sm;
   font-weight: $font-weight-semibold;
   flex-shrink: 0;
-  transition: border-color $transition-base, background-color $transition-base, color $transition-base;
+  transition:
+    border-color $transition-base,
+    background-color $transition-base,
+    color $transition-base;
 
   &--active {
     border-color: var(--palette-accent);
@@ -189,7 +192,9 @@
   padding: $space-4;
   display: none;
 
-  @include lg-up { display: block; }
+  @include lg-up {
+    display: block;
+  }
 }
 
 .legend__title {
