@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.4](https://github.com/rajanmali/UI-Forge/compare/v1.6.3...v1.6.4) (2026-06-02)
+
+### Bug Fixes
+
+- **ci:** deploy runs on release commits so site version stays in sync ([44e0c87](https://github.com/rajanmali/UI-Forge/commit/44e0c87423e976ff93c232d29656a21d66503b63))
+
 ### [1.6.3](https://github.com/rajanmali/UI-Forge/compare/v1.6.2...v1.6.3) (2026-06-02)
 
 ### Documentation
