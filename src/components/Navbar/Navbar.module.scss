@@ -35,7 +35,10 @@
   transition: opacity $transition-fast;
   @include focus-visible-ring;
 
-  &:hover { opacity: 0.75; text-decoration: none; }
+  &:hover {
+    opacity: 0.75;
+    text-decoration: none;
+  }
 
   [data-theme='dark'] & {
     background-color: rgba(0, 0, 0, 0.25);
@@ -49,7 +52,9 @@
   @include focus-visible-ring;
   border-radius: $radius-sm;
 
-  &:hover { text-decoration: none; }
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .navbar__logo_mark {
@@ -88,7 +93,9 @@
   color: var(--text-secondary);
   border-radius: $radius-md;
   text-decoration: none;
-  transition: color $transition-base, background-color $transition-base;
+  transition:
+    color $transition-base,
+    background-color $transition-base;
   @include focus-visible-ring;
 
   &:hover {
@@ -114,6 +121,38 @@
   gap: $space-2;
 }
 
+.navbar__search_btn {
+  @include flex(row, center, center);
+  gap: $space-1;
+  height: 2.25rem;
+  padding: 0 $space-3;
+  border-radius: $radius-md;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition:
+    background-color $transition-base,
+    border-color $transition-base;
+  @include focus-visible-ring;
+
+  &:hover {
+    background-color: var(--bg-primary);
+    border-color: var(--palette-primary);
+    color: var(--text-primary);
+  }
+
+  @include sm-down {
+    display: none;
+  }
+}
+
+.navbar__search_hint {
+  font-size: 0.7rem;
+  font-family: monospace;
+  opacity: 0.7;
+}
+
 .navbar__icon_btn {
   @include flex-center;
   width: 2.25rem;
@@ -123,7 +162,9 @@
   border: none;
   color: var(--text-secondary);
   cursor: pointer;
-  transition: background-color $transition-base, color $transition-base;
+  transition:
+    background-color $transition-base,
+    color $transition-base;
   @include focus-visible-ring;
 
   &:hover {
@@ -146,9 +187,13 @@
   @include focus-visible-ring;
   transition: background-color $transition-base;
 
-  &:hover { background-color: var(--bg-secondary); }
+  &:hover {
+    background-color: var(--bg-secondary);
+  }
 
-  @include md-up { display: none; }
+  @include md-up {
+    display: none;
+  }
 
   span {
     display: block;
@@ -156,14 +201,23 @@
     height: 2px;
     background-color: var(--text-primary);
     border-radius: $radius-full;
-    transition: transform $transition-base, opacity $transition-base;
+    transition:
+      transform $transition-base,
+      opacity $transition-base;
     transform-origin: center;
   }
 
   &--open {
-    span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
   }
 }
 
@@ -180,7 +234,9 @@
   padding: $space-4;
   z-index: $z-dropdown;
 
-  @include md-up { display: none !important; }
+  @include md-up {
+    display: none !important;
+  }
 
   &--open {
     display: block;
@@ -201,7 +257,9 @@
   color: var(--text-secondary);
   border-radius: $radius-md;
   text-decoration: none;
-  transition: color $transition-base, background-color $transition-base;
+  transition:
+    color $transition-base,
+    background-color $transition-base;
 
   &:hover {
     color: var(--text-primary);
@@ -229,5 +287,7 @@
   background-color: rgba($color-black, 0.4);
   z-index: $z-overlay - 1;
 
-  @include md-up { display: none; }
+  @include md-up {
+    display: none;
+  }
 }

@@ -2,12 +2,14 @@ import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { useAppSelector } from './store';
+import { useAppDispatch, useAppSelector } from './store';
+import { openCommandPalette } from './store/uiSlice';
 import Navbar from './components/Navbar/Navbar';
 import ToastContainer from './components/Toast/Toast';
 import PageTransition from './components/PageTransition/PageTransition';
 import PageLoader from './components/PageLoader/PageLoader';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import CommandPalette from './components/CommandPalette/CommandPalette';
 import './styles/main.scss';
 
 // Each page is a separate async chunk — only fetched when first navigated to
@@ -28,6 +30,19 @@ function ThemeSync() {
 }
 
 function AppShell() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        dispatch(openCommandPalette());
+      }
+    }
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [dispatch]);
+
   return (
     <>
       <ThemeSync />
@@ -53,6 +68,7 @@ function AppShell() {
         </Suspense>
       </div>
       <ToastContainer />
+      <CommandPalette />
     </>
   );
 }

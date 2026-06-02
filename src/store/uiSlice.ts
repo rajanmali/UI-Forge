@@ -15,6 +15,7 @@ interface UIState {
   palette: Palette;
   toasts: Toast[];
   navOpen: boolean;
+  commandPaletteOpen: boolean;
 }
 
 const storedTheme = (localStorage.getItem('ui-forge-theme') as Theme) ?? 'light';
@@ -25,6 +26,7 @@ const initialState: UIState = {
   palette: storedPalette,
   toasts: [],
   navOpen: false,
+  commandPaletteOpen: false,
 };
 
 const uiSlice = createSlice({
@@ -63,6 +65,12 @@ const uiSlice = createSlice({
     toggleNav(state) {
       state.navOpen = !state.navOpen;
     },
+    openCommandPalette(state) {
+      state.commandPaletteOpen = true;
+    },
+    closeCommandPalette(state) {
+      state.commandPaletteOpen = false;
+    },
   },
 });
 
@@ -75,6 +83,8 @@ export const {
   clearToasts,
   setNavOpen,
   toggleNav,
+  openCommandPalette,
+  closeCommandPalette,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;
