@@ -1,24 +1,22 @@
-import { defineConfig, mergeConfig } from 'vitest/config';
+import { defineConfig } from 'vitest/config';
 import { fileURLToPath } from 'url';
-import viteConfig from './vite.config';
+import react from '@vitejs/plugin-react';
 
-export default mergeConfig(
-  viteConfig,
-  defineConfig({
-    resolve: {
-      alias: {
-        // Replace framer-motion with a lightweight mock during tests.
-        // The real library requires browser animation APIs that jsdom lacks.
-        'framer-motion': fileURLToPath(
-          new URL('./src/test/mocks/framer-motion.tsx', import.meta.url),
-        ),
-      },
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      // Replace framer-motion with a lightweight mock during tests.
+      // The real library requires browser animation APIs that jsdom lacks.
+      'framer-motion': fileURLToPath(
+        new URL('./src/test/mocks/framer-motion.tsx', import.meta.url),
+      ),
     },
-    test: {
-      environment: 'jsdom',
-      setupFiles: ['./src/test/setup.ts'],
-      globals: true,
-      css: false,
-    },
-  }),
-);
+  },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    globals: true,
+    css: false,
+  },
+});
