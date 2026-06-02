@@ -18,6 +18,7 @@ import Select from '../../components/Select/Select';
 import Tooltip from '../../components/Tooltip/Tooltip';
 import Popover from '../../components/Popover/Popover';
 import DropdownMenu from '../../components/DropdownMenu/DropdownMenu';
+import Accordion from '../../components/Accordion/Accordion';
 import { useAppDispatch } from '../../store';
 import { addToast } from '../../store/uiSlice';
 
@@ -70,16 +71,60 @@ export default function Home() {
     dispatch(addToast({ type, message: msg }));
 
   const tabData = [
-    { id: 'overview', label: 'Overview', content: <p>Welcome to UIForge — a production-quality component library built on design tokens, SASS 7-1 architecture, and React 18.</p> },
-    { id: 'tokens', label: 'Design Tokens', content: <p>All colours, spacing, typography, shadows, and radii are driven by SASS variables defined in <code>abstracts/_variables.scss</code>. Zero hardcoded values in component files.</p> },
-    { id: 'a11y', label: 'Accessibility', content: <p>Every component ships with ARIA roles, keyboard navigation, focus rings, and screen-reader labels out of the box.</p> },
+    {
+      id: 'overview',
+      label: 'Overview',
+      content: (
+        <p>
+          Welcome to UIForge — a production-quality component library built on design tokens, SASS
+          7-1 architecture, and React 18.
+        </p>
+      ),
+    },
+    {
+      id: 'tokens',
+      label: 'Design Tokens',
+      content: (
+        <p>
+          All colours, spacing, typography, shadows, and radii are driven by SASS variables defined
+          in <code>abstracts/_variables.scss</code>. Zero hardcoded values in component files.
+        </p>
+      ),
+    },
+    {
+      id: 'a11y',
+      label: 'Accessibility',
+      content: (
+        <p>
+          Every component ships with ARIA roles, keyboard navigation, focus rings, and screen-reader
+          labels out of the box.
+        </p>
+      ),
+    },
     { id: 'disabled', label: 'Disabled Tab', disabled: true, content: null },
   ];
 
   const pillTabData = [
-    { id: 'react', label: 'React', content: <p>Built with React 18 + TypeScript for type-safe, composable UI primitives.</p> },
-    { id: 'redux', label: 'Redux', content: <p>RTK Query powers data-fetching on the Dashboard page with automatic caching and loading states.</p> },
-    { id: 'sass', label: 'SASS', content: <p>The 7-1 architecture keeps styles modular, scalable, and maintainable.</p> },
+    {
+      id: 'react',
+      label: 'React',
+      content: <p>Built with React 18 + TypeScript for type-safe, composable UI primitives.</p>,
+    },
+    {
+      id: 'redux',
+      label: 'Redux',
+      content: (
+        <p>
+          RTK Query powers data-fetching on the Dashboard page with automatic caching and loading
+          states.
+        </p>
+      ),
+    },
+    {
+      id: 'sass',
+      label: 'SASS',
+      content: <p>The 7-1 architecture keeps styles modular, scalable, and maintainable.</p>,
+    },
   ];
 
   return (
@@ -87,15 +132,24 @@ export default function Home() {
       {/* Hero */}
       <motion.div className={styles.hero} variants={stagger} initial="hidden" animate="show">
         <motion.div variants={fadeUp}>
-          <Badge variant="secondary" size="sm">v{APP_VERSION} — Production Ready</Badge>
+          <Badge variant="secondary" size="sm">
+            v{APP_VERSION} — Production Ready
+          </Badge>
         </motion.div>
-        <motion.h1 className={styles.hero__title} variants={fadeUp}>UIForge</motion.h1>
+        <motion.h1 className={styles.hero__title} variants={fadeUp}>
+          UIForge
+        </motion.h1>
         <motion.p className={styles.hero__sub} variants={fadeUp}>
-          A branded React component library demonstrating agency-level front-end engineering. Design tokens, full accessibility, dark mode, and live interaction.
+          A branded React component library demonstrating agency-level front-end engineering. Design
+          tokens, full accessibility, dark mode, and live interaction.
         </motion.p>
         <motion.div className={styles.hero__actions} variants={fadeUp}>
-          <Button size="lg" onClick={() => fire('success', 'Welcome to UIForge!')}>Get Started</Button>
-          <Button size="lg" variant="secondary" onClick={() => setModalOpen(true)}>View Source</Button>
+          <Button size="lg" onClick={() => fire('success', 'Welcome to UIForge!')}>
+            Get Started
+          </Button>
+          <Button size="lg" variant="secondary" onClick={() => setModalOpen(true)}>
+            View Source
+          </Button>
         </motion.div>
       </motion.div>
 
@@ -117,7 +171,19 @@ export default function Home() {
             <Button loading>Loading</Button>
             <Button disabled>Disabled</Button>
             <Button
-              leftIcon={<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>}
+              leftIcon={
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                >
+                  <path d="M12 5v14M5 12l7 7 7-7" />
+                </svg>
+              }
             >
               With Icon
             </Button>
@@ -136,14 +202,26 @@ export default function Home() {
             <Badge variant="neutral">Neutral</Badge>
           </Row>
           <Row label="With dot">
-            <Badge variant="success" dot>Online</Badge>
-            <Badge variant="warning" dot>Away</Badge>
-            <Badge variant="error" dot>Busy</Badge>
+            <Badge variant="success" dot>
+              Online
+            </Badge>
+            <Badge variant="warning" dot>
+              Away
+            </Badge>
+            <Badge variant="error" dot>
+              Busy
+            </Badge>
           </Row>
           <Row label="Sizes">
-            <Badge size="sm" variant="primary">Small</Badge>
-            <Badge size="md" variant="primary">Medium</Badge>
-            <Badge size="lg" variant="primary">Large</Badge>
+            <Badge size="sm" variant="primary">
+              Small
+            </Badge>
+            <Badge size="md" variant="primary">
+              Medium
+            </Badge>
+            <Badge size="lg" variant="primary">
+              Large
+            </Badge>
           </Row>
         </Section>
 
@@ -158,8 +236,17 @@ export default function Home() {
             />
           </Row>
           <Row label="States">
-            <Input label="With helper" placeholder="username" helperText="Must be at least 3 characters" />
-            <Input label="Error state" placeholder="email" errorText="Please enter a valid email address" defaultValue="bad-email" />
+            <Input
+              label="With helper"
+              placeholder="username"
+              helperText="Must be at least 3 characters"
+            />
+            <Input
+              label="Error state"
+              placeholder="email"
+              errorText="Please enter a valid email address"
+              defaultValue="bad-email"
+            />
             <Input label="Disabled" placeholder="disabled" disabled />
           </Row>
           <Row label="With icons">
@@ -167,7 +254,18 @@ export default function Home() {
               label="Search"
               placeholder="Search…"
               leftIcon={
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
               }
             />
           </Row>
@@ -177,7 +275,10 @@ export default function Home() {
         <Section title="Card">
           <div className={styles.card_grid}>
             <Card variant="elevated" header="Elevated Card" footer="Card Footer">
-              <p>Default elevated card with a subtle shadow and border. Perfect for content containers.</p>
+              <p>
+                Default elevated card with a subtle shadow and border. Perfect for content
+                containers.
+              </p>
             </Card>
             <Card variant="outlined" header="Outlined Card">
               <p>Outlined variant uses a stronger border without a background fill.</p>
@@ -198,7 +299,14 @@ export default function Home() {
           </Row>
           <Row label="Colours">
             <Spinner color="primary" />
-            <span style={{ background: '#1B3A6B', padding: '8px', borderRadius: '8px', display: 'inline-flex' }}>
+            <span
+              style={{
+                background: '#1B3A6B',
+                padding: '8px',
+                borderRadius: '8px',
+                display: 'inline-flex',
+              }}
+            >
               <Spinner color="white" />
             </span>
           </Row>
@@ -229,10 +337,34 @@ export default function Home() {
         {/* Toasts */}
         <Section title="Toast">
           <Row label="Fire a toast">
-            <Button variant="primary" size="sm" onClick={() => fire('success', 'Record saved successfully!')}>Success</Button>
-            <Button variant="ghost" size="sm" onClick={() => fire('info', 'Your session expires in 5 minutes.')}>Info</Button>
-            <Button variant="secondary" size="sm" onClick={() => fire('warning', 'Storage is at 90% capacity.')}>Warning</Button>
-            <Button variant="danger" size="sm" onClick={() => fire('error', 'Failed to connect to server.')}>Error</Button>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => fire('success', 'Record saved successfully!')}
+            >
+              Success
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => fire('info', 'Your session expires in 5 minutes.')}
+            >
+              Info
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => fire('warning', 'Storage is at 90% capacity.')}
+            >
+              Warning
+            </Button>
+            <Button
+              variant="danger"
+              size="sm"
+              onClick={() => fire('error', 'Failed to connect to server.')}
+            >
+              Error
+            </Button>
           </Row>
         </Section>
 
@@ -247,17 +379,28 @@ export default function Home() {
             title="UIForge Component Library"
             footer={
               <>
-                <Button variant="ghost" onClick={() => setModalOpen(false)}>Cancel</Button>
-                <Button onClick={() => { setModalOpen(false); fire('success', 'Action confirmed!'); }}>Confirm</Button>
+                <Button variant="ghost" onClick={() => setModalOpen(false)}>
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    setModalOpen(false);
+                    fire('success', 'Action confirmed!');
+                  }}
+                >
+                  Confirm
+                </Button>
               </>
             }
           >
             <p>
-              This modal demonstrates focus trapping, ESC-to-close, overlay click dismiss, scroll lock, and smooth entrance animation — all from a single composable component.
+              This modal demonstrates focus trapping, ESC-to-close, overlay click dismiss, scroll
+              lock, and smooth entrance animation — all from a single composable component.
             </p>
             <br />
             <p>
-              Built with <code>createPortal</code> so it always renders at the document root, above all other z-index layers.
+              Built with <code>createPortal</code> so it always renders at the document root, above
+              all other z-index layers.
             </p>
           </Modal>
         </Section>
@@ -293,8 +436,22 @@ export default function Home() {
               label="Component"
               placeholder="Select a component…"
               options={[
-                { label: 'Form', options: [{ value: 'input', label: 'Input' }, { value: 'select', label: 'Select' }, { value: 'checkbox', label: 'Checkbox' }] },
-                { label: 'Display', options: [{ value: 'card', label: 'Card' }, { value: 'badge', label: 'Badge' }, { value: 'avatar', label: 'Avatar' }] },
+                {
+                  label: 'Form',
+                  options: [
+                    { value: 'input', label: 'Input' },
+                    { value: 'select', label: 'Select' },
+                    { value: 'checkbox', label: 'Checkbox' },
+                  ],
+                },
+                {
+                  label: 'Display',
+                  options: [
+                    { value: 'card', label: 'Card' },
+                    { value: 'badge', label: 'Badge' },
+                    { value: 'avatar', label: 'Avatar' },
+                  ],
+                },
               ]}
             />
           </Row>
@@ -302,7 +459,10 @@ export default function Home() {
             <Select
               label="Region"
               placeholder="Select region…"
-              options={[{ value: 'eu', label: 'Europe' }, { value: 'us', label: 'North America' }]}
+              options={[
+                { value: 'eu', label: 'Europe' },
+                { value: 'us', label: 'North America' },
+              ]}
               errorText="Please select a region to continue"
             />
           </Row>
@@ -314,8 +474,18 @@ export default function Home() {
             <Textarea label="Description" placeholder="Write something…" rows={4} fullWidth />
           </Row>
           <Row label="States">
-            <Textarea label="With helper" placeholder="Enter bio" helperText="Max 280 characters" rows={3} />
-            <Textarea label="Error" placeholder="Enter address" errorText="This field is required" rows={3} />
+            <Textarea
+              label="With helper"
+              placeholder="Enter bio"
+              helperText="Max 280 characters"
+              rows={3}
+            />
+            <Textarea
+              label="Error"
+              placeholder="Enter address"
+              errorText="This field is required"
+              rows={3}
+            />
             <Textarea label="Disabled" placeholder="Disabled" disabled rows={3} />
           </Row>
         </Section>
@@ -344,7 +514,10 @@ export default function Home() {
             />
           </Row>
           <Row label="Error">
-            <Checkbox label="Accept required terms" errorText="You must accept the terms to continue" />
+            <Checkbox
+              label="Accept required terms"
+              errorText="You must accept the terms to continue"
+            />
           </Row>
         </Section>
 
@@ -357,10 +530,15 @@ export default function Home() {
               value={radioVal}
               onChange={setRadioVal}
               options={[
-                { value: 'react', label: 'React', helperText: 'Meta\'s UI library' },
+                { value: 'react', label: 'React', helperText: "Meta's UI library" },
                 { value: 'vue', label: 'Vue', helperText: 'The progressive framework' },
                 { value: 'svelte', label: 'Svelte', helperText: 'Compiles away' },
-                { value: 'angular', label: 'Angular', helperText: 'Enterprise-grade', disabled: true },
+                {
+                  value: 'angular',
+                  label: 'Angular',
+                  helperText: 'Enterprise-grade',
+                  disabled: true,
+                },
               ]}
             />
           </Row>
@@ -384,24 +562,43 @@ export default function Home() {
         <Section title="Tooltip">
           <Row label="Placements">
             <Tooltip content="Top tooltip" placement="top">
-              <Button variant="secondary" size="sm">Top</Button>
+              <Button variant="secondary" size="sm">
+                Top
+              </Button>
             </Tooltip>
             <Tooltip content="Bottom tooltip" placement="bottom">
-              <Button variant="secondary" size="sm">Bottom</Button>
+              <Button variant="secondary" size="sm">
+                Bottom
+              </Button>
             </Tooltip>
             <Tooltip content="Left tooltip" placement="left">
-              <Button variant="secondary" size="sm">Left</Button>
+              <Button variant="secondary" size="sm">
+                Left
+              </Button>
             </Tooltip>
             <Tooltip content="Right tooltip" placement="right">
-              <Button variant="secondary" size="sm">Right</Button>
+              <Button variant="secondary" size="sm">
+                Right
+              </Button>
             </Tooltip>
           </Row>
           <Row label="Rich content">
-            <Tooltip content={<span>Keyboard shortcut: <strong>⌘ + K</strong></span>} placement="top">
-              <Button variant="ghost" size="sm">With markup</Button>
+            <Tooltip
+              content={
+                <span>
+                  Keyboard shortcut: <strong>⌘ + K</strong>
+                </span>
+              }
+              placement="top"
+            >
+              <Button variant="ghost" size="sm">
+                With markup
+              </Button>
             </Tooltip>
             <Tooltip content="This tooltip is disabled" disabled>
-              <Button variant="ghost" size="sm">Disabled tooltip</Button>
+              <Button variant="ghost" size="sm">
+                Disabled tooltip
+              </Button>
             </Tooltip>
           </Row>
         </Section>
@@ -412,26 +609,45 @@ export default function Home() {
             <Popover
               title="What is UIForge?"
               placement="bottom-start"
-              trigger={<Button variant="secondary" size="sm">Open popover</Button>}
+              trigger={
+                <Button variant="secondary" size="sm">
+                  Open popover
+                </Button>
+              }
               content={
-                <p>UIForge is a branded React component library demonstrating agency-level front-end engineering with design tokens, full accessibility, and Framer Motion animations.</p>
+                <p>
+                  UIForge is a branded React component library demonstrating agency-level front-end
+                  engineering with design tokens, full accessibility, and Framer Motion animations.
+                </p>
               }
             />
           </Row>
           <Row label="Placements">
             <Popover
               placement="bottom-start"
-              trigger={<Button variant="ghost" size="sm">Bottom start</Button>}
+              trigger={
+                <Button variant="ghost" size="sm">
+                  Bottom start
+                </Button>
+              }
               content={<p>Aligned to the start of the trigger element.</p>}
             />
             <Popover
               placement="bottom-end"
-              trigger={<Button variant="ghost" size="sm">Bottom end</Button>}
+              trigger={
+                <Button variant="ghost" size="sm">
+                  Bottom end
+                </Button>
+              }
               content={<p>Aligned to the end of the trigger element.</p>}
             />
             <Popover
               placement="top-start"
-              trigger={<Button variant="ghost" size="sm">Top start</Button>}
+              trigger={
+                <Button variant="ghost" size="sm">
+                  Top start
+                </Button>
+              }
               content={<p>Appears above the trigger, aligned to start.</p>}
             />
           </Row>
@@ -439,14 +655,30 @@ export default function Home() {
             <Popover
               title="Team members"
               placement="bottom-start"
-              trigger={<Button variant="primary" size="sm">View team</Button>}
+              trigger={
+                <Button variant="primary" size="sm">
+                  View team
+                </Button>
+              }
               content={
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {[['Rajan Mali', 'Lead Engineer'], ['Sarah Chen', 'Designer'], ['Alex Torres', 'PM']].map(([name, role]) => (
+                  {[
+                    ['Rajan Mali', 'Lead Engineer'],
+                    ['Sarah Chen', 'Designer'],
+                    ['Alex Torres', 'PM'],
+                  ].map(([name, role]) => (
                     <div key={name} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                       <Avatar name={name} size="sm" status="online" />
                       <div>
-                        <p style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>{name}</p>
+                        <p
+                          style={{
+                            fontSize: '0.875rem',
+                            fontWeight: 600,
+                            color: 'var(--text-primary)',
+                          }}
+                        >
+                          {name}
+                        </p>
                         <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{role}</p>
                       </div>
                     </div>
@@ -461,33 +693,212 @@ export default function Home() {
         <Section title="Dropdown Menu">
           <Row label="Basic">
             <DropdownMenu
-              trigger={<Button variant="secondary" size="sm" rightIcon={<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>}>Actions</Button>}
-              sections={[{
-                items: [
-                  { id: 'edit',   label: 'Edit',        icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>, onClick: () => {} },
-                  { id: 'dup',    label: 'Duplicate',   icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>, onClick: () => {} },
-                  { id: 'share',  label: 'Share',       icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>, onClick: () => {} },
-                ],
-              }]}
+              trigger={
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  rightIcon={
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  }
+                >
+                  Actions
+                </Button>
+              }
+              sections={[
+                {
+                  items: [
+                    {
+                      id: 'edit',
+                      label: 'Edit',
+                      icon: (
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        >
+                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                        </svg>
+                      ),
+                      onClick: () => {},
+                    },
+                    {
+                      id: 'dup',
+                      label: 'Duplicate',
+                      icon: (
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        >
+                          <rect x="9" y="9" width="13" height="13" rx="2" />
+                          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                        </svg>
+                      ),
+                      onClick: () => {},
+                    },
+                    {
+                      id: 'share',
+                      label: 'Share',
+                      icon: (
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        >
+                          <circle cx="18" cy="5" r="3" />
+                          <circle cx="6" cy="12" r="3" />
+                          <circle cx="18" cy="19" r="3" />
+                          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                        </svg>
+                      ),
+                      onClick: () => {},
+                    },
+                  ],
+                },
+              ]}
             />
           </Row>
           <Row label="Grouped + shortcuts">
             <DropdownMenu
               placement="bottom-end"
-              trigger={<Button variant="ghost" size="sm" rightIcon={<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>}>File</Button>}
+              trigger={
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  rightIcon={
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  }
+                >
+                  File
+                </Button>
+              }
               sections={[
                 {
                   label: 'Document',
                   items: [
-                    { id: 'new',   label: 'New file',    shortcut: '⌘N', icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>, onClick: () => {} },
-                    { id: 'save',  label: 'Save',        shortcut: '⌘S', icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>, onClick: () => {} },
-                    { id: 'print', label: 'Print',       shortcut: '⌘P', icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>, onClick: () => {} },
+                    {
+                      id: 'new',
+                      label: 'New file',
+                      shortcut: '⌘N',
+                      icon: (
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        >
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                          <polyline points="14 2 14 8 20 8" />
+                        </svg>
+                      ),
+                      onClick: () => {},
+                    },
+                    {
+                      id: 'save',
+                      label: 'Save',
+                      shortcut: '⌘S',
+                      icon: (
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        >
+                          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                          <polyline points="17 21 17 13 7 13 7 21" />
+                          <polyline points="7 3 7 8 15 8" />
+                        </svg>
+                      ),
+                      onClick: () => {},
+                    },
+                    {
+                      id: 'print',
+                      label: 'Print',
+                      shortcut: '⌘P',
+                      icon: (
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        >
+                          <polyline points="6 9 6 2 18 2 18 9" />
+                          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                          <rect x="6" y="14" width="12" height="8" />
+                        </svg>
+                      ),
+                      onClick: () => {},
+                    },
                   ],
                 },
                 {
                   label: 'Danger zone',
                   items: [
-                    { id: 'del', label: 'Delete file', danger: true, icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>, onClick: () => {} },
+                    {
+                      id: 'del',
+                      label: 'Delete file',
+                      danger: true,
+                      icon: (
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        >
+                          <polyline points="3 6 5 6 21 6" />
+                          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+                        </svg>
+                      ),
+                      onClick: () => {},
+                    },
                   ],
                 },
               ]}
@@ -495,14 +906,72 @@ export default function Home() {
           </Row>
           <Row label="With disabled item">
             <DropdownMenu
-              trigger={<Button variant="ghost" size="sm" rightIcon={<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>}>More options</Button>}
-              sections={[{
-                items: [
-                  { id: 'a', label: 'Available action', icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>, onClick: () => {} },
-                  { id: 'b', label: 'Disabled action',  disabled: true, icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg> },
-                  { id: 'c', label: 'Another action',   onClick: () => {} },
-                ],
-              }]}
+              trigger={
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  rightIcon={
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  }
+                >
+                  More options
+                </Button>
+              }
+              sections={[
+                {
+                  items: [
+                    {
+                      id: 'a',
+                      label: 'Available action',
+                      icon: (
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        >
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      ),
+                      onClick: () => {},
+                    },
+                    {
+                      id: 'b',
+                      label: 'Disabled action',
+                      disabled: true,
+                      icon: (
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        >
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+                        </svg>
+                      ),
+                    },
+                    { id: 'c', label: 'Another action', onClick: () => {} },
+                  ],
+                },
+              ]}
             />
           </Row>
         </Section>
@@ -530,6 +999,60 @@ export default function Home() {
             <Switch label="Disabled off" disabled size="md" />
             <Switch label="Disabled on" disabled checked readOnly size="md" />
           </Row>
+        </Section>
+
+        {/* Accordion */}
+        <Section title="Accordion">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+            <div>
+              <p
+                style={{
+                  marginBottom: '1rem',
+                  color: 'var(--text-secondary)',
+                  fontSize: '0.875rem',
+                }}
+              >
+                Default (single open)
+              </p>
+              <Accordion>
+                <Accordion.Item title="What is UIForge?">
+                  A branded React component library showcasing design systems, accessibility, and
+                  animation — built as a production-quality portfolio project.
+                </Accordion.Item>
+                <Accordion.Item title="How does theming work?">
+                  Two layers of CSS custom properties: light/dark mode via data-theme and 5 brand
+                  palettes via data-palette. Every component reads these vars automatically.
+                </Accordion.Item>
+                <Accordion.Item title="Is keyboard navigation supported?">
+                  Yes — Arrow Up/Down moves focus between triggers, Home/End jump to first/last.
+                  Space and Enter toggle the panel.
+                </Accordion.Item>
+              </Accordion>
+            </div>
+            <div>
+              <p
+                style={{
+                  marginBottom: '1rem',
+                  color: 'var(--text-secondary)',
+                  fontSize: '0.875rem',
+                }}
+              >
+                Bordered, multi-open
+              </p>
+              <Accordion variant="bordered" allowMultiple defaultOpen={[0]}>
+                <Accordion.Item title="Open by default">
+                  This item starts expanded. Multiple items can be open simultaneously with
+                  allowMultiple.
+                </Accordion.Item>
+                <Accordion.Item title="Another section">
+                  Each panel animates open and closed with Framer Motion height transitions.
+                </Accordion.Item>
+                <Accordion.Item title="Disabled item" disabled>
+                  This item cannot be toggled.
+                </Accordion.Item>
+              </Accordion>
+            </div>
+          </div>
         </Section>
       </div>
     </main>
