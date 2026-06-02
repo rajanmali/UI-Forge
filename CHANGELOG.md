@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.2](https://github.com/rajanmali/UI-Forge/compare/v1.6.1...v1.6.2) (2026-06-02)
+
+### Documentation
+
+- **changelog:** remove spurious issue links from v1.6.0 entry ([48f557d](https://github.com/rajanmali/UI-Forge/commit/48f557db29435cb43e560226a2f62778f833b6ec)), closes [#1e1e1](https://github.com/rajanmali/UI-Forge/issues/1e1e1) [#2d2319](https://github.com/rajanmali/UI-Forge/issues/2d2319)
+
 ### [1.6.1](https://github.com/rajanmali/UI-Forge/compare/v1.6.0...v1.6.1) (2026-06-02)
 
 ### Bug Fixes
