@@ -19,6 +19,7 @@ import Tooltip from '../../components/Tooltip/Tooltip';
 import Popover from '../../components/Popover/Popover';
 import DropdownMenu from '../../components/DropdownMenu/DropdownMenu';
 import Accordion from '../../components/Accordion/Accordion';
+import DataTable, { type ColumnDef } from '../../components/DataTable/DataTable';
 import { useAppDispatch } from '../../store';
 import { addToast } from '../../store/uiSlice';
 
@@ -69,6 +70,35 @@ export default function Home() {
 
   const fire = (type: 'success' | 'warning' | 'error' | 'info', msg: string) =>
     dispatch(addToast({ type, message: msg }));
+
+  const dtColumns: ColumnDef<{ id: number; component: string; category: string; a11y: string }>[] =
+    [
+      { key: 'id', header: '#', sortable: true, width: '3rem' },
+      { key: 'component', header: 'Component', sortable: true },
+      { key: 'category', header: 'Category', sortable: true },
+      { key: 'a11y', header: 'A11y Role', sortable: true },
+    ];
+  const dtData = [
+    { id: 1, component: 'Button', category: 'Action', a11y: 'button' },
+    { id: 2, component: 'Input', category: 'Form', a11y: 'textbox' },
+    { id: 3, component: 'Select', category: 'Form', a11y: 'combobox' },
+    { id: 4, component: 'Checkbox', category: 'Form', a11y: 'checkbox' },
+    { id: 5, component: 'Radio', category: 'Form', a11y: 'radio' },
+    { id: 6, component: 'Switch', category: 'Form', a11y: 'switch' },
+    { id: 7, component: 'Modal', category: 'Overlay', a11y: 'dialog' },
+    { id: 8, component: 'Tooltip', category: 'Overlay', a11y: 'tooltip' },
+    { id: 9, component: 'Popover', category: 'Overlay', a11y: 'dialog' },
+    { id: 10, component: 'DropdownMenu', category: 'Overlay', a11y: 'menu' },
+    { id: 11, component: 'Tabs', category: 'Navigation', a11y: 'tablist' },
+    { id: 12, component: 'Accordion', category: 'Display', a11y: 'region' },
+    { id: 13, component: 'Card', category: 'Display', a11y: 'article' },
+    { id: 14, component: 'Badge', category: 'Display', a11y: 'status' },
+    { id: 15, component: 'Avatar', category: 'Display', a11y: 'img' },
+    { id: 16, component: 'Toast', category: 'Feedback', a11y: 'alert' },
+    { id: 17, component: 'Spinner', category: 'Feedback', a11y: 'progressbar' },
+    { id: 18, component: 'Navbar', category: 'Navigation', a11y: 'navigation' },
+    { id: 19, component: 'DataTable', category: 'Display', a11y: 'grid' },
+  ];
 
   const tabData = [
     {
@@ -1053,6 +1083,18 @@ export default function Home() {
               </Accordion>
             </div>
           </div>
+        </Section>
+
+        {/* DataTable */}
+        <Section title="DataTable">
+          <DataTable
+            columns={dtColumns}
+            data={dtData}
+            filterable
+            filterPlaceholder="Search components…"
+            pageSize={10}
+            aria-label="UIForge component registry"
+          />
         </Section>
       </div>
     </main>

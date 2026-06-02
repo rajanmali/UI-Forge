@@ -1478,6 +1478,71 @@ const accordionDoc: ComponentDocData = {
   ),
 };
 
+// ─── DataTable ────────────────────────────────────────────────
+const dataTableDoc: ComponentDocData = {
+  id: 'datatable',
+  label: 'DataTable',
+  category: 'Display',
+  description:
+    'A generic, self-contained data table with optional text filtering (debounced 300ms), column-level sorting (click to cycle asc → desc → off), and client-side pagination.',
+  props: [
+    {
+      name: 'columns',
+      type: 'ColumnDef<T>[]',
+      description:
+        'Column definitions — each specifies key, header, and optional sortable/render/width.',
+    },
+    { name: 'data', type: 'T[]', description: 'Array of row objects. Must extend object.' },
+    {
+      name: 'filterable',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows a debounced text search input above the table.',
+    },
+    {
+      name: 'pageSize',
+      type: 'number',
+      default: '20',
+      description: 'Rows per page when paginating.',
+    },
+    {
+      name: 'compact',
+      type: 'boolean',
+      default: 'false',
+      description: 'Reduces cell padding for denser presentation.',
+    },
+  ],
+  usage: `import DataTable, { type ColumnDef } from '@/components/DataTable';
+
+interface User { id: number; name: string; role: string; }
+
+const columns: ColumnDef<User>[] = [
+  { key: 'id',   header: 'ID',   sortable: true, width: '4rem' },
+  { key: 'name', header: 'Name', sortable: true },
+  { key: 'role', header: 'Role', sortable: true },
+];
+
+<DataTable columns={columns} data={users} filterable pageSize={20} />`,
+  a11y: (
+    <ul>
+      <li>
+        Table element has <code>role=&quot;grid&quot;</code>.
+      </li>
+      <li>
+        Sortable <code>{'<th>'}</code> elements carry <code>aria-sort</code> —{' '}
+        <code>ascending</code>, <code>descending</code>, or <code>none</code>.
+      </li>
+      <li>
+        Filter input has a visually-hidden <code>{'<label>'}</code> and an{' '}
+        <code>aria-live=&quot;polite&quot;</code> count that announces result changes.
+      </li>
+      <li>
+        Rows are <code>tabIndex=0</code> for keyboard navigation.
+      </li>
+    </ul>
+  ),
+};
+
 // ─── Exported list (sidebar order) ───────────────────────────
 export const ALL_DOCS: ComponentDocData[] = [
   buttonDoc,
@@ -1499,6 +1564,7 @@ export const ALL_DOCS: ComponentDocData[] = [
   navbarDoc,
   tabsDoc,
   accordionDoc,
+  dataTableDoc,
 ];
 
 export const CATEGORIES = ['Form', 'Display', 'Feedback', 'Overlay', 'Navigation'] as const;
