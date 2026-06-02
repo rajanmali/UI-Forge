@@ -7,8 +7,11 @@ const config: StorybookConfig = {
     name: '@storybook/react-vite',
     options: {},
   },
-  viteFinal: async (config) => {
-    return { ...config, base: '/' };
+  viteFinal: async (config, { configType }) => {
+    return {
+      ...config,
+      base: configType === 'PRODUCTION' ? '/UI-Forge/storybook/' : '/',
+    };
   },
 };
 

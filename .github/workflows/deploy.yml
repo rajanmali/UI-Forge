@@ -32,8 +32,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build app
         run: npm run build
+
+      - name: Build Storybook
+        run: npm run build-storybook
+
+      - name: Copy Storybook into dist
+        run: cp -r storybook-static dist/storybook
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
